@@ -1,0 +1,44 @@
+\name{plotConnectivityMatrices}
+\alias{plotConnectivityMatrices}
+\title{Plot a set of connectivity matrices.}
+\usage{
+plotConnectivityMatrices(allRes = NULL, zmax = NULL, zmin = 0,
+  colorscale = c("hot", "cold", "coldhot"),
+  plotBase = "ConnectivityMatrixYYYYMMDD.png", plotDir = "",
+  years = as.character(1996:2011), months = c("01"), days = c("01"),
+  devtype = "win")
+}
+\arguments{
+  \item{allRes}{- allRes element in the output list from
+  \code{calcConnectivityMatrices}}
+
+  \item{zmax}{- max value for color scale}
+
+  \item{zmin}{- min value for color scale}
+
+  \item{colorscale}{- color scale to use for plots ('hot',
+  'cold' or 'coldhot')}
+
+  \item{plotBase}{- base name for saved plots (should
+  include YYYY, MM, and DD; e.g.
+  "ConnectivityMatrixYYYYMMDD.png")}
+
+  \item{plotDir}{- directory for saved plots (devtype !=
+  'win')}
+
+  \item{years}{- vector of years of results to plot (YYYY)}
+
+  \item{months}{- vector of months to plot (MM)}
+
+  \item{days}{- vector of days to plot (DD)}
+
+  \item{devtype}{- 'win' or 'png'}
+}
+\description{
+Plot a set of connectivity matrices (an allRes output from
+\code{calcConnectivityMatrices})
+}
+\details{
+
+}
+

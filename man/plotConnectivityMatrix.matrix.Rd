@@ -1,0 +1,57 @@
+\name{plotConnectivityMatrix.matrix}
+\alias{plotConnectivityMatrix.matrix}
+\title{Plot a connectivity matrix from a matrix representation.}
+\usage{
+plotConnectivityMatrix.matrix(prbMat, uNAZs = NULL, uNDZs = NULL,
+  uSAZs = NULL, uSDZs = NULL, xlab = "Nursery Areas/Alongshore Zones",
+  ylab = "Spawning Areas/Alongshore Zones", zmax = NULL, zmin = 0,
+  title = NULL, devtype = "win", cex = 1 * (devtype == "win") + 1.5 *
+  (devtype != "win"), colorscale = c("hot", "cold", "coldhot"),
+  plotfile = "ConnectivityMatrix.png", plotsize = c(970, 780))
+}
+\arguments{
+  \item{prbMat}{- matrix representation of a connectivity
+  matrix (can be NULL)}
+
+  \item{uNAZs}{- character vector of unique nursery
+  alongshore zones}
+
+  \item{uNDZs}{- character vector of unique nursery depth
+  zones}
+
+  \item{uNSZs}{- character vector of unique spawning
+  alongshore zones}
+
+  \item{uSDZs}{- character vector of unique spawning depth
+  zones}
+
+  \item{zmax}{- max value for color scale}
+
+  \item{zmin}{- min value for color scale}
+
+  \item{title}{- title for plot}
+
+  \item{xlab}{- label for x axis}
+
+  \item{ylab}{- label for y axis}
+
+  \item{cex}{- character expansion factor for plot}
+
+  \item{colorscale}{- color scale to use for plot ('hot',
+  'cold' or 'coldhot')}
+
+  \item{plotfile}{- file to save plot to (if devtype !=
+  'win')}
+
+  \item{plotsize}{- 2 element vector giving plot size in
+  pixels (c(W,H))}
+
+  \item{devtype}{- 'win' or 'png'}
+}
+\description{
+Plot a connectivity matrix from a matrix representation.
+}
+\details{
+
+}
+

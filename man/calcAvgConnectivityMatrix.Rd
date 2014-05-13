@@ -1,0 +1,25 @@
+\name{calcAvgConnectivityMatrix}
+\alias{calcAvgConnectivityMatrix}
+\title{Calculate an "average" connectivity matrix.}
+\usage{
+calcAvgConnectivityMatrix(allRes)
+}
+\arguments{
+  \item{allRes}{- the results list from a connectivity
+  analysis}
+}
+\value{
+list with 5 elements:\cr avg - the average connectivity
+matrix \cr stdv - the standard deviations in connectivity
+matrix form\cr devs - the deviations in connectivity matrix
+form\cr dmin - the minimum value in the devs\cr dmax - the
+maximum value in the devs\cr
+}
+\description{
+Calculates an "average" connectivity matrix from results of
+a connectivity analysis.
+}
+\details{
+
+}
+

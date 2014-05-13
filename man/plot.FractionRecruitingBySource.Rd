@@ -1,0 +1,43 @@
+\name{plot.FractionRecruitingBySource}
+\alias{plot.FractionRecruitingBySource}
+\title{Produce plots based on the time series of the total fraction recruiting by source
+      from doAnalysis.FractionRecruitingBySource(...)}
+\usage{
+\method{plot}{FractionRecruitingBySource}(prbRS, srcLbls = NULL,
+  xTicks = NULL, pal = c("Spectral", "BrBG", "PiYG", "PRGn", "PuOr", "RdBu",
+  "RdGy", "RdYlBu", "RdYlGn"), clrs = NULL, devtype = "win",
+  basename = "FractionRecruitingBySource", width = 935, height = 571)
+}
+\arguments{
+  \item{prbRS}{- results object from
+  doAnalysis.FractionRecruitingBySource(...)}
+
+  \item{srcLbls}{- character vector with labels to use for
+  sources in plots}
+
+  \item{xTicks}{- ??}
+
+  \item{pal}{- name of color palette from which to create
+  colors for plot (if clrs=NULL)}
+
+  \item{clrs}{- colors to use for lot (NULL to use pal)}
+
+  \item{devtype}{- device type on which to plot}
+
+  \item{basename}{- base filename for saving plots (ignored
+  if devtype='win')}
+
+  \item{width}{- figure width (ignored if devtype='win';
+  pixels if devtype='png', inches if devtype='pdf')}
+
+  \item{height}{- figure height (ignored if devtype='win';
+  pixels if devtype='png', inches if devtype='pdf')}
+}
+\description{
+Function to produce plots based on time series of the total
+fraction recruiting by source.
+}
+\details{
+
+}
+
