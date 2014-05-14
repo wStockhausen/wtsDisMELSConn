@@ -29,7 +29,7 @@
 #' @import graphics
 #' @importFrom wtsUtilities computeStats
 #'
-plot.FractionRecruitingBySource<-function(prbRS,
+plotFractionRecruitingBySource<-function(prbRS,
                                           srcLbls=NULL,
                                           xTicks=NULL,
                                           pal=c('Spectral','BrBG','PiYG','PRGn','PuOr', 'RdBu', 'RdGy', 'RdYlBu', 'RdYlGn'),

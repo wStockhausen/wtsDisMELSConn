@@ -1,11 +1,11 @@
-\name{plot.FractionRecruitingBySource}
-\alias{plot.FractionRecruitingBySource}
+\name{plotFractionRecruitingBySource}
+\alias{plotFractionRecruitingBySource}
 \title{Produce plots based on the time series of the total fraction recruiting by source
       from doAnalysis.FractionRecruitingBySource(...)}
 \usage{
-\method{plot}{FractionRecruitingBySource}(prbRS, srcLbls = NULL,
-  xTicks = NULL, pal = c("Spectral", "BrBG", "PiYG", "PRGn", "PuOr", "RdBu",
-  "RdGy", "RdYlBu", "RdYlGn"), clrs = NULL, devtype = "win",
+plotFractionRecruitingBySource(prbRS, srcLbls = NULL, xTicks = NULL,
+  pal = c("Spectral", "BrBG", "PiYG", "PRGn", "PuOr", "RdBu", "RdGy",
+  "RdYlBu", "RdYlGn"), clrs = NULL, devtype = "win",
   basename = "FractionRecruitingBySource", width = 935, height = 571)
 }
 \arguments{

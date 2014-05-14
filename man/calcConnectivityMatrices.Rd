@@ -67,8 +67,8 @@ should be of the form "ConnYYYYMMDD.csv", where "Conn" is
 arbitrary (but onsiistent among results files) and YYYY
 indicates the year (if applicable), MM the month (if
 applicable), and DD the day (if applicable) for a
-particular model run. If YYYY, MM, or DD is \ital{not} part
-of the file name, use "" as the function input for the
+particular model run. If YYYY, MM, or DD is **not** part of
+the file name, use "" as the function input for the
 corresponding years, months, or days.
 }
 
