@@ -10,10 +10,7 @@ Description: Provides a set of functions for calculating and analyzing
     connectivity matrices based on DisMELS model output
 License: GPL-2
 Imports:
-<<<<<<< HEAD
     graphics,
     RColorBrewer,
-=======
->>>>>>> 37ee022a82788dd6556100e5bc554480b4a33f0c
     sqldf,
     wtsUtilities
