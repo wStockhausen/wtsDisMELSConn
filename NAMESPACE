@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 export(plot.FractionRecruitingBySource)
 export(calcAvgConnectivityMatrix)
 export(calcConnectivityMatrices)
@@ -10,4 +11,14 @@ import(graphics)
 import(sqldf)
 importFrom(wtsPlotUtils,createColorScale)
 importFrom(wtsUtilities,computeStats)
+=======
+export(calcAvgConnectivityMatrix)
+export(calcConnectivityMatrices)
+export(calcConnectivityMatrix)
+export(plotConnectivityMatrices)
+export(plotConnectivityMatrix)
+import(graphics)
+import(sqldf)
+importFrom(wtsPlotUtils,createColorScale)
+>>>>>>> 37ee022a82788dd6556100e5bc554480b4a33f0c
 importFrom(wtsUtilities,getCSV)
