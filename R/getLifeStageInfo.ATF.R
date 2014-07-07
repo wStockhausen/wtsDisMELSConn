@@ -1,7 +1,7 @@
 #'
 #'@title Get a list that defines life stage info for the DisMELS arrowtooth flounder IBM.
 #'#
-#'#export
+#'@export
 #'
 getLifeStageInfo.ATF<-function(){
     #java class names

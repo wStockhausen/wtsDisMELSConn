@@ -1,7 +1,7 @@
 #'
 #'@title Get a list that defines life stage info for the DisMELS POP IBM.
 #'#
-#'#export
+#'@export
 #'
 getLifeStageInfo.POP<-function(){
     #java class names
