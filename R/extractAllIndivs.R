@@ -1,10 +1,8 @@
 #'
-#'@title Function to extract tracks of successful individuals from a DisMELS model run.
+#'@title Function to extract tracks of all individuals from a DisMELS model run.
 #'
-#'@param indivConn = individual connectivity file (or dataframe)
 #'@param results = DisMELS results file (or dataframe)
 #'@param newResType - flag (T/F) indicating whether (T) or not (F) results are from a "new"-type IBM
-#'@param nurseryZones - vector of names of zones used as nursery areas in the IBM
 #'@param lhsTypeInfo = life stage info list for IBM
 #'@param stdVars = vector of standard model variables
 #'@param outDir = folder for output
@@ -15,27 +13,13 @@
 #'
 #'@export
 #'
-extractSuccessfulIndivs<-function(indivConn=NULL,  #individual connectivity file (or dataframe)
-                                  results=NULL,    #DisMELS results file (or dataframe)
-                                  newResType=FALSE,
-                                  nurseryZones=c("NurseryArea_000to050m","NurseryArea_050to150m"), #nursery area name(s)
-                                  lhsTypeInfo=NULL,    
-                                  outDir='./',
-                                  outBaseCSV="successfulIndivs"
-                                  ){
+extractAllIndivs<-function(results=NULL,    #DisMELS results file (or dataframe)
+                           newResType=FALSE,
+                           lhsTypeInfo=NULL,    
+                           outDir='./',
+                           outBaseCSV="AllIndivs"
+                           ){
 
-    retIndivConn<-FALSE;
-    if (!is.data.frame(indivConn)){
-        #read in individual connectivity results from csv file
-        if (is.null(indivConn)){
-            indivConn<-wtsUtilities::getCSV(caption='Select individual connectivity results file');
-            if (is.null(indivConn)) return(NULL);#user aborted
-        } else {
-            indivConn<-read.csv(indivConn,stringsAsFactors=FALSE);
-        }
-        retIndivConn<-TRUE;
-    }
-    
     retRes<-FALSE;
     if (!is.data.frame(results)){
         #read in full results of DisMELS model run from csv file
@@ -66,36 +50,18 @@ extractSuccessfulIndivs<-function(indivConn=NULL,  #individual connectivity file
                   'time','horizPos1','horizPos2','vertPos','track',
                   'alive','age','ageInStage','number');
     
-    #pull out IDs for successful indviduals from indivConn
+    #get life stage type names
     typeNames=names(lhsTypeInfo$lifeStageTypes);
     lastLHS<-typeNames[length(typeNames)];
-    nurseryZones<-as.data.frame(list(zone=nurseryZones));
-    qry<-"select
-            ID
-          from
-            indivConn i,
-            nurseryZones z
-          where
-            i.end_depthzone=z.zone and 
-            i.end_typeName='&&lastLHS'
-          order by
-            ID;";
-    qry<-gsub("&&lastLHS",lastLHS,qry);   
-    cat(qry,'\n');
-    indivIDs<-sqldf(qry);
     
-    #extract successful indivs from results
-    resVars<-paste('r',names(results),sep='.',collapse=',');
+    #extract indivs from results
+    resVars<-paste(names(results),sep='',collapse=',');
     qry<-"select
             &&resVars
           from
-            results r,
-            indivIDs i
-          where
-            r.id=i.ID
+            results r          
           order by
-            r.id;";
-    qry<-gsub("&&resVars",resVars,qry); 
+            id,age;";
     cat("query = ",qry,sep='\n');
     indivs<-sqldf(qry);    
     
@@ -150,7 +116,7 @@ extractSuccessfulIndivs<-function(indivConn=NULL,  #individual connectivity file
     return(invisible(indivsLst));
 }
 
-# indivConn<-extractSuccessfulIndivs();
-# results<-extractSuccessfulIndivs(indivConn);
-# successfulIndivs<-extractSuccessfulIndivs(newResType=TRUE,lhsTypeInfo=getLifeStageInfo.ATF());
-# successfulIndivs<-extractSuccessfulIndivs(newResType=FALSE,lhsTypeInfo=getLifeStageInfo.POP());
+# indivConn<-extractAllIndivs();
+# results<-extractAllIndivs(indivConn);
+# successfulIndivs<-extractAllIndivs(newResType=TRUE,lhsTypeInfo=getLifeStageInfo.ATF());
+# successfulIndivs<-extractAllIndivs(newResType=FALSE,lhsTypeInfo=getLifeStageInfo.POP());
