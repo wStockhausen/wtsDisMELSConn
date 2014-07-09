@@ -3,10 +3,8 @@
 #'
 #'@description Function to calculate a connectivity matrix based on one DisMELS model run.
 #'
-#' @param connResFile - name of classified grid cells file (can be NULL)
-#' @param cellsFile - name of classified grid cells file (can be NULL)
-#' @param ibmResTbl - dataframe based on DisMELS ConnectivityResults file (can be NULL)
-#' @param cellsTbl - dataframe based on classified grid cells file (can be NULL)
+#' @param ibmResTbl - name of DisMELS connectivity results file or resulting dataframe (can be NULL)
+#' @param cellsTbl - name of classified grid cells file or resulting dataframe (can be NULL)
 #' @param lifeStages - vector of names of life stages in the IBM
 #' @param spawningZones - vector of names of zones used as spawning areas in the IBM
 #' @param nurseryZones - vector of names of zones used as nursery areas in the IBM
@@ -15,12 +13,10 @@
 #' @param outIndivs - csv filename for individual start and end locations
 #' 
 #' @details 
-#' If the ibmResTbl dataframe is NULL, the connResFile is read to create the equivalent
-#' ibmResTbl (if the connResFile is NULL also, the user can select the file using a 
+#' If the ibmResTbl dataframe is NULL, the user can select the file using a 
 #' file dialog box).\cr \cr
 #' 
-#' If the cellsTbl dataframe is NULL, the cellsFile is read to create the equivalent
-#' cellsTbl (if the cellsFile is NULL also, the user can select the file using a 
+#' If the cellsTbl dataframe is NULL, the user can select the file using a 
 #' file dialog box).\cr \cr
 #' 
 #' If the writeCSVs flag is set, the two files specified by outConn and outIndivs are written before the function is exited.
@@ -39,10 +35,8 @@
 #*********************************************************
 #  Calculate connectivity matrix for one model run
 #**********************************************************/
-calcConnectivityMatrix<-function(connResFile=NULL,           # connectivity results file
-                                 cellsFile=NULL,             # filename for classified grid cells csv file
-                                 ibmResTbl=NULL,             # table based on connectivity results file
-                                 cellsTbl=NULL,              # table based on classified grid cells csv file
+calcConnectivityMatrix<-function(ibmResTbl=NULL,
+                                 cellsTbl=NULL, 
                                  lifeStages=NULL,            # vector of life stage names
                                  spawningZones=c("SpawningArea_300to600m"),                       #spawning area name(s)
                                  nurseryZones=c("NurseryArea_000to050m","NurseryArea_050to150m"), #nursery area name(s)
@@ -51,25 +45,25 @@ calcConnectivityMatrix<-function(connResFile=NULL,           # connectivity resu
                                  outIndivs="IndivStartEndPositions.csv"                     #output indivs csv file
                                  ){
   #create IBM connectivity results table (if not an input)
-  if (is.null(ibmResTbl)){
+  if (!is.data.frame(ibmResTbl)){
     cat("Reading connectivity results file.\n")
-    if (is.null(connResFile)) {
+    if (is.null(ibmResTbl)) {
         ibmResTbl<-wtsUtilities::getCSV(caption="Select DisMELS connectivity results file");
         if (is.null(ibmResTbl)) return(NULL);
     } else {
-        ibmResTbl<-read.csv(connResFile,stringsAsFactors=FALSE);
+        ibmResTbl<-read.csv(ibmResTbl,stringsAsFactors=FALSE);
     }  
     cat("Done reading connectivity results file.\n")
   }
   
   #create classified cells table (if not an input)
-  if (is.null(cellsTbl)){
+  if (!is.data.frame(cellsTbl)){
     cat("Reading cells file.\n")
-    if (is.null(cellsFile)) {
+    if (is.null(cellsTbl)) {
         cellsTbl<-wtsUtilities::getCSV(caption="Select classified grid cells (csv) file");
         if (is.null(cellsTbl)) return(NULL);
     } else {
-        cellsTbl<-read.csv(cellsFile,stringsAsFactors=FALSE);
+        cellsTbl<-read.csv(cellsTbl,stringsAsFactors=FALSE);
     }
     cat("Done reading cells file.\n")
   }
@@ -311,6 +305,8 @@ calcConnectivityMatrix<-function(connResFile=NULL,           # connectivity resu
                           s.lat as startLat,
                           e.lon as endLon,
                           e.lat as endLat,
+                          s.gridCellID as startGridCell,
+                          e.gridCellID as endGridCell,
                           s.alongshorezone as start_alongshorezone,
                           s.depthzone as start_depthzone,
                           e.alongshorezone as end_alongshorezone,

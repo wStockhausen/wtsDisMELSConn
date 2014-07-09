@@ -6,8 +6,7 @@
 #'
 #' @param resDir - path to base directory for DisMELS results files
 #' @param connResBase - file name template for connectivity results files from DisMELS (e.g., "ConnYYYYMMDD.csv") 
-#' @param cellsTbl - dataframe based on classified grid cells file (can be NULL)
-#' @param cellsFile - name of classified grid cells file (can be NULL)
+#' @param cellsTbl - name of classified grid cells file or dataframe based on classified grid cells file (can be NULL)
 #' @param years - vector of years corresponding to model simulation names (YYYY)
 #' @param months - vector of months corresponding to model simulation names (MM)
 #' @param days - vector of days corresponding to model simulation names (DD)
@@ -15,12 +14,11 @@
 #' @param nurseryZones - vector of names of zones used as nursery areas in the IBM
 #' @param lifeStages - vector of names of life stages in the IBM
 #' 
-#' @details If the 'cellsTbl' dataframe is given, it will be used rather than the cellsFile.
-#' If cellsTbl is NULL, the cellsFile will be read. If cellsFile is also null, the user can select
+#' @details If the 'cellsTbl' is a filename,it will be read to create an associated dataframe. If cellsTbl is null, the user can select
 #' the classified grid cells file using a file dialog.\cr\cr
 #' 
 #' Connectivity results files from the DisMELS model runs should be of the form "ConnYYYYMMDD.csv",
-#' where "Conn" is arbitrary (but onsiistent among results files) and YYYY indicates the year (if applicable), MM the month (if applicable),
+#' where "Conn" is arbitrary (but consistent among results files) and YYYY indicates the year (if applicable), MM the month (if applicable),
 #' and DD the day (if applicable) for a particular model run. If YYYY, MM, or DD is **not** part of the file name, use "" as the 
 #' function input for the corresponding years, months, or days.
 #' 
@@ -38,8 +36,7 @@
 ################################################################################
 calcConnectivityMatrices<-function(resDir="C:\\Projects\\GOA_IERP\\IBM_Runs\\ATF\\FullSeries",
                                    connResBase="ConnYYYYMMDD.csv",
-                                   cellsTbl=NULL,
-                                   cellsFile=file.path(resDir,'ATF_ClassifiedCGOAGridCells.csv'),
+                                   cellsTbl=file.path(resDir,'ATF_ClassifiedCGOAGridCells.csv'),
                                    years=as.character(1996:2011),
                                    months=c("01"),
                                    days=c("01"),
@@ -50,12 +47,12 @@ calcConnectivityMatrices<-function(resDir="C:\\Projects\\GOA_IERP\\IBM_Runs\\ATF
                                                  "postflexion.larva","settlement.stage.larva","benthic.juvenile")){
                                    
   #read in classified cells table
-  if (is.null(cellsTbl)){
-      if (is.null(cellsFile)) {
+  if (!is.data.frame(cellsTbl)){
+      if (is.null(cellsTbl)) {
         cellsTbl = wtsUtilities::getCSV(caption="Select classified grid cells (csv) file");
         if (is.null(cellsTbl)) return(NULL);
       } else {
-        cellsTbl<-read.csv(cellsFile,stringsAsFactors=FALSE);
+        cellsTbl<-read.csv(cellsTbl,stringsAsFactors=FALSE);
       }
   }
   

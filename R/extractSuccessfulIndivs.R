@@ -68,21 +68,10 @@ extractSuccessfulIndivs<-function(indivConn=NULL,  #individual connectivity file
     
     #pull out IDs for successful indviduals from indivConn
     typeNames=names(lhsTypeInfo$lifeStageTypes);
-    lastLHS<-typeNames[length(typeNames)];
-    nurseryZones<-as.data.frame(list(zone=nurseryZones));
-    qry<-"select
-            ID
-          from
-            indivConn i,
-            nurseryZones z
-          where
-            i.end_depthzone=z.zone and 
-            i.end_typeName='&&lastLHS'
-          order by
-            ID;";
-    qry<-gsub("&&lastLHS",lastLHS,qry);   
-    cat(qry,'\n');
-    indivIDs<-sqldf(qry);
+    indivIDs<-extractIndivIDs(indivConn=indivConn,
+                              onlySuccessful=TRUE,
+                              nurseryZones=nurseryZones,
+                              lhsTypeInfo=lhsTypeInfo);
     
     #extract successful indivs from results
     resVars<-paste('r',names(results),sep='.',collapse=',');
