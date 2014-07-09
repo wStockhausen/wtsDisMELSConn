@@ -91,11 +91,19 @@ extractSuccessfulIndivs.MultipleRuns<-function(YYYYs=NULL,
     }
 }
 
-# extractSuccessfulIndivs.MultipleRuns(YYYYs=1996:2000,
+# extractSuccessfulIndivs.MultipleRuns(YYYYs=1996:2011,
 #                                      newResType=TRUE,
 #                                      lhsTypeInfo=getLifeStageInfo.ATF(),
-#                                      inpDir.IndivConn='/Volumes/Iomega HDD/cDrive.GOA_IERP/IBM_Runs/ATF/FullSeriesJanFeb/ConnectivityResults/IndivConns',
+#                                      inpDir.IndivConn='G:/cDrive.GOA_IERP/IBM_Runs/ATF/FullSeriesJanFeb/ConnectivityResults/IndivConns',
 #                                      basename.IndivConn='ATF.IndivConn',
-#                                      inpDir.Results='/Volumes/Iomega HDD/cDrive.GOA_IERP/IBM_Runs/ATF/FullSeriesJanFeb/CSVs.ModelResults',
+#                                      inpDir.Results='G:/cDrive.GOA_IERP/IBM_Runs/ATF/FullSeriesJanFeb/CSVs.ModelResults',
 #                                      basename.Results='Results',
-#                                      outDir='./');
+#                                      outDir='G:/cDrive.GOA_IERP/IBM_Runs/ATF/FullSeriesJanFeb/CSVs.SuccessfulIndivs');
+# extractSuccessfulIndivs.MultipleRuns(YYYYs=1996:2011,
+#                                      newResType=FALSE,
+#                                      lhsTypeInfo=getLifeStageInfo.POP(),
+#                                      inpDir.IndivConn='G:/cDrive.GOA_IERP/IBM_Runs/POP/FullSeriesAprMayJun/ConnectivityAnalysis/IndivConns',
+#                                      basename.IndivConn='POP.IndivConn',
+#                                      inpDir.Results='G:/cDrive.GOA_IERP/IBM_Runs/POP/FullSeriesAprMayJun/CSVs.ModelResults',
+#                                      basename.Results='Results',
+#                                      outDir='G:/cDrive.GOA_IERP/IBM_Runs/POP/FullSeriesAprMayJun/CSVs.SuccessfulIndivs');
