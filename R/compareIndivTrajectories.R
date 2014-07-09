@@ -1,3 +1,10 @@
+#'
+#'@title Compare individual trajectories
+#'
+#'@importFrom wtsUtilities getCSV
+#'
+#'@export
+#'
 compareIndivTrajectories<-function(dfr=NULL,
                                    indivConn=NULL,
                                    var=NULL,
@@ -5,7 +12,7 @@ compareIndivTrajectories<-function(dfr=NULL,
                                    nurseryAlongshoreZones=1:13,
                                    nurseryDepthZones=c("NurseryArea_000to050m","NurseryArea_050to150m"), 
                                    spawningAlongshoreZones=1:12,
-                                   spawningDepthZones=c("SpawningArea_300to600m"),
+                                   spawningDepthZones=c("SpawningArea_300to600m")
                                    ){
     if (!is.data.frame(dfr)){
         #read in extracted individuals csv file

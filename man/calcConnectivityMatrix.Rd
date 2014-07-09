@@ -2,26 +2,19 @@
 \alias{calcConnectivityMatrix}
 \title{Calculate a connectivity matrix for one DisMELS model run.}
 \usage{
-calcConnectivityMatrix(connResFile = NULL, cellsFile = NULL,
-  ibmResTbl = NULL, cellsTbl = NULL, lifeStages = NULL,
-  spawningZones = c("SpawningArea_300to600m"),
+calcConnectivityMatrix(ibmResTbl = NULL, cellsTbl = NULL,
+  lifeStages = NULL, spawningZones = c("SpawningArea_300to600m"),
   nurseryZones = c("NurseryArea_000to050m", "NurseryArea_050to150m"),
   writeCSVs = TRUE,
   outConn = "ConnectivityToNurseryAreasFromSpawningAreas.csv",
   outIndivs = "IndivStartEndPositions.csv")
 }
 \arguments{
-  \item{connResFile}{- name of classified grid cells file
-  (can be NULL)}
+  \item{ibmResTbl}{- name of DisMELS connectivity results
+  file or resulting dataframe (can be NULL)}
 
-  \item{cellsFile}{- name of classified grid cells file
-  (can be NULL)}
-
-  \item{ibmResTbl}{- dataframe based on DisMELS
-  ConnectivityResults file (can be NULL)}
-
-  \item{cellsTbl}{- dataframe based on classified grid
-  cells file (can be NULL)}
+  \item{cellsTbl}{- name of classified grid cells file or
+  resulting dataframe (can be NULL)}
 
   \item{lifeStages}{- vector of names of life stages in the
   IBM}
@@ -54,15 +47,11 @@ DisMELS model run.
 \details{
 
 
-If the ibmResTbl dataframe is NULL, the connResFile is read
-to create the equivalent ibmResTbl (if the connResFile is
-NULL also, the user can select the file using a file dialog
-box).\cr \cr
+If the ibmResTbl dataframe is NULL, the user can select the
+file using a file dialog box).\cr \cr
 
-If the cellsTbl dataframe is NULL, the cellsFile is read to
-create the equivalent cellsTbl (if the cellsFile is NULL
-also, the user can select the file using a file dialog
-box).\cr \cr
+If the cellsTbl dataframe is NULL, the user can select the
+file using a file dialog box).\cr \cr
 
 If the writeCSVs flag is set, the two files specified by
 outConn and outIndivs are written before the function is

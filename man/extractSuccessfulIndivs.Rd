@@ -21,6 +21,8 @@ extractSuccessfulIndivs(indivConn = NULL, results = NULL,
 
   \item{lhsTypeInfo}{= life stage info list for IBM}
 
+  \item{stdVars}{= vector of standard model variables}
+
   \item{outDir}{= folder for output}
 
   \item{outBaseCSV}{= base name for output csv file}

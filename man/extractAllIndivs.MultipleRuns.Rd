@@ -1,0 +1,40 @@
+\name{extractAllIndivs.MultipleRuns}
+\alias{extractAllIndivs.MultipleRuns}
+\title{Extracts and re-orders a series of DisMELS model results files for all individuals.}
+\usage{
+extractAllIndivs.MultipleRuns(YYYYs = NULL, MMs = NULL, DDs = NULL,
+  newResType = FALSE, lhsTypeInfo = NULL, inpDir.Results = NULL,
+  basename.Results = "Results", outDir = NULL, basename.Out = "AllIndivs")
+}
+\arguments{
+  \item{YYYYs}{= years to extract (can be NULL)}
+
+  \item{MMs}{= months to extract (can be NULL)}
+
+  \item{DDs}{= days to extract (can be NULL)}
+
+  \item{newResType}{- flag (T/F) indicating whether (T) or
+  not (F) results are from a "new"-type IBM}
+
+  \item{inpDir.Results}{= folder with input DisMELS model
+  results files}
+
+  \item{basename.Resuls}{= base name for DisMELS model
+  results files}
+
+  \item{outDir}{= output folder}
+
+  \item{basename.Out}{= base name for output files}
+}
+\description{
+Function to extracts and re-orders a series of DisMELS
+model results for all individuals.
+}
+\details{
+
+
+This function assumes files are named something like
+'basenameYYYYMMDD.csv'. Note that at least one of YYYYs,
+MMs, and DDs must be a non-null vector.
+}
+
