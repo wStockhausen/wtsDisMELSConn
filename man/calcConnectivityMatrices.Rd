@@ -4,9 +4,9 @@
 \usage{
 
   calcConnectivityMatrices(resDir = "C:\\\\Projects\\\\GOA_IERP\\\\IBM_Runs\\\\ATF\\\\FullSeries",
-  connResBase = "ConnYYYYMMDD.csv", cellsTbl = NULL,
-  cellsFile = file.path(resDir, "ATF_ClassifiedCGOAGridCells.csv"),
-  years = as.character(1996:2011), months = c("01"), days = c("01"),
+  connResBase = "ConnYYYYMMDD.csv", cellsTbl = file.path(resDir,
+  "ATF_ClassifiedCGOAGridCells.csv"), years = as.character(1996:2011),
+  months = c("01"), days = c("01"),
   spawningZones = c("SpawningArea_300to600m"),
   nurseryZones = c("NurseryArea_000to050m", "NurseryArea_050to150m"),
   lifeStages = c("egg01", "small.yolk.sac.larva", "large.yolk.sac.larva",
@@ -20,11 +20,9 @@
   \item{connResBase}{- file name template for connectivity
   results files from DisMELS (e.g., "ConnYYYYMMDD.csv")}
 
-  \item{cellsTbl}{- dataframe based on classified grid
-  cells file (can be NULL)}
-
-  \item{cellsFile}{- name of classified grid cells file
-  (can be NULL)}
+  \item{cellsTbl}{- name of classified grid cells file or
+  dataframe based on classified grid cells file (can be
+  NULL)}
 
   \item{years}{- vector of years corresponding to model
   simulation names (YYYY)}
@@ -56,15 +54,14 @@ corresponding to a set of DisMELS model runs.
 \details{
 
 
-If the 'cellsTbl' dataframe is given, it will be used
-rather than the cellsFile. If cellsTbl is NULL, the
-cellsFile will be read. If cellsFile is also null, the user
-can select the classified grid cells file using a file
+If the 'cellsTbl' is a filename,it will be read to create
+an associated dataframe. If cellsTbl is null, the user can
+select the classified grid cells file using a file
 dialog.\cr\cr
 
 Connectivity results files from the DisMELS model runs
 should be of the form "ConnYYYYMMDD.csv", where "Conn" is
-arbitrary (but onsiistent among results files) and YYYY
+arbitrary (but consistent among results files) and YYYY
 indicates the year (if applicable), MM the month (if
 applicable), and DD the day (if applicable) for a
 particular model run. If YYYY, MM, or DD is **not** part of

@@ -64,4 +64,4 @@ extractIndivIDs<-function(indivConn=NULL,  #individual connectivity file (or dat
     return(invisible(indivIDs));
 }
 
-dfr<-extractIndivIDs(onlySuccessful=TRUE,lhsTypeInfo=getLifeStageInfo.ATF())
+#dfr<-extractIndivIDs(onlySuccessful=TRUE,lhsTypeInfo=getLifeStageInfo.ATF())

@@ -20,7 +20,7 @@
 #'@param devtype - 'win' or 'png'
 #'
 #'@import graphics
-#'@importFrom wtsPlotUtils createColorScale
+#'@importFrom wtsUtilities createColorScale
 #'
 #source("../Plots/createColorScale.R",chdir=TRUE);
 #----------------------------------------------------------
@@ -62,7 +62,7 @@ plotConnectivityMatrix.matrix<-function(prbMat,
   
   cat("zmin = ",zmin,"\n")
   cat("zmax = ",zmax,"\n")
-  colorScale<-wtsPlotUtils::createColorScale(name=colorscale[1]);
+  colorScale<-wtsUtilities::createColorScale(name=colorscale[1]);
   pal<-colorScale((1:ncolors)/ncolors)
 #  image(1:ncol,1:nrow,t(prbMat),col=rev(heat.colors(ncolors)),
   image(1:ncol,1:nrow,t(prbMat),col=pal,

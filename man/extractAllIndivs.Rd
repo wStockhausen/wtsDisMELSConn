@@ -1,0 +1,25 @@
+\name{extractAllIndivs}
+\alias{extractAllIndivs}
+\title{Function to extract tracks of all individuals from a DisMELS model run.}
+\usage{
+extractAllIndivs(results = NULL, newResType = FALSE, lhsTypeInfo = NULL,
+  outDir = "./", outBaseCSV = "AllIndivs")
+}
+\arguments{
+  \item{results}{= DisMELS results file (or dataframe)}
+
+  \item{newResType}{- flag (T/F) indicating whether (T) or
+  not (F) results are from a "new"-type IBM}
+
+  \item{lhsTypeInfo}{= life stage info list for IBM}
+
+  \item{stdVars}{= vector of standard model variables}
+
+  \item{outDir}{= folder for output}
+
+  \item{outBaseCSV}{= base name for output csv file}
+}
+\description{
+
+}
+
