@@ -1,6 +1,7 @@
 export(calcAvgConnectivityMatrix)
 export(calcConnectivityMatrices)
 export(calcConnectivityMatrix)
+export(compareIndivTrajectories)
 export(doAnalysis.FractionRecruitingBySource)
 export(extractAllIndivs)
 export(extractAllIndivs.MultipleRuns)
