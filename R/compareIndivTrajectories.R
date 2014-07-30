@@ -1,13 +1,9 @@
 #'
-<<<<<<< HEAD
-#'@title UNFINISHED FUNCTION!!
-=======
 #'@title Compare individual trajectories
 #'
 #'@importFrom wtsUtilities getCSV
 #'
 #'@export
->>>>>>> 62a74cf16a4686e604456070f29fe0f6b451d39d
 #'
 compareIndivTrajectories<-function(dfr=NULL,
                                    indivConn=NULL,
@@ -17,12 +13,8 @@ compareIndivTrajectories<-function(dfr=NULL,
                                    nurseryAlongshoreZones=1:13,
                                    nurseryDepthZones=c("NurseryArea_000to050m","NurseryArea_050to150m"), 
                                    spawningAlongshoreZones=1:12,
-<<<<<<< HEAD
-                                   spawningDepthZones=c("SpawningArea_300to600m")){
-=======
                                    spawningDepthZones=c("SpawningArea_300to600m")
                                    ){
->>>>>>> 62a74cf16a4686e604456070f29fe0f6b451d39d
     if (!is.data.frame(dfr)){
         #read in extracted individuals csv file
         if (is.null(dfr)){
