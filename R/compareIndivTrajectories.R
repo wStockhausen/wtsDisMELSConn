@@ -3,6 +3,9 @@
 #'
 #'@importFrom wtsUtilities getCSV
 #'
+#'@importFrom sqldf sqldf
+#'@importFrom wtsUtilities getCSV
+#' 
 #'@export
 #'
 compareIndivTrajectories<-function(dfr=NULL,
@@ -51,7 +54,7 @@ compareIndivTrajectories<-function(dfr=NULL,
             i.id=d.id;";
     qry<-gsub("&&var",var,qry);
     cat(qry,"\n");
-    indivsDFR<-sqldf(qry);
+    indivsDFR<-sqldf::sqldf(qry);
     
     #extract time series of var for each indiv by zones
     qry<-"select
@@ -92,7 +95,7 @@ compareIndivTrajectories<-function(dfr=NULL,
     qry<-gsub("&&end_depthzones",paste(nurseryDepthZones,collapse="','"),qry);
     qry<-gsub("&&end_alongshorezones",paste(nurseryAlongshoreZones,collapse=","),qry);
     cat(qry,"\n");
-    dfr1<-sqldf(qry);
+    dfr1<-sqldf::sqldf(qry);
     xrng1<-range(dfr1$age,na.rm=TRUE,finite=TRUE);
     yrng1<-range(dfr1[[var]],na.rm=TRUE,finite=TRUE);
     

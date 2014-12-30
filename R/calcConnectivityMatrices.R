@@ -26,9 +26,9 @@
 #' allRes - list of connectivity matrix results\cr
 #' zmax   - max connectivity value (useful for scaling plots)
 #' 
-#' @export
-#' 
 #' @importFrom wtsUtilities getCSV
+#' 
+#' @export
 #'
 #source("calcConnectivityMatrix.R",chdir=TRUE);
 ################################################################################

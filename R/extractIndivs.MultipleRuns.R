@@ -1,19 +1,26 @@
 #'
-#'@title Extracts and re-orders a series of DisMELS model results files for only successful individuals.
+#'@title Extracts and re-orders a series of DisMELS model results files by individual.
 #'
-#'@description Function to xtracts and re-orders a series of DisMELS model results for only successful individuals.
+#'@description Function to extract and re-order a series of DisMELS model results by individual.
 #'
-#'@param YYYYs = years to extract (can be NULL)
-#'@param MMs = months to extract (can be NULL)
-#'@param DDs = days to extract (can be NULL)
+#'@param YYYYs - years to extract (can be NULL)
+#'@param MMs - months to extract (can be NULL)
+#'@param DDs - days to extract (can be NULL)
+#'@param lhsTypeInfo - life stage info list for IBM
+#'@param lhsTypes - lhs types to keep for output (NULL = all)
 #'@param newResType - flag (T/F) indicating whether (T) or not (F) results are from a "new"-type IBM
-#'@param nurseryZones = vector of nursery area names
-#'@param inpDir.IndivConn = folder with input individual connectivity matrix files
-#'@param basename.IndivConn = base name for individual connectivity matrix files
-#'@param inpDir.Results = folder with input DisMELS model results files
-#'@param basename.Resuls = base name for DisMELS model results files
-#'@param outDir = output folder
-#'@param basename.Out = base name for output files
+#'@param onlySuccessful   - flag (T/F) to extract only successful indivs (if TRUE)
+#'@param onlyUnsuccessful - flag (T/F) to extract only unsuccessful indivs (if TRUE)
+#'@param nurseryZones - vector of nursery area names
+#'@param inpDir.IndivConn - folder with input individual connectivity matrix files
+#'@param basename.IndivConn - base name for individual connectivity matrix files
+#'@param inpDir.Results - folder with input DisMELS model results files
+#'@param basename.Resuls - base name for DisMELS model results files
+#'@param writeOutput - flag (T/F) indicating whether output files should be written
+#'@param outDir - output folder
+#'@param basename.Out - base name for output files
+#'
+#'@return no return value
 #'
 #'@details
 #'This function assumes files are named something like 'basenameYYYYMMDD.csv'. 
@@ -23,18 +30,23 @@
 #'
 #'@export
 #'
-extractSuccessfulIndivs.MultipleRuns<-function(YYYYs=NULL,
-                                               MMs=NULL,
-                                               DDs=NULL,
-                                               newResType=FALSE,
-                                               nurseryZones=c("NurseryArea_000to050m","NurseryArea_050to150m"), #nursery area name(s)
-                                               lhsTypeInfo=NULL,    
-                                               inpDir.IndivConn=NULL,
-                                               basename.IndivConn="IndivConn",
-                                               inpDir.Results=NULL,
-                                               basename.Results="Results",
-                                               outDir=NULL,
-                                               basename.Out="SuccessfulIndivs"){
+extractIndivs.MultipleRuns<-function(YYYYs=NULL,
+                                       MMs=NULL,
+                                       DDs=NULL,
+                                       lhsTypeInfo=NULL,    
+                                       lhsTypes=NULL,
+                                       newResType=FALSE,
+                                       onlySucccessful=TRUE,
+                                       onlyUnsucccessful=FALSE,
+                                       nurseryZones=c("NurseryArea_000to050m","NurseryArea_050to150m"), #nursery area name(s)
+                                       inpDir.IndivConn=NULL,
+                                       basename.IndivConn="IndivConn",
+                                       inpDir.Results=NULL,
+                                       basename.Results="Results",
+                                       returnList=TRUE,
+                                       writeOutput=TRUE,
+                                       outDir=NULL,
+                                       basename.Out="SuccessfulIndivs"){
     if (is.null(inpDir.IndivConn)){
         inpDir.IndivConn<-tcltk::tk_choose.dir(caption='Select input directory for csv files with Individual Connectivity matrices.')
     }
@@ -73,13 +85,19 @@ extractSuccessfulIndivs.MultipleRuns<-function(YYYYs=NULL,
                     results<-file.path(inpDir.Results,paste(basename.Results,id,'.csv',sep=''))
                     if (file.exists(results)){
                         outBaseCSV<-paste(basename.Out,id,sep='');
-                        extractSuccessfulIndivs(indivConn=indivConn,
-                                                results=results,
-                                                newResType=newResType,
-                                                nurseryZones=nurseryZones,
-                                                lhsTypeInfo=lhsTypeInfo,
-                                                outDir=outDir,
-                                                outBaseCSV=outBaseCSV);
+                        extractIndivs(indivConn=indivConn,
+                                      results=results,
+                                      lhsTypeInfo=lhsTypeInfo,
+                                      lhsTypes=lhsTypes,
+                                      keepLHSTypes=keepLHSTypes,
+                                      newResType=newResType,
+                                      onlySuccessful=onlySuccessful,
+                                      onlyUnsuccessful=onlyUnsuccessful,
+                                      nurseryZones=nurseryZones,
+                                      returnList=FALSE,
+                                      writeOutput=writeOutput,
+                                      outDir=outDir,
+                                      outBaseCSV=outBaseCSV);
                     } else {
                         cat("could not process '",results,"'. File does not exist.\n",sep='')
                     }
@@ -91,7 +109,7 @@ extractSuccessfulIndivs.MultipleRuns<-function(YYYYs=NULL,
     }
 }
 
-# extractSuccessfulIndivs.MultipleRuns(YYYYs=1996:2011,
+# extractIndivs.MultipleRuns(YYYYs=1996:2011,
 #                                      newResType=TRUE,
 #                                      lhsTypeInfo=getLifeStageInfo.ATF(),
 #                                      inpDir.IndivConn='G:/cDrive.GOA_IERP/IBM_Runs/ATF/FullSeriesJanFeb/ConnectivityResults/IndivConns',
@@ -99,7 +117,7 @@ extractSuccessfulIndivs.MultipleRuns<-function(YYYYs=NULL,
 #                                      inpDir.Results='G:/cDrive.GOA_IERP/IBM_Runs/ATF/FullSeriesJanFeb/CSVs.ModelResults',
 #                                      basename.Results='Results',
 #                                      outDir='G:/cDrive.GOA_IERP/IBM_Runs/ATF/FullSeriesJanFeb/CSVs.SuccessfulIndivs');
-# extractSuccessfulIndivs.MultipleRuns(YYYYs=1996:2011,
+# extractIndivs.MultipleRuns(YYYYs=1996:2011,
 #                                      newResType=FALSE,
 #                                      lhsTypeInfo=getLifeStageInfo.POP(),
 #                                      inpDir.IndivConn='G:/cDrive.GOA_IERP/IBM_Runs/POP/FullSeriesAprMayJun/ConnectivityAnalysis/IndivConns',

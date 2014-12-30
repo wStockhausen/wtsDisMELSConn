@@ -5,29 +5,20 @@
 #'@description Function to produce plots based on time series of the total fraction recruiting by source.
 #'
 #' @param prbRS - results object from doAnalysis.FractionRecruitingBySource(...)
-#' 
 #' @param srcLbls - character vector with labels to use for sources in plots
-#' 
 #' @param xTicks - ??
-#' 
 #' @param pal - name of color palette from which to create colors for plot (if clrs=NULL)
-#' 
 #' @param clrs - colors to use for lot (NULL to use pal)
-#' 
 #' @param devtype - device type on which to plot
-#' 
 #' @param basename - base filename for saving plots (ignored if devtype='win')
-#' 
 #' @param width - figure width (ignored if devtype='win'; pixels if devtype='png', inches if devtype='pdf')
-#' 
 #' @param height - figure height (ignored if devtype='win'; pixels if devtype='png', inches if devtype='pdf')
-#' 
-#' 
-#' @export
 #' 
 #' @import RColorBrewer
 #' @import graphics
 #' @importFrom wtsUtilities computeStats
+#' 
+#' @export
 #'
 plotFractionRecruitingBySource<-function(prbRS,
                                           srcLbls=NULL,

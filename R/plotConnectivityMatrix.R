@@ -16,9 +16,10 @@
 #'@param plotsize - 2 element vector giving plot size in pixels (c(W,H))
 #'@param devtype - 'win' or 'png'
 #'
-#'@export
 #'@importFrom wtsUtilities getCSV
 #' 
+#'@export
+#'
 
 #source("../Plots/createColorScale.R",chdir=TRUE);
 #source("../Utilities/addFilter.R",chdir=TRUE)

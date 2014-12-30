@@ -3,18 +3,20 @@
 \alias{extractIndivIDs}
 \title{Function to extract unique IDs for individuals from a DisMELS model run.}
 \usage{
-extractIndivIDs(indivConn = NULL, onlySuccessful = FALSE,
-  nurseryZones = c("NurseryArea_000to050m", "NurseryArea_050to150m"),
-  lhsTypeInfo = NULL)
+extractIndivIDs(indivConn = NULL, lhsTypeInfo = NULL,
+  onlySuccessful = FALSE, onlyUnsuccessful = FALSE,
+  nurseryZones = c("NurseryArea_000to050m", "NurseryArea_050to150m"))
 }
 \arguments{
-\item{indivConn}{= individual connectivity file (or dataframe)}
+\item{indivConn}{- individual connectivity file (or dataframe)}
 
-\item{onlySuccessful}{= flag (T/F) to pull out only successful individuals}
+\item{lhsTypeInfo}{- life stage info list for IBM (req'd if onlySuccessful=TRUE or onlyUnsuccessful=TRUE)}
 
-\item{nurseryZones}{= vector of names of zones used as nursery areas in the IBM (req'd if onlySuccessful=TRUE)}
+\item{onlySuccessful}{- flag (T/F) to pull out only successful individuals}
 
-\item{lhsTypeInfo}{= life stage info list for IBM (req'd if onlySuccessful=TRUE)}
+\item{onlyUnsuccessful}{- flag (T/F) to pull out only unsuccessful individuals}
+
+\item{nurseryZones}{- vector of names of zones used as nursery areas in the IBM (req'd if onlySuccessful=TRUE)}
 }
 \value{
 data frame with single column (ID) of unique ids.
@@ -24,6 +26,10 @@ data frame with single column (ID) of unique ids.
 }
 \details{
 If onlySuccessful=TRUE, then it is assumed that 'successful' individuals are those which are in
-one of the nursery areas in the final life stage.
+one of the nursery areas in the final life stage.\cr
+\cr
+If onlyUnsuccessful=TRUE, then it is assumedthat 'unsuccessful' individuals are those which
+don't make it to the final life stage or are not in one of the nursery areas in the
+final life stage.
 }
 

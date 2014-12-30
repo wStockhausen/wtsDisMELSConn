@@ -7,11 +7,10 @@
 #' 
 #' @return matrix of fractions recruiting, with times as rows and sources as columns
 #' 
-#' 
+#'@importFrom sqldf sqldf
+#'
 #' @export
 #' 
-#' @import sqldf
-#'
 doAnalysis.FractionRecruitingBySource<-function(allRes){
     nObs<-length(allRes);                     #number of observations (times) for connectivity results
     dfr<-allRes[[1]]$prbSinkGivenSource;      #connectivity matrix for 1st time
@@ -34,7 +33,7 @@ doAnalysis.FractionRecruitingBySource<-function(allRes){
           order by src;';
     for (time in times){
         prbSGS<-allRes[[time]]$prbSinkGivenSource;
-        prbRS<-sqldf(qry);
+        prbRS<-sqldf::sqldf(qry);
         for (src in srcs){
             prbRec.Source[time,src]<-prbRS[prbRS$src==src,"frRec"];
         }
