@@ -7,15 +7,15 @@
 #'@param onlyUnsuccessful - flag (T/F) to pull out only unsuccessful individuals
 #'@param nurseryZones     - vector of names of zones used as nursery areas in the IBM (req'd if onlySuccessful=TRUE)
 #'
-#'@return data frame with single column (ID) of unique ids.
+#'@return data frame with columns 
+#'ID, start_typeName,start_depthzone,start_alongshorezone,end_typeName,end_depthzone,end_alongshorezone
 #'
 #'@details
 #'If onlySuccessful=TRUE, then it is assumed that 'successful' individuals are those which are in
 #'one of the nursery areas in the final life stage.\cr
 #'\cr
-#'If onlyUnsuccessful=TRUE, then it is assumedthat 'unsuccessful' individuals are those which 
-#'don't make it to the final life stage or are not in one of the nursery areas in the 
-#'final life stage.
+#'If onlyUnsuccessful=TRUE, then it is assumed that 'unsuccessful' individuals are those which 
+#'don't make it to the final life stage.
 #'
 #'@importFrom sqldf sqldf
 #'@importFrom wtsUtilities getCSV
@@ -40,37 +40,73 @@ extractIndivIDs<-function(indivConn=NULL,
         retIndivConn<-TRUE;
     }
     
+    cat('----running extractIndivIDs(...)----\n')
     
     #pull out distinct IDs 
     if (!onlySuccessful&!onlyUnsuccessful) {
+        cat('--Selecting all individuals\n')
         qry<-"select distinct
-                ID
+                ID,
+                start_typeName,
+                start_depthzone,
+                start_alongshorezone,
+                end_typeName,
+                end_depthzone,
+                end_alongshorezone
               from
                 indivConn i              
               order by
                 ID;";
     } else {
-        if (onlySuccessful)   {eq <- '=';}
-        if (onlyUnsuccessful) {eq <- '!=';}
         typeNames=names(lhsTypeInfo$lifeStageTypes);
         lastLHS<-typeNames[length(typeNames)];
         nurseryZones<-as.data.frame(list(zone=nurseryZones));
-        qry<-"select
-                ID
-              from
-                indivConn i,
-                nurseryZones z
-              where
-                i.end_depthzone = z.zone and 
-                i.end_typeName &&eq '&&lastLHS'
-              order by
-                ID;";
-        qry<-gsub("&&eq",eq,qry);   
-        qry<-gsub("&&lastLHS",lastLHS,qry);   
+        if (onlySuccessful){
+            #successful indivs are in nursery zones in last stage
+            cat('--Selecting only successful individuals\n')
+            qry<-"select
+                    ID,
+                    start_typeName,
+                    start_depthzone,
+                    start_alongshorezone,
+                    end_typeName,
+                    end_depthzone,
+                    end_alongshorezone
+                  from
+                    indivConn i,
+                    nurseryZones z
+                  where
+                    i.end_depthzone = z.zone and 
+                    i.end_typeName = '&&lastLHS'
+                  order by
+                    ID;";
+            qry<-gsub("&&lastLHS",lastLHS,qry);   
+        } else {
+            #unsuccessful indivs don't reach the last stage
+            cat('--Selecting only unsuccessful individuals\n')
+            qry<-"select distinct
+                    ID,
+                    start_typeName,
+                    start_depthzone,
+                    start_alongshorezone,
+                    end_typeName,
+                    end_depthzone,
+                    end_alongshorezone
+                  from
+                    indivConn i
+                  where
+                    i.end_typeName != '&&lastLHS'
+                  order by
+                    ID;";
+            qry<-gsub("&&lastLHS",lastLHS,qry);   
+        }
     }
     cat(qry,'\n');
     indivIDs<-sqldf::sqldf(qry);
+    cat('----finished running extractIndivIDs(...)----\n')
     return(invisible(indivIDs));
 }
 
-#dfr<-extractIndivIDs(onlySuccessful=TRUE,lhsTypeInfo=getLifeStageInfo.ATF())
+#dfr.suc<-extractIndivIDs(indivConn,onlySuccessful=TRUE,lhsTypeInfo=getLifeStageInfo.ATF())
+#dfr.uns<-extractIndivIDs(indivConn,onlyUnsuccessful=TRUE,lhsTypeInfo=getLifeStageInfo.ATF())
+#dfr.all<-extractIndivIDs(indivConn,lhsTypeInfo=getLifeStageInfo.ATF())

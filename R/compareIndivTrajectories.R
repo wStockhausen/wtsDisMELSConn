@@ -1,10 +1,19 @@
 #'
 #'@title Compare individual trajectories
 #'
-#'@importFrom wtsUtilities getCSV
+#'@param dfr - dataframe or filename (or NULL) from call to extractIndivs(...) (?)
+#'@param indivConn        - individual connectivity file (or dataframe)
+#'@param lhsTypeInfo      - life stage info list for IBM (req'd if onlySuccessful=TRUE or onlyUnsuccessful=TRUE)
+#'@param onlySuccessful   - flag (T/F) to pull out only successful individuals
+#'@param onlyUnsuccessful - flag (T/F) to pull out only unsuccessful individuals
+#'@param nurseryAlongshoreZones  - alongshore id's for nursery zones to include
+#'@param nurseryDepthZones       - vector of names of depth zones used as nursery areas in the IBM (req'd if onlySuccessful=TRUE)
+#'@param spawningAlongshoreZones - alongshore id's for nursery zones to include
+#'@param spawningDepthZones      - vector of names of zones used as spawning areas in the IBM (req'd if onlySuccessful=TRUE)
 #'
 #'@importFrom sqldf sqldf
 #'@importFrom wtsUtilities getCSV
+#'@import ggplot2
 #' 
 #'@export
 #'
@@ -12,7 +21,8 @@ compareIndivTrajectories<-function(dfr=NULL,
                                    indivConn=NULL,
                                    var=NULL,
                                    lhsTypeInfo=getLifeStageInfo.ATF(),
-                                   onlySuccessfulIndivs=TRUE,
+                                   onlySuccessful=TRUE,
+                                   onlyUnsuccessful=FALSE,
                                    nurseryAlongshoreZones=1:13,
                                    nurseryDepthZones=c("NurseryArea_000to050m","NurseryArea_050to150m"), 
                                    spawningAlongshoreZones=1:12,
@@ -40,7 +50,8 @@ compareIndivTrajectories<-function(dfr=NULL,
     
     #extract ids for indivs
     ids<-extractIndivIDs(indivConn=indivConn,
-                          onlySuccessful=onlySuccessfulIndivs,
+                          onlySuccessful=onlySuccessful,
+                          onlyUnsuccessful=onlyUnsuccessful,
                           nurseryZones=nurseryDepthZones,
                           lhsTypeInfo=lhsTypeInfo);
     
@@ -104,7 +115,7 @@ compareIndivTrajectories<-function(dfr=NULL,
     nNDZ<-length(nurseryDepthZones);
     for (spaz in spawningAlongshoreZones){
         for (spdz in spawningDepthZones){            
-            plot(dfr1$age[idx],dfr1[[var]][idx],xlim=xrng1,ylim=yrng1,ylab=var,xlab='age',type='n');
+            plot(dfr1$age,dfr1[[var]],xlim=xrng1,ylim=yrng1,ylab=var,xlab='age',type='n');
             for (iNDZ in 1:nNDZ){
                 idx<-(dfr1$spawningDepthZone==spdz)&
                      (dfr1$spawningAlongshoreZone==spaz)&
@@ -114,4 +125,23 @@ compareIndivTrajectories<-function(dfr=NULL,
             mtext(paste(spaz),side=3,line=0,adj=0.05);
         }
     }
+    
+    p <- ggplot(mapping=aes_string(x="age",y=var,fill="nurseryAlongshoreZone",shape="nurseryDepthZone"),
+                data=dfr1);
+    p <- p + geom_point(position='jitter')
+    p <- p + geom_boxplot()
+    p <- p + facet_wrap(spawningDepthZone,nrow=2)
+    print(p)
 }
+
+# compareIndivTrajectories(dfr=NULL,
+#                            indivConn=NULL,
+#                            var='temperature',
+#                            lhsTypeInfo=getLifeStageInfo.ATF(),
+#                            onlySuccessful=TRUE,
+#                            onlyUnsuccessful=FALSE,
+#                            nurseryAlongshoreZones=1:13,
+#                            nurseryDepthZones=c("NurseryArea_000to050m","NurseryArea_050to150m"), 
+#                            spawningAlongshoreZones=1:12,
+#                            spawningDepthZones=c("SpawningArea_300to600m"))
+                                   

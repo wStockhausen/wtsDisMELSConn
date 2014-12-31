@@ -4,11 +4,30 @@
 \title{Compare individual trajectories}
 \usage{
 compareIndivTrajectories(dfr = NULL, indivConn = NULL, var = NULL,
-  lhsTypeInfo = getLifeStageInfo.ATF(), onlySuccessfulIndivs = TRUE,
-  nurseryAlongshoreZones = 1:13,
+  lhsTypeInfo = getLifeStageInfo.ATF(), onlySuccessful = TRUE,
+  onlyUnsuccessful = FALSE, nurseryAlongshoreZones = 1:13,
   nurseryDepthZones = c("NurseryArea_000to050m", "NurseryArea_050to150m"),
   spawningAlongshoreZones = 1:12,
   spawningDepthZones = c("SpawningArea_300to600m"))
+}
+\arguments{
+\item{dfr}{- dataframe or filename (or NULL) from call to extractIndivs(...) (?)}
+
+\item{indivConn}{- individual connectivity file (or dataframe)}
+
+\item{lhsTypeInfo}{- life stage info list for IBM (req'd if onlySuccessful=TRUE or onlyUnsuccessful=TRUE)}
+
+\item{onlySuccessful}{- flag (T/F) to pull out only successful individuals}
+
+\item{onlyUnsuccessful}{- flag (T/F) to pull out only unsuccessful individuals}
+
+\item{nurseryAlongshoreZones}{- alongshore id's for nursery zones to include}
+
+\item{nurseryDepthZones}{- vector of names of depth zones used as nursery areas in the IBM (req'd if onlySuccessful=TRUE)}
+
+\item{spawningAlongshoreZones}{- alongshore id's for nursery zones to include}
+
+\item{spawningDepthZones}{- vector of names of zones used as spawning areas in the IBM (req'd if onlySuccessful=TRUE)}
 }
 \description{
 

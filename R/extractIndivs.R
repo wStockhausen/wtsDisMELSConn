@@ -29,13 +29,13 @@ extractIndivs<-function(indivConn=NULL,    #individual connectivity results file
                           lhsTypeInfo=NULL,    
                           lhsTypes=NULL,    
                           newResType=FALSE,
-                          onlySuccessful=TRUE,
+                          onlySuccessful=FALSE,
                           onlyUnsuccessful=FALSE,
                           nurseryZones=c("NurseryArea_000to050m","NurseryArea_050to150m"), #nursery area name(s)
                           returnList=TRUE,
                           writeOutput=TRUE,
                           outDir='./',
-                          outBaseCSV="successfulIndivs"
+                          outBaseCSV="allIndivs"
                           ){
 
     retIndivConn<-FALSE;
@@ -70,6 +70,8 @@ extractIndivs<-function(indivConn=NULL,    #individual connectivity results file
     if (is.null(lhsTypes)) lhsTypes<-typeNames;#process all typeNames
     
     #define variables
+    conVars <- c('start_typeName','start_depthzone','start_alongshorezone',
+                  'end_typeName','end_depthzone','end_alongshorezone');
     stdVarsAll<-getStdVars(newResType);
     stdVarsOut<-c('typeName','id','parentID','origID',
                   'time','horizPos1','horizPos2','vertPos','track',
@@ -81,10 +83,17 @@ extractIndivs<-function(indivConn=NULL,    #individual connectivity results file
                               onlySuccessful=onlySuccessful,
                               onlyUnsuccessful=onlyUnsuccessful,
                               nurseryZones=nurseryZones);
+    cat('Will Extract results for ',nrow(indivIDs),' individuals\n',sep='')
     
     #extract indivs from results
     resVars<-paste('r',names(results),sep='.',collapse=',');
     qry<-"select
+            i.start_typeName,
+            i.start_depthzone,
+            i.start_alongshorezone,
+            i.end_typeName,
+            i.end_depthzone,
+            i.end_alongshorezone,
             &&resVars
           from
             results r,
@@ -97,10 +106,18 @@ extractIndivs<-function(indivConn=NULL,    #individual connectivity results file
     cat("query = ",qry,sep='\n');
     indivs<-sqldf::sqldf(qry);    
     
+    #check on indivs
+    qry<-"select distinct id from indivs order by id;"
+    uids<-sqldf::sqldf(qry);
+    cat("Number of unique ids in indivs =",nrow(uids),'\n');
+    print(uids$id[1:10]);
+    cat('names(indivs)= ',paste(names(indivs,collapse=',')),'\n')
+    
     #assign temporary names to columns
     nc<-length(names(indivs));
     names(indivs)<-paste('c',1:nc,sep='');
-    names(indivs)[1:2]<-c('typeName','id')
+    names(indivs)[7:8]<-c('typeName','id')
+    cat('names(indivs)= ',paste(names(indivs,collapse=',')),'\n')
     
     #loop over type names and extract results for indivs
     if (returnList) indivsLst<-list();
@@ -119,11 +136,11 @@ extractIndivs<-function(indivConn=NULL,    #individual connectivity results file
             
             #assign correct names to columns for life stage
             lhsVars<-lhsTypeInfo$lifeStageTypes[[typeName]]$info;
-            allVars<-c(stdVarsAll,lhsVars);
+            allVars<-c(conVars,stdVarsAll,lhsVars);
             names(indivsTmp)[1:length(allVars)]<-allVars;
             
             #determine output column names for life stage
-            varsOutStr<-paste(c(stdVarsOut,lhsVars),sep='',collapse=',')
+            varsOutStr<-paste(c(conVars,stdVarsOut,lhsVars),sep='',collapse=',')
     
             qry<-"select
                     &&varsOut
@@ -148,5 +165,6 @@ extractIndivs<-function(indivConn=NULL,    #individual connectivity results file
     return(NULL);
 }
 
-# successfulIndivs<-extractIndivs(newResType=TRUE,lhsTypeInfo=getLifeStageInfo.ATF());
+#sIndivs<-extractIndivs(indivConn,results,onlySuccessful  =TRUE,lhsTypes='benthic.juvenile',outBaseCSV=  'SuccessfulIndivs',newResType=TRUE,lhsTypeInfo=getLifeStageInfo.ATF(),returnList=FALSE);
+#uIndivs<-extractIndivs(indivConn,results,onlyUnsuccessful=TRUE,lhsTypes='benthic.juvenile',outBaseCSV='UnsuccessfulIndivs',newResType=TRUE,lhsTypeInfo=getLifeStageInfo.ATF(),returnList=FALSE);
 # successfulIndivs<-extractIndivs(newResType=FALSE,lhsTypeInfo=getLifeStageInfo.POP());

@@ -4,10 +4,10 @@
 \title{Function to extract tracks of individuals from a DisMELS model run.}
 \usage{
 extractIndivs(indivConn = NULL, results = NULL, lhsTypeInfo = NULL,
-  lhsTypes = NULL, newResType = FALSE, onlySuccessful = TRUE,
+  lhsTypes = NULL, newResType = FALSE, onlySuccessful = FALSE,
   onlyUnsuccessful = FALSE, nurseryZones = c("NurseryArea_000to050m",
   "NurseryArea_050to150m"), returnList = TRUE, writeOutput = TRUE,
-  outDir = "./", outBaseCSV = "successfulIndivs")
+  outDir = "./", outBaseCSV = "allIndivs")
 }
 \arguments{
 \item{indivConn}{- individual connectivity file (or dataframe)}

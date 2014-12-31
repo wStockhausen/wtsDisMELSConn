@@ -19,7 +19,8 @@ extractIndivIDs(indivConn = NULL, lhsTypeInfo = NULL,
 \item{nurseryZones}{- vector of names of zones used as nursery areas in the IBM (req'd if onlySuccessful=TRUE)}
 }
 \value{
-data frame with single column (ID) of unique ids.
+data frame with columns
+ID, start_typeName,start_depthzone,start_alongshorezone,end_typeName,end_depthzone,end_alongshorezone
 }
 \description{
 
@@ -28,8 +29,7 @@ data frame with single column (ID) of unique ids.
 If onlySuccessful=TRUE, then it is assumed that 'successful' individuals are those which are in
 one of the nursery areas in the final life stage.\cr
 \cr
-If onlyUnsuccessful=TRUE, then it is assumedthat 'unsuccessful' individuals are those which
-don't make it to the final life stage or are not in one of the nursery areas in the
-final life stage.
+If onlyUnsuccessful=TRUE, then it is assumed that 'unsuccessful' individuals are those which
+don't make it to the final life stage.
 }
 
