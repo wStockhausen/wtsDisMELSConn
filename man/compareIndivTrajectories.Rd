@@ -5,10 +5,9 @@
 \title{Compare individual trajectories}
 \usage{
 compareIndivTrajectories(dfr = NULL, var = NULL,
-  lhsTypeInfo = getLifeStageInfo.ATF(), nurseryAlongshoreZones = 1:13,
-  nurseryDepthZones = c("NurseryArea_000to050m", "NurseryArea_050to150m"),
-  spawningAlongshoreZones = 1:12,
-  spawningDepthZones = c("SpawningArea_300to600m"))
+  lhsTypeInfo = getLifeStageInfo.ATF(), nurseryAlongshoreZones = NULL,
+  nurseryDepthZones = NULL, spawningAlongshoreZones = NULL,
+  spawningDepthZones = NULL)
 }
 \arguments{
 \item{dfr}{- dataframe or filename (or NULL) from call to extractIndivs(...) (?)}

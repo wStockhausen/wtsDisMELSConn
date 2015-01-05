@@ -19,10 +19,10 @@
 compareIndivTrajectories<-function(dfr=NULL,
                                    var=NULL,
                                    lhsTypeInfo=getLifeStageInfo.ATF(),
-                                   nurseryAlongshoreZones=1:13,
-                                   nurseryDepthZones=c("NurseryArea_000to050m","NurseryArea_050to150m"), 
-                                   spawningAlongshoreZones=1:12,
-                                   spawningDepthZones=c("SpawningArea_300to600m")
+                                   nurseryAlongshoreZones=NULL,
+                                   nurseryDepthZones=NULL, 
+                                   spawningAlongshoreZones=NULL,
+                                   spawningDepthZones=NULL
                                    ){
     if (!is.data.frame(dfr)){
         #read in extracted individuals csv file
@@ -33,6 +33,11 @@ compareIndivTrajectories<-function(dfr=NULL,
             dfr<-read.csv(dfr,stringsAsFactors=FALSE);
         }
     }
+    
+    if (is.null(nurseryAlongshoreZones)) nurseryAlongshoreZones<-unique(dfr[["end_alongshorezone"]]);
+    if (is.null(nurseryDepthZones))      nurseryDepthZones<-unique(dfr[["end_depthzone"]]);
+    if (is.null(spawningAlongshoreZones)) spawningAlongshoreZones<-unique(dfr[["start_alongshorezone"]]);
+    if (is.null(spawningDepthZones))      spawningDepthZones<-unique(dfr[["start_depthzone"]]);
     
     #extract time series of var for each indiv by zones
     qry<-"select
@@ -61,17 +66,19 @@ compareIndivTrajectories<-function(dfr=NULL,
     qry<-gsub("&&end_alongshorezones",  paste(nurseryAlongshoreZones, collapse=","),qry);
     cat(qry,"\n");
     dfr<-sqldf::sqldf(qry);
-    dfr$agep<-factor(as.integer(round(dfr$age)));
+    dfr$agep<-as.factor(as.integer(round(dfr$age)));
+    dfr$nurseryAlongshoreZone<-as.factor(as.integer(dfr$nurseryAlongshoreZone))
+    dfr$spawningAlongshoreZone<-as.factor(as.integer(dfr$spawningAlongshoreZone))
     xrng1<-range(dfr$age,na.rm=TRUE,finite=TRUE);
     yrng1<-range(dfr[[var]],na.rm=TRUE,finite=TRUE);
     
     p <- ggplot(mapping=aes_string(x="agep",y=var,
-                                   fill="nurseryAlongshoreZone",
-                                   shape="nurseryDepthZone"),
+                                   color="spawningAlongshoreZone"),
                 data=dfr);
-    p <- p + geom_point(position='jitter')
+    p <- p + geom_point(position='jitter',alpha=0.2)
 #    p <- p + geom_boxplot()
-    p <- p + facet_wrap(~spawningAlongshoreZone,nrow=2)
+    p <- p + labs(x='age (days)',y=bquote(temperature~degree*C))
+#    p <- p + facet_wrap(~spawningAlongshoreZone,nrow=2)
     print(p)
 }
 

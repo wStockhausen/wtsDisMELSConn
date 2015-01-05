@@ -19,9 +19,9 @@ extractResultsByLHS(results, lhsTypeInfo = getLifeStageInfo.ATF(),
 
 \item{writeOutput}{- flag to write output to file}
 
-\item{outDir}{-}
+\item{outDir}{- folder to write output csv files}
 
-\item{outBaseCSV}{-}
+\item{outBaseCSV}{- base name for output csv files}
 }
 \description{
 Function to extract results from DisMELS model run to individual files by life stage.

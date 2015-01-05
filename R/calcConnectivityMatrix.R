@@ -92,7 +92,7 @@ calcConnectivityMatrix<-function(ibmResTbl=NULL,
   uniqNurseryZones1<-rbind(uniqNurseryZones,list(depthzone='non-nursery areas',alongshorezone=-1));
   
   #drop columns NOT in stdVars
-  stdVars<-getStdVars(lhsTypeInfo$resType=='NEW');
+  stdVars<-getStdVars(lhsTypeInfo$resType);
   ibmResTbl<-ibmResTbl[,1:length(stdVars$vars)];
   
   #categorize starting points relative to spawning/source areas

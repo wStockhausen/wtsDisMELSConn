@@ -8,8 +8,8 @@
 #'@param lhsTypes - life stage types (names) to process
 #'@param returnList - flag to return list of output (does nothing now)
 #'@param writeOutput - flag to write output to file
-#'@param outDir - 
-#'@param outBaseCSV - 
+#'@param outDir - folder to write output csv files
+#'@param outBaseCSV - base name for output csv files
 #'
 #'@export
 #'
@@ -20,9 +20,8 @@ extractResultsByLHS<-function(results,
                               writeOutput=TRUE,
                               outDir=dirname(results),
                               outBaseCSV="Results"){
-    #get results file type
-    newResType <- toupper(lhsTypeInfo$resType)=='NEW';
-    stdVars <- getStdVars(newResType);
+    #get standard variable names/order using the results file type
+    stdVars <- getStdVars(lhsTypeInfo$resType);
     
     #define life stage types
     typeNames=names(lhsTypeInfo$lifeStageTypes);
@@ -52,8 +51,6 @@ extractResultsByLHS<-function(results,
     str <- readLines(resConn,n=1); #read 1st results line
     ctr<-1
     while (length(str)>0){
-        #res<-read.csv(header=FALSE,text=str,stringsAsFactors=FALSE)
-        #typeName<-res[1,1];
         res<-strsplit(str,',',fixed=TRUE)
         typeName<-res[[1]][1]
         if (typeName %in% lhsTypes){
@@ -64,7 +61,7 @@ extractResultsByLHS<-function(results,
         str <- readLines(resConn,n=1); #read next line
         ctr<-ctr+1;
         if ((ctr%%10000)==0) cat('processing ',ctr,'\n'); 
-        if ((ctr%%50000)==0) {
+        if ((ctr%%100000)==0) {
             cat('Flushing connections\n'); 
             for (lhsConn in lhsConns) flush(lhsConn);
         }

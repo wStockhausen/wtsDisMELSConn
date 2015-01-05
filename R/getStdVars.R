@@ -3,14 +3,14 @@
 #'
 #'@description Function to get standard variable names for DisMELS output.
 #'
-#'@param newResType - flag (T/F) indicating if results are based on the new or old DisMELS results format.
+#'@param newResType - flag ("NEW" or "OLD") indicating if results are based on the new or old DisMELS results format.
 #'
 #'@return data frame with columns for names of standard variables ('vars') and types ('types)
 #'
 #'@export
 #'
-getStdVars<-function(newResType=TRUE){
-    if (newResType){
+getStdVars<-function(newResType){
+    if (toupper(newResType)=='NEW'){
           stdVarsAll<-c('typeName','id','parentID','origID','startTime','time',
                         'horizType','vertType','horizPos1','horizPos2','vertPos','gridCellID','track',
                         'active','alive','attached','age','ageInStage','number');

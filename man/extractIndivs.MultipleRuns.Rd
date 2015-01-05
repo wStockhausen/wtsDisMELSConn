@@ -5,12 +5,12 @@
 \title{Extracts and re-orders a series of DisMELS model results files by individual.}
 \usage{
 extractIndivs.MultipleRuns(YYYYs = NULL, MMs = NULL, DDs = NULL,
-  lhsTypeInfo = NULL, lhsTypes = NULL, newResType = FALSE,
-  onlySucccessful = TRUE, onlyUnsucccessful = FALSE,
-  nurseryZones = c("NurseryArea_000to050m", "NurseryArea_050to150m"),
-  inpDir.IndivConn = NULL, basename.IndivConn = "IndivConn",
-  inpDir.Results = NULL, basename.Results = "Results", returnList = TRUE,
-  writeOutput = TRUE, outDir = NULL, basename.Out = "SuccessfulIndivs")
+  lhsTypeInfo = NULL, lhsTypes = NULL, onlySucccessful = TRUE,
+  onlyUnsucccessful = FALSE, nurseryZones = c("NurseryArea_000to050m",
+  "NurseryArea_050to150m"), inpDir.IndivConn = NULL,
+  basename.IndivConn = "IndivConn", inpDir.Results = NULL,
+  basename.Results = "Results", outDir = NULL,
+  basename.Out = "SuccessfulIndivs")
 }
 \arguments{
 \item{YYYYs}{- years to extract (can be NULL)}
@@ -23,8 +23,6 @@ extractIndivs.MultipleRuns(YYYYs = NULL, MMs = NULL, DDs = NULL,
 
 \item{lhsTypes}{- lhs types to keep for output (NULL = all)}
 
-\item{newResType}{- flag (T/F) indicating whether (T) or not (F) results are from a "new"-type IBM}
-
 \item{nurseryZones}{- vector of nursery area names}
 
 \item{inpDir.IndivConn}{- folder with input individual connectivity matrix files}
@@ -32,8 +30,6 @@ extractIndivs.MultipleRuns(YYYYs = NULL, MMs = NULL, DDs = NULL,
 \item{basename.IndivConn}{- base name for individual connectivity matrix files}
 
 \item{inpDir.Results}{- folder with input DisMELS model results files}
-
-\item{writeOutput}{- flag (T/F) indicating whether output files should be written}
 
 \item{outDir}{- output folder}
 

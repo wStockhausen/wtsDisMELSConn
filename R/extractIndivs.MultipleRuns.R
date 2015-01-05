@@ -8,7 +8,6 @@
 #'@param DDs - days to extract (can be NULL)
 #'@param lhsTypeInfo - life stage info list for IBM
 #'@param lhsTypes - lhs types to keep for output (NULL = all)
-#'@param newResType - flag (T/F) indicating whether (T) or not (F) results are from a "new"-type IBM
 #'@param onlySuccessful   - flag (T/F) to extract only successful indivs (if TRUE)
 #'@param onlyUnsuccessful - flag (T/F) to extract only unsuccessful indivs (if TRUE)
 #'@param nurseryZones - vector of nursery area names
@@ -16,7 +15,6 @@
 #'@param basename.IndivConn - base name for individual connectivity matrix files
 #'@param inpDir.Results - folder with input DisMELS model results files
 #'@param basename.Resuls - base name for DisMELS model results files
-#'@param writeOutput - flag (T/F) indicating whether output files should be written
 #'@param outDir - output folder
 #'@param basename.Out - base name for output files
 #'
@@ -35,7 +33,6 @@ extractIndivs.MultipleRuns<-function(YYYYs=NULL,
                                        DDs=NULL,
                                        lhsTypeInfo=NULL,    
                                        lhsTypes=NULL,
-                                       newResType=FALSE,
                                        onlySucccessful=TRUE,
                                        onlyUnsucccessful=FALSE,
                                        nurseryZones=c("NurseryArea_000to050m","NurseryArea_050to150m"), #nursery area name(s)
@@ -43,8 +40,6 @@ extractIndivs.MultipleRuns<-function(YYYYs=NULL,
                                        basename.IndivConn="IndivConn",
                                        inpDir.Results=NULL,
                                        basename.Results="Results",
-                                       returnList=TRUE,
-                                       writeOutput=TRUE,
                                        outDir=NULL,
                                        basename.Out="SuccessfulIndivs"){
     if (is.null(inpDir.IndivConn)){
@@ -89,13 +84,11 @@ extractIndivs.MultipleRuns<-function(YYYYs=NULL,
                                       results=results,
                                       lhsTypeInfo=lhsTypeInfo,
                                       lhsTypes=lhsTypes,
-                                      keepLHSTypes=keepLHSTypes,
-                                      newResType=newResType,
                                       onlySuccessful=onlySuccessful,
                                       onlyUnsuccessful=onlyUnsuccessful,
                                       nurseryZones=nurseryZones,
                                       returnList=FALSE,
-                                      writeOutput=writeOutput,
+                                      writeOutput=TRUE,
                                       outDir=outDir,
                                       outBaseCSV=outBaseCSV);
                     } else {

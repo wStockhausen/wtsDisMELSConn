@@ -4,10 +4,10 @@
 \alias{getStdVars}
 \title{Get standard variable names for DisMELS output.}
 \usage{
-getStdVars(newResType = TRUE)
+getStdVars(newResType)
 }
 \arguments{
-\item{newResType}{- flag (T/F) indicating if results are based on the new or old DisMELS results format.}
+\item{newResType}{- flag ("NEW" or "OLD") indicating if results are based on the new or old DisMELS results format.}
 }
 \value{
 data frame with columns for names of standard variables ('vars') and types ('types)
