@@ -5,7 +5,7 @@
 #'
 #' @param ibmResTbl - name of DisMELS connectivity results file or resulting dataframe (can be NULL)
 #' @param cellsTbl - name of classified grid cells file or resulting dataframe (can be NULL)
-#' @param lifeStages - vector of names of life stages in the IBM
+#' @param lhsTypeInfo - list object with life stage info
 #' @param spawningZones - vector of names of zones used as spawning areas in the IBM
 #' @param nurseryZones - vector of names of zones used as nursery areas in the IBM
 #' @param writeCSVs - flag (T/F) to write output files 
@@ -36,7 +36,7 @@
 #**********************************************************/
 calcConnectivityMatrix<-function(ibmResTbl=NULL,
                                  cellsTbl=NULL, 
-                                 lifeStages=NULL,            # vector of life stage names
+                                 lhsTypeInfo=getLifeStageInfo.ATF(),            
                                  spawningZones=c("SpawningArea_300to600m"),                       #spawning area name(s)
                                  nurseryZones=c("NurseryArea_000to050m","NurseryArea_050to150m"), #nursery area name(s)
                                  writeCSVs=TRUE,
@@ -67,7 +67,8 @@ calcConnectivityMatrix<-function(ibmResTbl=NULL,
     cat("Done reading cells file.\n")
   }
   
-  #pull out first and recruited life stages
+  #pull out life stage info
+  lifeStages<-names(lhsTypeInfo$lifeStageTypes)
   firstLHS<-lifeStages[1];                 # name of first life stage
   lastLHS<-lifeStages[length(lifeStages)]; # name of final (recruiting) life stage
   cat("firstLHS = ",firstLHS,"\n")
@@ -89,6 +90,10 @@ calcConnectivityMatrix<-function(ibmResTbl=NULL,
                           order by
                             depthzone, alongshorezone;");
   uniqNurseryZones1<-rbind(uniqNurseryZones,list(depthzone='non-nursery areas',alongshorezone=-1));
+  
+  #drop columns NOT in stdVars
+  stdVars<-getStdVars(lhsTypeInfo$resType=='NEW');
+  ibmResTbl<-ibmResTbl[,1:length(stdVars$vars)];
   
   #categorize starting points relative to spawning/source areas
   qry<-"select * 
@@ -152,6 +157,11 @@ calcConnectivityMatrix<-function(ibmResTbl=NULL,
         where 
           ibmResTbl1.id = s.id";
   ibmResTbl<-sqldf::sqldf(qry);
+  #last column of ibmResTbl has duplicate name 'id'
+  #need to replace it with unique name
+  nms<-names(ibmResTbl)
+  names(ibmResTbl)<-c(nms[1:(length(nms)-1)],'id1');
+  
   
   #categorize ending points relative to nursery areas/sink polygons
   qry<-"select 

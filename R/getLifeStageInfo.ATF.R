@@ -4,6 +4,9 @@
 #'@export
 #'
 getLifeStageInfo.ATF<-function(){
+    #results file type
+    resType='NEW';
+    
     #java class names
     classNames<-c('EggStage','LarvaStage','SettlerStage','BenthicJuvenileStage');
     
@@ -13,11 +16,17 @@ getLifeStageInfo.ATF<-function(){
     SettlerClassInfo <-c('size','weight','temperature','salinity');
     JuvenileClassInfo<-c('size','weight','temperature','salinity');
     
+    #data types
+    EggClassDataTypes      <- rep('numeric',times=6)
+    LarvaClassDataTypes    <- rep('numeric',times=4)
+    SettlerClassDataTypes  <- rep('numeric',times=4)
+    JuvenileClassDataTypes <- rep('numeric',times=4)
+    
     #class info
-    info.classes<-list(EggStage=EggClassInfo,
-                       LarvaStage=LarvaClassInfo,
-                       SettlerStage=SettlerClassInfo,
-                       BenthicJuvenileStage=JuvenileClassInfo)
+    info.classes<-list(EggStage            =list(vars=EggClassInfo,     types=EggClassDataTypes),
+                       LarvaStage          =list(vars=LarvaClassInfo,   types=LarvaClassDataTypes),
+                       SettlerStage        =list(vars=SettlerClassInfo, types=SettlerClassDataTypes),
+                       BenthicJuvenileStage=list(vars=JuvenileClassInfo,types=JuvenileClassDataTypes))
     
     
     #defined life stage type names (NOT class names)
@@ -30,5 +39,5 @@ getLifeStageInfo.ATF<-function(){
                         settlement.stage.larva=        list(class=classNames[3],info=info.classes[[3]]),
                         benthic.juvenile=              list(class=classNames[4],info=info.classes[[4]]));
     
-    return(invisible(list(classNames=classNames,classInfo=info.classes,lifeStageTypes=lifeStageTypes)));
+    return(invisible(list(resType=resType,classNames=classNames,classInfo=info.classes,lifeStageTypes=lifeStageTypes)));
 }

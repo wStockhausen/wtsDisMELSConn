@@ -5,7 +5,6 @@
 #'@param results - DisMELS results file (or dataframe)
 #'@param lhsTypeInfo - life stage info list for IBM
 #'@param lhsTypes - vector of lhs types to process (NULL = all)
-#'@param newResType - flag (T/F) indicating whether (TRUE) or not (FALSE) results are from a "new"-type IBM
 #'@param onlySuccessful   - flag (T/F) to extract only successful indivs (if TRUE)
 #'@param onlyUnsuccessful - flag (T/F) to extract only unsuccessful indivs (if TRUE)
 #'@param nurseryZones - vector of names of zones used as nursery areas in the IBM
@@ -26,9 +25,8 @@
 #'
 extractIndivs<-function(indivConn=NULL,    #individual connectivity results file (or dataframe)
                           results=NULL,    #DisMELS results file (or dataframe)
-                          lhsTypeInfo=NULL,    
+                          lhsTypeInfo=getLifeStageInfo.ATF(),    
                           lhsTypes=NULL,    
-                          newResType=FALSE,
                           onlySuccessful=FALSE,
                           onlyUnsuccessful=FALSE,
                           nurseryZones=c("NurseryArea_000to050m","NurseryArea_050to150m"), #nursery area name(s)
@@ -72,9 +70,9 @@ extractIndivs<-function(indivConn=NULL,    #individual connectivity results file
     #define variables
     conVars <- c('start_typeName','start_depthzone','start_alongshorezone',
                   'end_typeName','end_depthzone','end_alongshorezone');
-    stdVarsAll<-getStdVars(newResType);
-    stdVarsOut<-c('typeName','id','parentID','origID',
-                  'time','horizPos1','horizPos2','vertPos','track',
+    stdVars <-getStdVars(lhsTypeInfo$resType=='NEW');
+    stdVarsOut<-c('typeName','id','time',
+                  'horizPos1','horizPos2','vertPos','track',
                   'alive','age','ageInStage','number');
     
     #pull out IDs for indviduals from indivConn
@@ -84,63 +82,66 @@ extractIndivs<-function(indivConn=NULL,    #individual connectivity results file
                               onlyUnsuccessful=onlyUnsuccessful,
                               nurseryZones=nurseryZones);
     cat('Will Extract results for ',nrow(indivIDs),' individuals\n',sep='')
-    
-    #extract indivs from results
-    resVars<-paste('r',names(results),sep='.',collapse=',');
-    qry<-"select
-            i.start_typeName,
-            i.start_depthzone,
-            i.start_alongshorezone,
-            i.end_typeName,
-            i.end_depthzone,
-            i.end_alongshorezone,
-            &&resVars
-          from
-            results r,
-            indivIDs i
-          where
-            r.id=i.ID
-          order by
-            r.id;";
-    qry<-gsub("&&resVars",resVars,qry); 
-    cat("query = ",qry,sep='\n');
-    indivs<-sqldf::sqldf(qry);    
-    
-    #check on indivs
-    qry<-"select distinct id from indivs order by id;"
+    qry<-"select distinct ID from indivIDs order by ID;"
     uids<-sqldf::sqldf(qry);
-    cat("Number of unique ids in indivs =",nrow(uids),'\n');
-    print(uids$id[1:10]);
-    cat('names(indivs)= ',paste(names(indivs,collapse=',')),'\n')
-    
-    #assign temporary names to columns
-    nc<-length(names(indivs));
-    names(indivs)<-paste('c',1:nc,sep='');
-    names(indivs)[7:8]<-c('typeName','id')
-    cat('names(indivs)= ',paste(names(indivs,collapse=',')),'\n')
+    cat("Number of unique ids in indivIDs =",nrow(uids),'\n');
+    print(uids$ID[1:10]);
     
     #loop over type names and extract results for indivs
     if (returnList) indivsLst<-list();
     for (ctr in 1:length(typeNames)){
         typeName<-typeNames[ctr];
         if (typeName %in% lhsTypes){
+            
+            #extract indivs from results
+            resVars<-paste('r',names(results),sep='.',collapse=',');
             qry<-"select
-                    *
+                    i.start_typeName,
+                    i.start_depthzone,
+                    i.start_alongshorezone,
+                    i.end_typeName,
+                    i.end_depthzone,
+                    i.end_alongshorezone,
+                    &&resVars
                   from
-                    indivs i
+                    results r,
+                    indivIDs i
                   where
-                    i.typeName='&&typeName';";
+                    r.id=i.ID and 
+                    r.typeName='&&typeName'
+                  order by
+                    r.id,r.age;";
+            qry<-gsub("&&resVars",resVars,qry); 
+#             qry<-"select
+#                     *
+#                   from
+#                     indivIDs i,
+#                     resConn r
+#                   where
+#                     r.id=i.ID and 
+#                     r.typeName='&&typeName'
+#                   order by
+#                     r.id,r.age;";
             qry<-gsub("&&typeName",typeName,qry); 
             cat("query = ",qry,sep='\n');
-            indivsTmp<-sqldf::sqldf(qry);
+            indivsTmp<-sqldf::sqldf(qry);    
+#             close(resConn);
             
+            #check on indivs
+            qry<-"select distinct id from indivsTmp order by id;"
+            uids<-sqldf::sqldf(qry);
+            cat("Number of unique ids in indivsTmp =",nrow(uids),'\n');
+            print(uids$id[1:10]);
+            cat('names(indivsTmp)= [',paste(names(indivsTmp),collapse=','),']\n')
+
             #assign correct names to columns for life stage
-            lhsVars<-lhsTypeInfo$lifeStageTypes[[typeName]]$info;
-            allVars<-c(conVars,stdVarsAll,lhsVars);
-            names(indivsTmp)[1:length(allVars)]<-allVars;
+            lhsVars<-lhsTypeInfo$lifeStageTypes[[typeName]]$info$vars;
+            allVars<-c(conVars,stdVars$vars,lhsVars);
+            names(indivsTmp)<-paste('tmp',1:ncol(indivsTmp),sep='');#assign temporary names
+            names(indivsTmp)[1:length(allVars)]<-allVars;#assign names to extracted columns
             
             #determine output column names for life stage
-            varsOutStr<-paste(c(conVars,stdVarsOut,lhsVars),sep='',collapse=',')
+            varsOutStr<-paste(allVars,sep='',collapse=',')
     
             qry<-"select
                     &&varsOut
@@ -165,6 +166,9 @@ extractIndivs<-function(indivConn=NULL,    #individual connectivity results file
     return(NULL);
 }
 
-#sIndivs<-extractIndivs(indivConn,results,onlySuccessful  =TRUE,lhsTypes='benthic.juvenile',outBaseCSV=  'SuccessfulIndivs',newResType=TRUE,lhsTypeInfo=getLifeStageInfo.ATF(),returnList=FALSE);
-#uIndivs<-extractIndivs(indivConn,results,onlyUnsuccessful=TRUE,lhsTypes='benthic.juvenile',outBaseCSV='UnsuccessfulIndivs',newResType=TRUE,lhsTypeInfo=getLifeStageInfo.ATF(),returnList=FALSE);
-# successfulIndivs<-extractIndivs(newResType=FALSE,lhsTypeInfo=getLifeStageInfo.POP());
+#icDir<-'~/Programming/R/GitPackages/wtsDisMELSConn'
+#indivConn<-file.path(icDir,'IndivConn.1997.csv')
+#resDir<-'/Volumes/Iomega HDD/cDrive.GOA_IERP/IBM_Runs/ATF/FullSeriesJanFeb/CSVs.ModelResults'
+#results<-file.path(resDir,'Results1997.csv')
+#sIndivs<-extractIndivs(indivConn,results,onlySuccessful  =TRUE,lhsTypes='egg01',outBaseCSV='ExtractedIndivs.Successful',  lhsTypeInfo=getLifeStageInfo.ATF(),returnList=FALSE);
+#uIndivs<-extractIndivs(indivConn,results,onlyUnsuccessful=TRUE,lhsTypes='egg01',outBaseCSV='ExtractedIndivs.Unsuccessful',lhsTypeInfo=getLifeStageInfo.ATF(),returnList=FALSE);

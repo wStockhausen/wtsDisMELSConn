@@ -4,18 +4,28 @@
 #'@export
 #'
 getLifeStageInfo.POP<-function(){
+    #results file type
+    resType<-'OLD';
+    
     #java class names
-    classNames<-c('SimplePelagicLHS','SimpleSettlerLHS','SimpleBenthicJuvenileLHS');
+    classNames<-c('SimplePelagicLHS',
+                  'SimpleSettlerLHS',
+                  'SimpleBenthicJuvenileLHS');
     
     #names of 'additional attributes' variables for each life stage class
     PelagicClassInfo <-c('size','temperature','salinity');
     SettlerClassInfo <-c('size','temperature','salinity');
     JuvenileClassInfo<-c('size','temperature','salinity');
     
+    #data types
+    LarvaClassDataTypes    <- rep('numeric',times=3)
+    SettlerClassDataTypes  <- rep('numeric',times=3)
+    JuvenileClassDataTypes <- rep('numeric',times=3)
+    
     #class info
-    info.classes<-list(SimplePelagicLHS=PelagicClassInfo,
-                       SimpleSettlerLHS=SettlerClassInfo,
-                       SimpleBenthicJuvenileLHS=JuvenileClassInfo)
+    info.classes<-list(SimplePelagicLHS        =list(vars=PelagicClassInfo, types=PelagicClassDataTypes),
+                       SimpleSettlerLHS        =list(vars=SettlerClassInfo, types=SettlerClassDataTypes),
+                       SimpleBenthicJuvenileLHS=list(vars=JuvenileClassInfo,types=JuvenileClassDataTypes))
     
     
     #defined life stage type names (NOT class names)
@@ -25,5 +35,5 @@ getLifeStageInfo.POP<-function(){
                         settler          =list(class=classNames[2],info=info.classes[[2]]),
                         benthic.juvenile =list(class=classNames[3],info=info.classes[[3]]));
     
-    return(invisible(list(classNames=classNames,classInfo=info.classes,lifeStageTypes=lifeStageTypes)));
+    return(invisible(list(resType=resType,classNames=classNames,classInfo=info.classes,lifeStageTypes=lifeStageTypes)));
 }

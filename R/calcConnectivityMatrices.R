@@ -12,7 +12,7 @@
 #' @param days - vector of days corresponding to model simulation names (DD)
 #' @param spawningZones - vector of names of zones used as spawning areas in the IBM
 #' @param nurseryZones - vector of names of zones used as nursery areas in the IBM
-#' @param lifeStages - vector of names of life stages in the IBM
+#' @param lhsTypeInfo - list object with life stage info
 #' 
 #' @details If the 'cellsTbl' is a filename,it will be read to create an associated dataframe. If cellsTbl is null, the user can select
 #' the classified grid cells file using a file dialog.\cr\cr
@@ -42,9 +42,7 @@ calcConnectivityMatrices<-function(resDir="C:\\Projects\\GOA_IERP\\IBM_Runs\\ATF
                                    days=c("01"),
                                    spawningZones=c("SpawningArea_300to600m"),
                                    nurseryZones=c("NurseryArea_000to050m","NurseryArea_050to150m"),
-                                   lifeStages=c("egg01","small.yolk.sac.larva","large.yolk.sac.larva",
-                                                 "small.feeding.preflexion.larva","large.feeding.preflexion.larva",
-                                                 "postflexion.larva","settlement.stage.larva","benthic.juvenile")){
+                                   lhsTypeInfo=getLifeStageInfo.ATF()){
                                    
   #read in classified cells table
   if (!is.data.frame(cellsTbl)){
@@ -72,7 +70,7 @@ calcConnectivityMatrices<-function(resDir="C:\\Projects\\GOA_IERP\\IBM_Runs\\ATF
           
           res<-calcConnectivityMatrix(ibmResTbl=ibmResTbl,                # table for connectivity results
                                       cellsTbl=cellsTbl,                  # table for classified grid cells
-                                      lifeStages=lifeStages,              # vector of life stage names
+                                      lhsTypeInfo=lhsTypeInfo,            # list object with life stage info
                                       spawningZones=spawningZones,        # spawning area name(s)
                                       nurseryZones=nurseryZones,          # nursery area name(s)
                                       writeCSVs=FALSE);                   # flag to write results to csv files

@@ -5,7 +5,7 @@
 #'
 #'@param newResType - flag (T/F) indicating if results are based on the new or old DisMELS results format.
 #'
-#'@return character vector with names of standard variables
+#'@return data frame with columns for names of standard variables ('vars') and types ('types)
 #'
 #'@export
 #'
@@ -14,10 +14,18 @@ getStdVars<-function(newResType=TRUE){
           stdVarsAll<-c('typeName','id','parentID','origID','startTime','time',
                         'horizType','vertType','horizPos1','horizPos2','vertPos','gridCellID','track',
                         'active','alive','attached','age','ageInStage','number');
+          type<-c('character','integer','integer','integer','character','character',
+                  'integer','integer','numeric','numeric','numeric','character','character',
+                  'character','character','character','numeric','numeric','numeric')
     } else {
-          stdVarsAll<-c('typeName','id','parentID','origID','horizType','vertType','active','alive','attached',
-                        'startTime','time','age','ageInStage','size','number','horizPos1','horizPos2','vertPos',
+          stdVarsAll<-c('typeName','id','parentID','origID','horizType','vertType',
+                        'active','alive','attached','startTime','time',
+                        'age','ageInStage','size','number','horizPos1','horizPos2','vertPos',
                         'temp','salinity','gridCellID','track');
+          type<-c('character','integer','integer','integer','integer','integer',
+                  'character','character','character','character','character',
+                  'numeric','numeric','numeric','numeric','numeric','numeric','numeric',
+                  'numeric','numeric','character','character');
     }
-    return(stdVarsAll);
+    return(data.frame(list(vars=stdVarsAll,types=type),stringsAsFactors=FALSE));
 }
