@@ -5,11 +5,11 @@
 \title{Extracts and re-orders a series of DisMELS model results files by individual.}
 \usage{
 extractIndivs.MultipleRuns(YYYYs = NULL, MMs = NULL, DDs = NULL,
-  lhsTypeInfo = NULL, lhsTypes = NULL, onlySucccessful = TRUE,
-  onlyUnsucccessful = FALSE, nurseryZones = c("NurseryArea_000to050m",
-  "NurseryArea_050to150m"), inpDir.IndivConn = NULL,
-  basename.IndivConn = "IndivConn", inpDir.Results = NULL,
-  basename.Results = "Results", outDir = NULL,
+  lhsTypeInfo = NULL, lhsTypes = NULL,
+  nurseryZones = c("NurseryArea_000to050m", "NurseryArea_050to150m"),
+  onlySuccessful = TRUE, onlyUnsuccessful = FALSE,
+  inpDir.IndivConn = NULL, basename.IndivConn = "IndivConn",
+  inpDir.Results = NULL, basename.Results = "Results", outDir = NULL,
   basename.Out = "SuccessfulIndivs")
 }
 \arguments{
@@ -25,6 +25,10 @@ extractIndivs.MultipleRuns(YYYYs = NULL, MMs = NULL, DDs = NULL,
 
 \item{nurseryZones}{- vector of nursery area names}
 
+\item{onlySuccessful}{- flag (T/F) to extract only successful indivs (if TRUE)}
+
+\item{onlyUnsuccessful}{- flag (T/F) to extract only unsuccessful indivs (if TRUE)}
+
 \item{inpDir.IndivConn}{- folder with input individual connectivity matrix files}
 
 \item{basename.IndivConn}{- base name for individual connectivity matrix files}
@@ -34,10 +38,6 @@ extractIndivs.MultipleRuns(YYYYs = NULL, MMs = NULL, DDs = NULL,
 \item{outDir}{- output folder}
 
 \item{basename.Out}{- base name for output files}
-
-\item{onlySuccessful}{- flag (T/F) to extract only successful indivs (if TRUE)}
-
-\item{onlyUnsuccessful}{- flag (T/F) to extract only unsuccessful indivs (if TRUE)}
 
 \item{basename.Resuls}{- base name for DisMELS model results files}
 }

@@ -8,9 +8,9 @@
 #'@param DDs - days to extract (can be NULL)
 #'@param lhsTypeInfo - life stage info list for IBM
 #'@param lhsTypes - lhs types to keep for output (NULL = all)
+#'@param nurseryZones - vector of nursery area names
 #'@param onlySuccessful   - flag (T/F) to extract only successful indivs (if TRUE)
 #'@param onlyUnsuccessful - flag (T/F) to extract only unsuccessful indivs (if TRUE)
-#'@param nurseryZones - vector of nursery area names
 #'@param inpDir.IndivConn - folder with input individual connectivity matrix files
 #'@param basename.IndivConn - base name for individual connectivity matrix files
 #'@param inpDir.Results - folder with input DisMELS model results files
@@ -33,9 +33,9 @@ extractIndivs.MultipleRuns<-function(YYYYs=NULL,
                                        DDs=NULL,
                                        lhsTypeInfo=NULL,    
                                        lhsTypes=NULL,
-                                       onlySucccessful=TRUE,
-                                       onlyUnsucccessful=FALSE,
                                        nurseryZones=c("NurseryArea_000to050m","NurseryArea_050to150m"), #nursery area name(s)
+                                       onlySuccessful=TRUE,
+                                       onlyUnsuccessful=FALSE,
                                        inpDir.IndivConn=NULL,
                                        basename.IndivConn="IndivConn",
                                        inpDir.Results=NULL,
@@ -91,6 +91,7 @@ extractIndivs.MultipleRuns<-function(YYYYs=NULL,
                                       writeOutput=TRUE,
                                       outDir=outDir,
                                       outBaseCSV=outBaseCSV);
+                        gc(verbose=TRUE);#force garbage collection
                     } else {
                         cat("could not process '",results,"'. File does not exist.\n",sep='')
                     }

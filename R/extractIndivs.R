@@ -70,7 +70,7 @@ extractIndivs<-function(indivConn=NULL,    #individual connectivity results file
     #define variables
     conVars <- c('start_typeName','start_depthzone','start_alongshorezone',
                   'end_typeName','end_depthzone','end_alongshorezone');
-    stdVars <-getStdVars(lhsTypeInfo$resType=='NEW');
+    stdVars <-getStdVars(lhsTypeInfo$resType);
     stdVarsOut<-c('typeName','id','time',
                   'horizPos1','horizPos2','vertPos','track',
                   'alive','age','ageInStage','number');
@@ -112,20 +112,9 @@ extractIndivs<-function(indivConn=NULL,    #individual connectivity results file
                   order by
                     r.id,r.age;";
             qry<-gsub("&&resVars",resVars,qry); 
-#             qry<-"select
-#                     *
-#                   from
-#                     indivIDs i,
-#                     resConn r
-#                   where
-#                     r.id=i.ID and 
-#                     r.typeName='&&typeName'
-#                   order by
-#                     r.id,r.age;";
             qry<-gsub("&&typeName",typeName,qry); 
             cat("query = ",qry,sep='\n');
             indivsTmp<-sqldf::sqldf(qry);    
-#             close(resConn);
             
             #check on indivs
             qry<-"select distinct id from indivsTmp order by id;"
@@ -138,7 +127,9 @@ extractIndivs<-function(indivConn=NULL,    #individual connectivity results file
             lhsVars<-lhsTypeInfo$lifeStageTypes[[typeName]]$info$vars;
             allVars<-c(conVars,stdVars$vars,lhsVars);
             names(indivsTmp)<-paste('tmp',1:ncol(indivsTmp),sep='');#assign temporary names
-            names(indivsTmp)[1:length(allVars)]<-allVars;#assign names to extracted columns
+            nms<-names(indivsTmp);
+            nms[1:length(allVars)]<-allVars; #substitute allVars
+            names(indivsTmp)<-nms;           #assign names to extracted columns
             
             #determine output column names for life stage
             varsOutStr<-paste(allVars,sep='',collapse=',')
