@@ -81,7 +81,7 @@ extractIndivs<-function(indivConn=NULL,    #individual connectivity results file
                               onlySuccessful=onlySuccessful,
                               onlyUnsuccessful=onlyUnsuccessful,
                               nurseryZones=nurseryZones);
-    cat('Will Extract results for ',nrow(indivIDs),' individuals\n',sep='')
+    cat('Will extract results for ',nrow(indivIDs),' individuals\n',sep='')
     qry<-"select distinct ID from indivIDs order by ID;"
     uids<-sqldf::sqldf(qry);
     cat("Number of unique ids in indivIDs =",nrow(uids),'\n');

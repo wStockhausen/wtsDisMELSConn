@@ -13,14 +13,14 @@ getLifeStageInfo.POP<-function(){
                   'SimpleBenthicJuvenileLHS');
     
     #names of 'additional attributes' variables for each life stage class
-    PelagicClassInfo <-c('size','temperature','salinity');
-    SettlerClassInfo <-c('size','temperature','salinity');
-    JuvenileClassInfo<-c('size','temperature','salinity');
+    PelagicClassInfo <-NULL;
+    SettlerClassInfo <-NULL;
+    JuvenileClassInfo<-NULL;
     
     #data types
-    PelagicClassDataTypes  <- rep('numeric',times=3)
-    SettlerClassDataTypes  <- rep('numeric',times=3)
-    JuvenileClassDataTypes <- rep('numeric',times=3)
+    PelagicClassDataTypes  <- NULL;
+    SettlerClassDataTypes  <- NULL;
+    JuvenileClassDataTypes <- NULL;
     
     #class info
     info.classes<-list(SimplePelagicLHS        =list(vars=PelagicClassInfo, types=PelagicClassDataTypes),
