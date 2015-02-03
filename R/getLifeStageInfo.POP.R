@@ -18,7 +18,7 @@ getLifeStageInfo.POP<-function(){
     JuvenileClassInfo<-c('size','temperature','salinity');
     
     #data types
-    LarvaClassDataTypes    <- rep('numeric',times=3)
+    PelagicClassDataTypes  <- rep('numeric',times=3)
     SettlerClassDataTypes  <- rep('numeric',times=3)
     JuvenileClassDataTypes <- rep('numeric',times=3)
     
