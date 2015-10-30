@@ -9,6 +9,7 @@
 #' @param spawningZones - vector of names of zones used as spawning areas in the IBM
 #' @param nurseryZones - vector of names of zones used as nursery areas in the IBM
 #' @param writeCSVs - flag (T/F) to write output files 
+#' @param outNumRel - csv filename for initial numbers released from spawning areas
 #' @param outConn - csv filename for connectivity to nursery areas from spawning areas
 #' @param outIndivs - csv filename for individual start and end locations
 #' 
@@ -40,6 +41,7 @@ calcConnectivityMatrix<-function(ibmResTbl=NULL,
                                  spawningZones=c("SpawningArea_300to600m"),                       #spawning area name(s)
                                  nurseryZones=c("NurseryArea_000to050m","NurseryArea_050to150m"), #nursery area name(s)
                                  writeCSVs=TRUE,
+                                 outNumRel="NumbersReleasedFromSpawningAreas.csv",       #initial numbers released csv file 
                                  outConn="ConnectivityToNurseryAreasFromSpawningAreas.csv", #output connectivity csv file
                                  outIndivs="IndivStartEndPositions.csv"                     #output indivs csv file
                                  ){
@@ -499,6 +501,7 @@ calcConnectivityMatrix<-function(ibmResTbl=NULL,
   prbSinkGivenSource$prSetBySrc<-as.numeric(prbSinkGivenSource$prSetBySrc);#not sure why this is non-numeric
   
   if (writeCSVs){
+    write.csv(numSource,         file=outNumSource)
     write.csv(prbSinkGivenSource,file=outConn);
     write.csv(tblIndivConn,      file=outIndivs);
   }
