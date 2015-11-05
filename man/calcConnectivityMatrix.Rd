@@ -33,9 +33,9 @@ calcConnectivityMatrix(ibmResTbl = NULL, cellsTbl = NULL,
 }
 \value{
 list w/ 2 elements:\cr
-prbSinkGivenSource - probability of transport to a sink (nursery area) conditioned on starting in a source (spawning area)\cr
-numSource - numbers by source (spawning area)\cr
-tblIndivConn - dataframe of start and end locations for each individual in the model run\cr
+dfrCM - dataframe with probability of transport to a sink (nursery area) conditioned on starting in a source (spawning area)\cr
+dfrNR - numbers by source (spawning area)\cr
+dfrIC - dataframe of start and end locations for each individual in the model run\cr
 }
 \description{
 Function to calculate a connectivity matrix based on one DisMELS model run.

@@ -14,14 +14,11 @@
 #'@export
 #'
 concatAnnualTables<-function(allRes=NULL,
-                           type=c("prbSinkGivenSource","tblIndivConn","numSource"),
-                           writeCSV=TRUE,
-                           folder=getwd(),
-                           basename=c('ConnMats','IndivConns','numsBySource')){
+                             type=c("prbSinkGivenSource","tblIndivConn","numSource"),
+                             writeCSV=TRUE,
+                             folder=getwd(),
+                             basename=c('ConnMats','IndivConns','numsBySource')){
     nms<-names(allRes);
-    #create filename
-    outCSV<-file.path(folder,paste(basename,'.csv',sep=''));
-
     dfrp<-NULL;
     for (nm in nms){
         #create output filename
@@ -33,7 +30,14 @@ concatAnnualTables<-function(allRes=NULL,
         dfr<-cbind(dt,dfr);
         dfrp<-rbind(dfrp,dfr);
     }
-    write.csv(dfrp,file=outCSV,row.names=FALSE);
+    dfrp$date<-as.numeric(as.character(dfrp$date)); #need this otherwise "date" is a factor
+    
+    if (writeCSV){
+      if (!dir.exists(folder)) dir.create(folder,recursive=TRUE);
+      outCSV<-file.path(folder,paste(basename,'.csv',sep=''));
+      write.csv(dfrp,file=outCSV,row.names=FALSE);
+    }
+    
     return(invisible(dfrp));
 }
 

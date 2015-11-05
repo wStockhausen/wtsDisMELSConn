@@ -13,6 +13,9 @@
 #' @param spawningZones - vector of names of zones used as spawning areas in the IBM
 #' @param nurseryZones - vector of names of zones used as nursery areas in the IBM
 #' @param lhsTypeInfo - list object with life stage info
+#' @param writeCSVs - flag (T/F) to write concatenated dataframes to csv
+#' @param folder   - folder to write csv files to
+#' @param basename - base name for output csv files
 #' 
 #' @details If the 'cellsTbl' is a filename,it will be read to create an associated dataframe. If cellsTbl is null, the user can select
 #' the classified grid cells file using a file dialog.\cr\cr
@@ -22,9 +25,10 @@
 #' and DD the day (if applicable) for a particular model run. If YYYY, MM, or DD is **not** part of the file name, use "" as the 
 #' function input for the corresponding years, months, or days.
 #' 
-#' @return list w/ 2 elements:\cr
-#' allRes - list of connectivity matrix results\cr
-#' zmax   - max connectivity value (useful for scaling plots)
+#' @return list w/ 3 elements:\cr
+#' dfrCMs - dataframe with connectivity matrices results\cr
+#' dfrICs - dataframe with individual connectivity results\cr
+#' dfrNRs - dataframe with numbers released
 #' 
 #' @importFrom wtsUtilities getCSV
 #' 
@@ -42,7 +46,10 @@ calcConnectivityMatrices<-function(resDir="C:\\Projects\\GOA_IERP\\IBM_Runs\\ATF
                                    days=c("01"),
                                    spawningZones=c("SpawningArea_300to600m"),
                                    nurseryZones=c("NurseryArea_000to050m","NurseryArea_050to150m"),
-                                   lhsTypeInfo=getLifeStageInfo.ATF()){
+                                   lhsTypeInfo=getLifeStageInfo.ATF(),
+                                   writeCSVs=TRUE,
+                                   folder=getwd(),
+                                   basename=""){
                                    
   #read in classified cells table
   if (!is.data.frame(cellsTbl)){
@@ -75,10 +82,14 @@ calcConnectivityMatrices<-function(resDir="C:\\Projects\\GOA_IERP\\IBM_Runs\\ATF
                                       nurseryZones=nurseryZones,          # nursery area name(s)
                                       writeCSVs=FALSE);                   # flag to write results to csv files
           allRes[[paste(year,month,day,sep='.')]]<-res;
-          mx<-max(mx,res$prbSinkGivenSource$prSetBySrc,na.rm=TRUE);
+          mx<-max(mx,res$dfrCM$prFin,na.rm=TRUE);
         }
       }
     }
   }
-  return (list(allRes=allRes,zmax=mx));
+  
+  dfrCMs<-concatAnnualTables(allRes,type="dfrCM",writeCSV=writeCSVs,folder=folder,basename=paste(basename,'ConnMats',sep=''));
+  dfrICs<-concatAnnualTables(allRes,type="dfrIC",writeCSV=writeCSVs,folder=folder,basename=paste(basename,'IndivConns',sep=''));
+  dfrNRs<-concatAnnualTables(allRes,type="dfrNR",writeCSV=writeCSVs,folder=folder,basename=paste(basename,'NumReleased',sep=''));
+  return (list(dfrCMs=dfrCMs,dfrICs=dfrICs,dfrNRs=dfrNRs));
 }

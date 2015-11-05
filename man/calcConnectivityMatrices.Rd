@@ -11,7 +11,8 @@
   months = c("01"), days = c("01"),
   spawningZones = c("SpawningArea_300to600m"),
   nurseryZones = c("NurseryArea_000to050m", "NurseryArea_050to150m"),
-  lhsTypeInfo = getLifeStageInfo.ATF())
+  lhsTypeInfo = getLifeStageInfo.ATF(), writeCSVs = TRUE,
+  folder = getwd(), basename = "")
 }
 \arguments{
 \item{resDir}{- path to base directory for DisMELS results files}
@@ -31,11 +32,18 @@
 \item{nurseryZones}{- vector of names of zones used as nursery areas in the IBM}
 
 \item{lhsTypeInfo}{- list object with life stage info}
+
+\item{writeCSVs}{- flag (T/F) to write concatenated dataframes to csv}
+
+\item{folder}{- folder to write csv files to}
+
+\item{basename}{- base name for output csv files}
 }
 \value{
-list w/ 2 elements:\cr
-allRes - list of connectivity matrix results\cr
-zmax   - max connectivity value (useful for scaling plots)
+list w/ 3 elements:\cr
+dfrCMs - dataframe with connectivity matrices results\cr
+dfrICs - dataframe with individual connectivity results\cr
+dfrNRs - dataframe with numbers released
 }
 \description{
 Function to calculate a set of connectivity matrices corresponding to

@@ -23,9 +23,9 @@
 #' If the writeCSVs flag is set, the two files specified by outConn and outIndivs are written before the function is exited.
 #' 
 #' @return list w/ 2 elements:\cr
-#' prbSinkGivenSource - probability of transport to a sink (nursery area) conditioned on starting in a source (spawning area)\cr
-#' numSource - numbers by source (spawning area)\cr
-#' tblIndivConn - dataframe of start and end locations for each individual in the model run\cr
+#' dfrCM - dataframe with probability of transport to a sink (nursery area) conditioned on starting in a source (spawning area)\cr
+#' dfrNR - numbers by source (spawning area)\cr
+#' dfrIC - dataframe of start and end locations for each individual in the model run\cr
 #' 
 #' @importFrom sqldf sqldf
 #' @importFrom wtsUtilities getCSV
@@ -41,7 +41,7 @@ calcConnectivityMatrix<-function(ibmResTbl=NULL,
                                  spawningZones=c("SpawningArea_300to600m"),                       #spawning area name(s)
                                  nurseryZones=c("NurseryArea_000to050m","NurseryArea_050to150m"), #nursery area name(s)
                                  writeCSVs=TRUE,
-                                 outNumRel="NumbersReleasedFromSpawningAreas.csv",       #initial numbers released csv file 
+                                 outNumRel="NumbersReleasedFromSpawningAreas.csv",          #initial numbers released csv file 
                                  outConn="ConnectivityToNurseryAreasFromSpawningAreas.csv", #output connectivity csv file
                                  outIndivs="IndivStartEndPositions.csv"                     #output indivs csv file
                                  ){
@@ -463,68 +463,83 @@ calcConnectivityMatrix<-function(ibmResTbl=NULL,
   
   #***********************************************************
   #***********************************************************
-  prbSinkGivenSource<-sqldf::sqldf("select
-                                u.start_depthzone      as start_depthzone,
-                                u.start_alongshorezone as start_alongshorezone,
-                                u.end_depthzone        as end_depthzone,
-                                u.end_alongshorezone   as end_alongshorezone,
-                                s.prSetBySrc           as prSetBySrc
-                            from
-                                (select 
-                                    sz.depthzone      as start_depthzone,
-                                    sz.alongshorezone as start_alongshorezone,
-                                    nz.depthzone      as end_depthzone,
-                                    nz.alongshorezone as end_alongshorezone
-                                 from uniqNurseryZones as nz, uniqSpawningZones as sz) as u left join
-                                (select
-                                    ss.start_depthzone,
-                                    ss.start_alongshorezone,
-                                    ss.end_depthzone,
-                                    ss.end_alongshorezone,
-                                    ss.totFin/src.totRel as prSetBySrc
-                                from
-                                    numSourceSink2 as ss,
-                                    numSource as src
-                                where
-                                    ss.start_depthzone      = src.start_depthzone AND
-                                    ss.start_alongshorezone = src.start_alongshorezone) as s
-                            on
-                                s.start_depthzone      = u.start_depthzone AND
-                                s.start_alongshorezone = u.start_alongshorezone AND
-                                s.end_depthzone        = u.end_depthzone AND
-                                s.end_alongshorezone   = u.end_alongshorezone
-                            order by
-                                start_depthzone,start_alongshorezone,
-                                end_depthzone,end_alongshorezone;");
-                            
-  prbSinkGivenSource$prSetBySrc[is.na(prbSinkGivenSource$prSetBySrc)]<-0;
-  prbSinkGivenSource$prSetBySrc<-as.numeric(prbSinkGivenSource$prSetBySrc);#not sure why this is non-numeric
+  qry<-"select
+          u.start_depthzone      as start_depthzone,
+          u.start_alongshorezone as start_alongshorezone,
+          u.end_depthzone        as end_depthzone,
+          u.end_alongshorezone   as end_alongshorezone,
+          s.totRel               as numRel,
+          s.totFin               as numFin,
+          s.prSetBySrc           as prFin
+        from
+          (select 
+              sz.depthzone      as start_depthzone,
+              sz.alongshorezone as start_alongshorezone,
+              nz.depthzone      as end_depthzone,
+              nz.alongshorezone as end_alongshorezone
+           from uniqNurseryZones as nz, uniqSpawningZones as sz) as u left join
+              (select
+                 ss.start_depthzone,
+                 ss.start_alongshorezone,
+                 ss.end_depthzone,
+                 ss.end_alongshorezone,
+                 src.totRel as totRel,
+                 ss.totFin as totFin,
+                 ss.totFin/src.totRel as prSetBySrc
+             from
+               numSource as src left join
+               numSourceSink2 as ss
+             on
+               ss.start_depthzone      = src.start_depthzone AND
+               ss.start_alongshorezone = src.start_alongshorezone) as s
+          on
+            s.start_depthzone      = u.start_depthzone AND
+            s.start_alongshorezone = u.start_alongshorezone AND
+            s.end_depthzone        = u.end_depthzone AND
+            s.end_alongshorezone   = u.end_alongshorezone
+          order by
+            start_depthzone,start_alongshorezone,
+            end_depthzone,end_alongshorezone;";
+  prbSinkGivenSource<-sqldf::sqldf(qry);  
+  idx<-is.na(prbSinkGivenSource$numRel);
+  prbSinkGivenSource$numRel[idx]<-0;
+  prbSinkGivenSource$numRel<-as.numeric(prbSinkGivenSource$numRel);#not sure why this is non-numeric
+  idx<-is.na(prbSinkGivenSource$numFin);
+  prbSinkGivenSource$numFin[idx]<-0;
+  prbSinkGivenSource$numFin<-as.numeric(prbSinkGivenSource$numFin);#not sure why this is non-numeric
+  idx<-is.na(prbSinkGivenSource$prFin);
+  prbSinkGivenSource$prFin[idx]<-0;
+  prbSinkGivenSource$prFin<-as.numeric(prbSinkGivenSource$prFin);#not sure why this is non-numeric
   
+  
+  #***********************************************************
+  #***********************************************************
+  qry<-"select
+          p.start_depthzone      as start_depthzone,
+          p.start_alongshorezone as start_alongshorezone,
+          p.end_depthzone        as end_depthzone,
+          p.end_alongshorezone   as end_alongshorezone,
+          s.totRel               as numRel,
+          p.numFin               as numFin,
+          p.prFin                as prFin
+        from
+          numSource as s,
+          prbSinkGivenSource as p
+        where
+          s.start_depthzone = p.start_depthzone and
+          s.start_alongshorezone = p.start_alongshorezone
+        order by
+          start_depthzone,start_alongshorezone,
+          end_depthzone,end_alongshorezone;";
+  dfrCM<-sqldf::sqldf(qry);  
+
   if (writeCSVs){
-    write.csv(numSource,         file=outNumSource)
-    write.csv(prbSinkGivenSource,file=outConn);
-    write.csv(tblIndivConn,      file=outIndivs);
+    write.csv(numSource,   file=outNumSource)
+    write.csv(dfrCM,       file=outConn);
+    write.csv(tblIndivConn,file=outIndivs);
   }
   
-  return(list(prbSinkGivenSource=prbSinkGivenSource,numSource=numSource,tblIndivConn=tblIndivConn));
+  return(list(dfrCM=dfrCM,dfrNR=numSource,dfrIC=tblIndivConn));
 }
-
-# #An example of how to run the program
-# connResFile<-"C:\\Projects\\GOA_IERP\\IBM_Runs\\ATF\\2011\\03-15\\ConnectivityAnalysis\\Results01Conn.csv";
-# cellsFile<-"C:\\Projects\\GOA_IERP\\IBM_Runs\\ATF\\2011\\03-15\\ConnectivityAnalysis\\ATF_ClassifiedCGOAGridCells.csv";
-# spawningZones<-c("SpawningArea_300to600m");
-# nurseryZones<-c("NurseryArea_000to050m","NurseryArea_050to150m");
-# lifeStages<-c("egg01","small.yolk.sac.larva","large.yolk.sac.larva",
-#               "small.feeding.preflexion.larva","large.feeding.preflexion.larva",
-#               "postflexion.larva","settlement.stage.larva","benthic.juvenile");
-# 
-# res<-calcConnectivityMatrix(connResFile=connResFile,                                   # filename for connectivity results csv file
-#                             cellsFile=cellsFile,                                       # filename for classified grid cells csv file
-#                             lifeStages=lifeStages,                                     # vector of life stage names
-#                             spawningZones=spawningZones,                               #spawning area name(s)
-#                             nurseryZones=nurseryZones,                                 #nursery area name(s)
-#                             writeCSVs=TRUE,                                            #flag to write csv files
-#                             outConn="ConnectivityToNurseryAreasFromSpawningAreas.csv", #output connectivity csv file
-#                             outIndivs="IndivStartEndPositions.csv");                   #output csv file w/ individuals' start/end locations
 
   
