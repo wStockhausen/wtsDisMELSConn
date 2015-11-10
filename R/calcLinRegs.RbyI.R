@@ -66,20 +66,23 @@ calcLinRegs.RbyI<-function(mdfrZR,mdfrI,ylab,vars,nrows=2,labelByGroup=FALSE){
     dfrRonIs<-dcast(mdfrRbyIs[mdfrRbyIs$group==uG,],year~variable,fun.aggregate=sum,value.var='value');
     ##linear model analysis
     for (var in vars){
-      if (var %in% names(dfrRonIs)&&(sum(abs(dfrRonIs[[var]]),na.rm=TRUE)>0)){
-        gv<-var;
-        if (labelByGroup) gv<-paste(uG,var);
-        cat("Processing",gv,'\n')
-        lm.vars[[gv]]<-lm(as.formula(paste("R~\`",var,"`",sep='')),dfrRonIs);
-        s<-summary(lm.vars[[gv]]);
-        sum.vars<-rbind(sum.vars,data.frame(index=gv,
-                                            rho=s$coefficients[2,1],
-                                            rsq=s$r.squared,
-                                            p=s$coefficients[2,4]));
+      if (var %in% names(dfrRonIs)){
+        tst<-sum(abs(dfrRonIs[[var]]),na.rm=TRUE);
+        if(!is.na(tst)&&(tst>0)){
+          gv<-var;
+          if (labelByGroup) gv<-paste(uG,var);
+          cat("Processing",gv,'\n')
+          lm.vars[[gv]]<-lm(as.formula(paste("R~\`",var,"`",sep='')),dfrRonIs);
+          s<-summary(lm.vars[[gv]]);
+          sum.vars<-rbind(sum.vars,data.frame(index=gv,
+                                              rho=s$coefficients[2,1],
+                                              rsq=s$r.squared,
+                                              p=s$coefficients[2,4]));
+        }
       }
-    }
+    }#vars loop
     ##cat(uG,'\n')
-  }
+  }#uGs loop
   ##knitr::kable(sum.vars);
 
   ##plot the linear fits
