@@ -17,6 +17,7 @@
 #'
 #'@import ggplot2
 #'@import plyr
+#'@import reshape2
 #'@import wtsUtilities
 #'
 #'@export
