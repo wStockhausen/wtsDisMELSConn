@@ -12,6 +12,42 @@ plotConnectivityMatrixGG(dfr, x = "nursery area", y = "spawning area",
 }
 \arguments{
 \item{dfr}{- dataframe to plot}
+
+\item{x}{- column name for x values}
+
+\item{y}{- column name for y values}
+
+\item{z}{- column name for z values}
+
+\item{xLab}{- x axis label}
+
+\item{yLab}{- y axis label}
+
+\item{zLab}{- z label}
+
+\item{xMin}{- x axis minimum}
+
+\item{xMax}{- x axis maximum}
+
+\item{yMin}{- y axis minimum}
+
+\item{yMax}{- y axis maximum}
+
+\item{zMin}{- z axis minimum}
+
+\item{zMax}{- z axis maximum}
+
+\item{facetWrap}{- formula for ggplot2::facet_wrap}
+
+\item{facetGrid}{- formula for ggplot2::facet_grid}
+
+\item{ncol}{- number of columns for ggplot2::facet_wrap}
+
+\item{reverseX}{- flag to reverse x axis}
+
+\item{reverseY}{- flag to reverse y axis}
+
+\item{useGrad2}{- flag to use reshape2::scale_fill_gradient2 for fill axis}
 }
 \description{
 Function to plot connectivity matrices using ggplot2.

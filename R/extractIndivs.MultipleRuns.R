@@ -14,7 +14,7 @@
 #'@param inpDir.IndivConn - folder with input individual connectivity matrix files
 #'@param basename.IndivConn - base name for individual connectivity matrix files
 #'@param inpDir.Results - folder with input DisMELS model results files
-#'@param basename.Resuls - base name for DisMELS model results files
+#'@param basename.Results - base name for DisMELS model results files
 #'@param outDir - output folder
 #'@param basename.Out - base name for output files
 #'

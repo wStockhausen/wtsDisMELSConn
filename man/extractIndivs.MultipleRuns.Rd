@@ -35,11 +35,11 @@ extractIndivs.MultipleRuns(YYYYs = NULL, MMs = NULL, DDs = NULL,
 
 \item{inpDir.Results}{- folder with input DisMELS model results files}
 
+\item{basename.Results}{- base name for DisMELS model results files}
+
 \item{outDir}{- output folder}
 
 \item{basename.Out}{- base name for output files}
-
-\item{basename.Resuls}{- base name for DisMELS model results files}
 }
 \value{
 no return value

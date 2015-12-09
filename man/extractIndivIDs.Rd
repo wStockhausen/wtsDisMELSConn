@@ -2,7 +2,7 @@
 % Please edit documentation in R/extractIndivIDs.R
 \name{extractIndivIDs}
 \alias{extractIndivIDs}
-\title{Function to extract unique IDs for individuals from a DisMELS model run.}
+\title{Extract unique IDs for individuals from a DisMELS model run.}
 \usage{
 extractIndivIDs(indivConn = NULL, lhsTypeInfo = NULL,
   onlySuccessful = FALSE, onlyUnsuccessful = FALSE,
@@ -22,6 +22,9 @@ extractIndivIDs(indivConn = NULL, lhsTypeInfo = NULL,
 \value{
 data frame with columns 
 ID, start_typeName,start_depthzone,start_alongshorezone,end_typeName,end_depthzone,end_alongshorezone
+}
+\description{
+Function to extract unique IDs for individuals from a DisMELS model run.
 }
 \details{
 If onlySuccessful=TRUE, then it is assumed that 'successful' individuals are those which are in

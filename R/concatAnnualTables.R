@@ -1,7 +1,7 @@
 #'
 #'@title Concatenate annual tables (connectivity matrices, individual connectivities, numbers by source), write to csv files.
 #'
-#'@title Function to concatenate annual tables (connectivity matrices, individual connectivities, numbers by source), write to csv files.
+#'@description Function to concatenate annual tables (connectivity matrices, individual connectivities, numbers by source), write to csv files.
 #'
 #'@param allRes - the allRes list from running calcConnectivityMatrices(...)
 #'@param type - type of table to concatenate

@@ -4,6 +4,24 @@
 #'@description Function to plot connectivity matrices using ggplot2.
 #'
 #'@param dfr - dataframe to plot
+#'@param x - column name for x values
+#'@param y - column name for y values
+#'@param z - column name for z values
+#'@param xLab - x axis label
+#'@param yLab - y axis label
+#'@param zLab - z label
+#'@param xMin - x axis minimum
+#'@param xMax - x axis maximum
+#'@param yMin - y axis minimum
+#'@param yMax - y axis maximum
+#'@param zMin - z axis minimum
+#'@param zMax - z axis maximum
+#'@param facetWrap - formula for ggplot2::facet_wrap
+#'@param facetGrid - formula for ggplot2::facet_grid
+#'@param ncol - number of columns for ggplot2::facet_wrap
+#'@param reverseY - flag to reverse y axis
+#'@param reverseX - flag to reverse x axis
+#'@param useGrad2 - flag to use reshape2::scale_fill_gradient2 for fill axis
 #'
 #'@import ggplot2
 #'

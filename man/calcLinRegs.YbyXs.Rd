@@ -4,8 +4,8 @@
 \alias{calcLinRegs.YbyXs}
 \title{Calculate linear regressions for time series in Y as function of time series in X.}
 \usage{
-calcLinRegs.YbyXs(mdfrX, mdfrY, yvars = NULL, xlab = "index", nrows = 2,
-  coord_fixed = FALSE, labelByGroup = FALSE)
+calcLinRegs.YbyXs(mdfrX, mdfrY, yvars = NULL, xlab = "index",
+  ylab = "index", nrows = 2, coord_fixed = FALSE, labelByGroup = FALSE)
 }
 \arguments{
 \item{mdfrX}{- melted dataframe with independent (X) time series}
@@ -16,6 +16,8 @@ calcLinRegs.YbyXs(mdfrX, mdfrY, yvars = NULL, xlab = "index", nrows = 2,
 
 \item{xlab}{- label associated with independent variables}
 
+\item{ylab}{- label associated with dependent variables}
+
 \item{nrows}{- number of rows for LR plots}
 
 \item{coord_fixed}{- flag to use equal x/y unit dimensions in LR plots}
@@ -23,7 +25,8 @@ calcLinRegs.YbyXs(mdfrX, mdfrY, yvars = NULL, xlab = "index", nrows = 2,
 \item{labelByGroup}{- flag to use "group" column to organize linear regression analysis}
 }
 \value{
-list of named sublists by unique Y with elements
+list with named elements res and p3. p3 is a ggplot object.
+res is a list with sublists by unique Y with elements
 * lms     - list with linear model (lm) results by Y for X
 * summary - dataframe with summaries of linear model results
 * plots   - list of ggplot2 objects (p1=standardized time series, p2=fits to lm's)

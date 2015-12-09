@@ -2,7 +2,7 @@
 % Please edit documentation in R/extractIndivs.R
 \name{extractIndivs}
 \alias{extractIndivs}
-\title{Function to extract tracks of individuals from a DisMELS model run.}
+\title{Extract tracks of individuals from a DisMELS model run.}
 \usage{
 extractIndivs(indivConn = NULL, results = NULL,
   lhsTypeInfo = getLifeStageInfo.ATF(), lhsTypes = NULL,
@@ -36,6 +36,9 @@ extractIndivs(indivConn = NULL, results = NULL,
 }
 \value{
 list of dataframes with indiv results by lhs type name if returnList=TRUE, otherwise NULL.
+}
+\description{
+Function to extract tracks of individuals from a DisMELS model run.
 }
 \details{
 If indivConn or results are NULL, the user will be prompted to select the 

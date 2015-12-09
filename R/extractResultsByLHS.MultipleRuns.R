@@ -9,7 +9,7 @@
 #'@param lhsTypeInfo - life stage info list for IBM
 #'@param lhsTypes - lhs types to keep for output (NULL = all)
 #'@param inpDir.Results - folder with input DisMELS model results files
-#'@param basename.Resuls - base name for DisMELS model results files
+#'@param basename.Results - base name for DisMELS model results files
 #'@param outDir - output folder
 #'@param basename.Out - base name for output files
 #'

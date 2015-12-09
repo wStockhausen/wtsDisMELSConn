@@ -1,5 +1,7 @@
 #'
-#'@title Plot time series of a variable for individuals
+#'@title Plot time series of a variable for individuals.
+#'
+#'@description Funcrtion to plot time series of a variable for individuals.
 #'
 #'@param dfr - dataframe or filename (or NULL) from call to extractIndivs(...)
 #'@param vars - name(s) of variable(s) (columns) to plot
@@ -12,7 +14,7 @@
 #'@param xlab   - x axis label
 #'@param ylabs  - y axis labels (character vector or list of expressions/character vectors)
 #'@param titles - plot titles (character vector or list of expressions/character vectors)
-#'@param subset - list with subsets of alongshore spawning zones to include in plots
+#'@param subsets - list with subsets of alongshore spawning zones to include in plots
 #'@param facets - expression for creating facets (use bquote(...))
 #'@param ggtheme - ggplot2 theme for plot
 #'

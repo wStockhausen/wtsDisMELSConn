@@ -1,5 +1,7 @@
 #'
-#'@title Function to extract tracks of individuals from a DisMELS model run.
+#'@title Extract tracks of individuals from a DisMELS model run.
+#'
+#'@description Function to extract tracks of individuals from a DisMELS model run.
 #'
 #'@param indivConn - individual connectivity file (or dataframe)
 #'@param results - DisMELS results file (or dataframe)

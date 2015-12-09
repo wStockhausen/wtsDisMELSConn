@@ -18,6 +18,8 @@ plotConnectivityMatrix.matrix(prbMat, uNAZs = NULL, uNDZs = NULL,
 
 \item{uNDZs}{- character vector of unique nursery depth zones}
 
+\item{uSAZs}{- character vector of unique spawning alongshore zones}
+
 \item{uSDZs}{- character vector of unique spawning depth zones}
 
 \item{xlab}{- label for x axis}
@@ -39,8 +41,6 @@ plotConnectivityMatrix.matrix(prbMat, uNAZs = NULL, uNDZs = NULL,
 \item{plotfile}{- file to save plot to (if devtype != 'win')}
 
 \item{plotsize}{- 2 element vector giving plot size in pixels (c(W,H))}
-
-\item{uNSZs}{- character vector of unique spawning alongshore zones}
 }
 \description{
 Plot a connectivity matrix from a matrix representation.

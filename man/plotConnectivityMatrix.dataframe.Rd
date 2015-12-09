@@ -31,8 +31,6 @@ plotConnectivityMatrix.dataframe(tbl, zmax = NULL, zmin = 0, title = NULL,
 \item{plotfile}{- file to save plot to (if devtype != 'win')}
 
 \item{plotsize}{- 2 element vector giving plot size in pixels (c(W,H))}
-
-\item{csvfile}{- csv file to read connectivity matrix from (can be NULL)}
 }
 \description{
 Plot a connectivity matrix from a dataframe.

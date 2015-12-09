@@ -1,8 +1,10 @@
 #'
 #'@title Plot fraction remaining by age-in-stage.
 #'
+#'@description Function to plot fraction remaining by age-in-stage.
+#'
 #'@param dfr - dataframe or filename (or NULL) from call to extractIndivs(...)
-#'@param subset - list with subsets of alongshore spawning zones to include in plots
+#'@param subsets - list with subsets of alongshore spawning zones to include in plots
 #'@param lhsTypeInfo - life stage info list for IBM (req'd if onlySuccessful=TRUE or onlyUnsuccessful=TRUE)
 #'@param nurseryAlongshoreZones  - vector of id's for alongshore nursery zones to include
 #'@param nurseryDepthZones       - vector of names for depth zones used as nursery areas in the IBM (req'd if onlySuccessful=TRUE)
@@ -30,7 +32,7 @@ plotFractionRemaining<-function(dfr=NULL,
     if (!is.data.frame(dfr)){
         #read in extracted individuals csv file
         if (is.null(dfr)){
-            dfr<-wtsUtilities::getCSV(caption='Select extracted individuals results file');
+            dfr<-getCSV(caption='Select extracted individuals results file');
             if (is.null(dfr)) return(NULL);#user aborted
         } else {
             dfr<-read.csv(dfr,stringsAsFactors=FALSE);
@@ -67,7 +69,7 @@ plotFractionRemaining<-function(dfr=NULL,
     qry<-gsub("&&end_depthzones",       paste(nurseryDepthZones,      collapse="','"),qry);
     qry<-gsub("&&end_alongshorezones",  paste(nurseryAlongshoreZones, collapse=","),qry);
     cat(qry,"\n");
-    dfrp<-sqldf::sqldf(qry);
+    dfrp<-sqldf(qry);
     
     #normalize by numbers at 
     qry<-"select
@@ -99,7 +101,7 @@ plotFractionRemaining<-function(dfr=NULL,
         order by
             d.start_depthzone,d.start_alongshorezone,d.ageInStage;";
     cat(qry,"\n");
-    dfr1<-sqldf::sqldf(qry);
+    dfr1<-sqldf(qry);
     names(dfr1)<-c('start_depthzone','start_alongshorezone','ageInStage','fraction')
     xrng1<-range(dfr1$ageInStage,na.rm=TRUE,finite=TRUE);
     yrng1<-range(dfr1[['fraction']],na.rm=TRUE,finite=TRUE);

@@ -1,5 +1,7 @@
 #'
-#'@title Function to extract unique IDs for individuals from a DisMELS model run.
+#'@title Extract unique IDs for individuals from a DisMELS model run.
+#'
+#'@description Function to extract unique IDs for individuals from a DisMELS model run.
 #'
 #'@param indivConn        - individual connectivity file (or dataframe)
 #'@param lhsTypeInfo      - life stage info list for IBM (req'd if onlySuccessful=TRUE or onlyUnsuccessful=TRUE)

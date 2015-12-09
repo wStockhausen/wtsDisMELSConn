@@ -13,6 +13,8 @@ calcLinRegs.RbyI(mdfrZR, mdfrI, ylab, vars, nrows = 2, labelByGroup = FALSE)
 
 \item{ylab}{- label for y axis in time series plot of raw time series}
 
+\item{vars}{- subset of index time series to include in linear regresssion analysis}
+
 \item{nrows}{- number of rows for LR plots}
 
 \item{labelByGroup}{- flag to use "group" column to organize linear regression analysis}

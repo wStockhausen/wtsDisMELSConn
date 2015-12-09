@@ -2,7 +2,7 @@
 % Please edit documentation in R/plotTimeSeriesofIndivValues.R
 \name{plotTimeSeriesofIndivValues}
 \alias{plotTimeSeriesofIndivValues}
-\title{Plot time series of a variable for individuals}
+\title{Plot time series of a variable for individuals.}
 \usage{
 plotTimeSeriesofIndivValues(dfr = NULL, vars = NULL, by = "age",
   lhsTypeInfo = getLifeStageInfo.ATF(), nurseryAlongshoreZones = NULL,
@@ -33,10 +33,13 @@ plotTimeSeriesofIndivValues(dfr = NULL, vars = NULL, by = "age",
 
 \item{titles}{- plot titles (character vector or list of expressions/character vectors)}
 
+\item{subsets}{- list with subsets of alongshore spawning zones to include in plots}
+
 \item{facets}{- expression for creating facets (use bquote(...))}
 
 \item{ggtheme}{- ggplot2 theme for plot}
-
-\item{subset}{- list with subsets of alongshore spawning zones to include in plots}
+}
+\description{
+Funcrtion to plot time series of a variable for individuals.
 }
 

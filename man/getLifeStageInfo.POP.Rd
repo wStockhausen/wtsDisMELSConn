@@ -2,9 +2,14 @@
 % Please edit documentation in R/getLifeStageInfo.POP.R
 \name{getLifeStageInfo.POP}
 \alias{getLifeStageInfo.POP}
-\title{Get a list that defines life stage info for the DisMELS POP IBM.
-#}
+\title{Get a list that defines life stage info for the DisMELS POP IBM.}
 \usage{
 getLifeStageInfo.POP()
+}
+\value{
+a list
+}
+\description{
+Function to get a list that defines life stage info for the DisMELS POP IBM.
 }
 

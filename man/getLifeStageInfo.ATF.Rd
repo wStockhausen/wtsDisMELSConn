@@ -2,9 +2,14 @@
 % Please edit documentation in R/getLifeStageInfo.ATF.R
 \name{getLifeStageInfo.ATF}
 \alias{getLifeStageInfo.ATF}
-\title{Get a list that defines life stage info for the DisMELS arrowtooth flounder IBM.
-#}
+\title{Get a list that defines life stage info for the DisMELS arrowtooth flounder IBM.}
 \usage{
 getLifeStageInfo.ATF()
+}
+\value{
+a list
+}
+\description{
+Function to get a list that defines life stage info for the DisMELS arrowtooth flounder IBM.
 }
 

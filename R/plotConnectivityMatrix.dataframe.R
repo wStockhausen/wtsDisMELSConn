@@ -4,7 +4,6 @@
 #'@description Plot a connectivity matrix from a dataframe.
 #'
 #'@param tbl - dataframe or matrix representation of a connectivity matrix (can be NULL)
-#'@param csvfile - csv file to read connectivity matrix from (can be NULL)
 #'@param zmax - max value for color scale
 #'@param zmin - min value for color scale
 #'@param title - title for plot

@@ -5,6 +5,7 @@
 #'
 #'@param mdfrZR - melted dataframe with standardized recruitment time series
 #'@param mdfrI - melted dataframe with raw index time series
+#'@param vars - subset of index time series to include in linear regresssion analysis
 #'@param ylab - label for y axis in time series plot of raw time series
 #'@param nrows - number of rows for LR plots
 #'@param labelByGroup - flag to use "group" column to organize linear regression analysis
@@ -22,7 +23,12 @@
 #'
 #'@export
 #'
-calcLinRegs.RbyI<-function(mdfrZR,mdfrI,ylab,vars,nrows=2,labelByGroup=FALSE){
+calcLinRegs.RbyI<-function(mdfrZR,
+                           mdfrI,
+                           ylab,
+                           vars,
+                           nrows=2,
+                           labelByGroup=FALSE){
   #define list for ggplot2 objects
   plots<-list();
   

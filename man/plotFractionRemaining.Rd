@@ -12,6 +12,8 @@ plotFractionRemaining(dfr = NULL, subsets = NULL,
 \arguments{
 \item{dfr}{- dataframe or filename (or NULL) from call to extractIndivs(...)}
 
+\item{subsets}{- list with subsets of alongshore spawning zones to include in plots}
+
 \item{lhsTypeInfo}{- life stage info list for IBM (req'd if onlySuccessful=TRUE or onlyUnsuccessful=TRUE)}
 
 \item{nurseryAlongshoreZones}{- vector of id's for alongshore nursery zones to include}
@@ -25,7 +27,8 @@ plotFractionRemaining(dfr = NULL, subsets = NULL,
 \item{title}{- plot title}
 
 \item{ggtheme}{- ggplot2 theme for plot}
-
-\item{subset}{- list with subsets of alongshore spawning zones to include in plots}
+}
+\description{
+Function to plot fraction remaining by age-in-stage.
 }
 

@@ -22,4 +22,7 @@ concatAnnualTables(allRes = NULL, type = c("prbSinkGivenSource",
 \value{
 dataframe with concatenated matrices
 }
+\description{
+Function to concatenate annual tables (connectivity matrices, individual connectivities, numbers by source), write to csv files.
+}
 

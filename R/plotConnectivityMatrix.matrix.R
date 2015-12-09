@@ -6,7 +6,7 @@
 #'@param prbMat - matrix representation of a connectivity matrix (can be NULL)
 #'@param uNAZs - character vector of unique nursery alongshore zones
 #'@param uNDZs - character vector of unique nursery depth zones
-#'@param uNSZs - character vector of unique spawning alongshore zones
+#'@param uSAZs - character vector of unique spawning alongshore zones
 #'@param uSDZs - character vector of unique spawning depth zones
 #'@param zmax - max value for color scale
 #'@param zmin - min value for color scale
