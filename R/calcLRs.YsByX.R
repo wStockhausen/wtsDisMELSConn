@@ -20,7 +20,14 @@
 #'    \item summary - dataframe with summaries of linear model results
 #'    \item plots   - list of ggplot2 objects (p1=standardized time series, p2=fits to lm's)\cr
 #'  }
-#'  \item sums - a dataframe summarizing all LR results.
+#'  \item summary - a dataframe summarizing all LR results. Columns are
+#'  \itemize{
+#'    \item y   - dependent variable label
+#'    \item x   - independent variable label
+#'    \item rho - Pearson's correlation coefficient
+#'    \item rsq - R-squared for linear fit
+#'    \item p   - P-value (uncorrected for multiple comparisons)
+#'  }
 #'  \item plot - a ggplot object.
 #'}
 #'
@@ -44,8 +51,9 @@ calcLRs.YsByX<-function(mdfrX,
 #   require(reshape2);
 #   require(wtsUtilities);
   
-  #define list for results
-  res<-list();
+  #define objects for output
+  res<-list();#list of individual LR results and plot objects
+  sums<-NULL; #dataframe for summary of LR results
   
   ##standardize independent (X) values by variable, group across years
   mdfrX$group<-"";#set (or add) group column to ""
@@ -102,7 +110,7 @@ calcLRs.YsByX<-function(mdfrX,
             cat("------Processing dependent group/variable ",gv,'\n')
             lm.vars[[gv]]<-lm(as.formula(paste("`",yvar,"`~\`",uXV,"`",sep='')),dfrYsOnX);
             s<-summary(lm.vars[[gv]]);
-            sum.vars<-rbind(sum.vars,data.frame(index=gv,
+            sum.vars<-rbind(sum.vars,data.frame(y=gv,
                                                 rho=s$coefficients[2,1],
                                                 rsq=s$r.squared,
                                                 p=s$coefficients[2,4]));
@@ -132,6 +140,8 @@ calcLRs.YsByX<-function(mdfrX,
     #print(p2);
     
     res[[uXV]]<-list(lms=lm.vars,summary=sum.vars,plots=list(p1=p1,p2=p2))
+    sum.vars$x<-uXV;
+    sums<-rbind(sums,sum.vars[,c("y","x","rho","rsq","p")]);
   }##uXVs
   
   
@@ -160,7 +170,7 @@ calcLRs.YsByX<-function(mdfrX,
   p3 <- p3 + facet_grid(yvar~xvar);
   #print(p3);
 
-  return(invisible(list(res=res,p3=p3)));
+  return(invisible(list(res=res,summary=sums,plot=p3)));
 }
 
 # mdfrI<-mdfrEIs;  ylab<-'Index';           vars<-c('AO','PDO','MEI','lagged MEI');

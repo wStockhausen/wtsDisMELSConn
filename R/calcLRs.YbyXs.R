@@ -17,7 +17,14 @@
 #'  \item res - a list with sublists by unique Y with elements
 #'  \itemize{
 #'    \item lms     - list with linear model (lm) results by Y for X
-#'    \item summary - dataframe with summaries of linear model results
+#'  \item summary - a dataframe summarizing all LR results. Columns are
+#'  \itemize{
+#'    \item y   - dependent variable label
+#'    \item x   - independent variable label
+#'    \item rho - Pearson's correlation coefficient
+#'    \item rsq - R-squared for linear fit
+#'    \item p   - P-value (uncorrected for multiple comparisons)
+#'  }
 #'    \item plots   - list of ggplot2 objects (p1=standardized time series, p2=fits to lm's)\cr
 #'  }
 #'  \item sums - a dataframe summarizing all LR results.
@@ -101,7 +108,7 @@ calcLRs.YbyXs<-function(mdfrX,
           cat("------Processing independent group/variable ",gv,'\n')
           lm.vars[[gv]]<-lm(as.formula(paste("`",uYV,"`~\`",uXV,"`",sep='')),dfrYOnXs);
           s<-summary(lm.vars[[gv]]);
-          sum.vars<-rbind(sum.vars,data.frame(index=gv,
+          sum.vars<-rbind(sum.vars,data.frame(x=gv,
                                               rho=s$coefficients[2,1],
                                               rsq=s$r.squared,
                                               p=s$coefficients[2,4]));
@@ -131,7 +138,7 @@ calcLRs.YbyXs<-function(mdfrX,
     
     res[[uYV]]<-list(lms=lm.vars,summary=sum.vars,plots=list(p1=p1,p2=p2))
     sum.vars$y<-uYV;
-    sums<-rbind(sums,sum.vars[,c("y","index","rho","rsq","p")]);
+    sums<-rbind(sums,sum.vars[,c("y","x","rho","rsq","p")]);
   }##uYVs
   
   ##plot the linear fits on one page
@@ -159,7 +166,7 @@ calcLRs.YbyXs<-function(mdfrX,
   p3 <- p3 + facet_grid(yvar~xvar);
   #print(p3);
 
-  return(invisible(list(res=res,sums=sums,plot=p3)));
+  return(invisible(list(res=res,summary=sums,plot=p3)));
 }
 
 # mdfrI<-mdfrEIs;  ylab<-'Index';           vars<-c('AO','PDO','MEI','lagged MEI');

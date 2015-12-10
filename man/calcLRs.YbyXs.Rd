@@ -30,7 +30,14 @@ list with named elements 'res', 'sums' and 'plot': \cr
  \item res - a list with sublists by unique Y with elements
  \itemize{
    \item lms     - list with linear model (lm) results by Y for X
-   \item summary - dataframe with summaries of linear model results
+ \item summary - a dataframe summarizing all LR results. Columns are
+ \itemize{
+   \item y   - dependent variable label
+   \item x   - independent variable label
+   \item rho - Pearson's correlation coefficient
+   \item rsq - R-squared for linear fit
+   \item p   - P-value (uncorrected for multiple comparisons)
+ }
    \item plots   - list of ggplot2 objects (p1=standardized time series, p2=fits to lm's)\cr
  }
  \item sums - a dataframe summarizing all LR results.
