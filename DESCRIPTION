@@ -2,20 +2,22 @@ Package: wtsDisMELSConn
 Type: Package
 Title: Functions for dealing with DisMELS IBM model output, including
     calculating and analyzing connectivity matrices
-Version: 1.2.0
-Date: 2015-12-09
+Version: 1.2.1
+Date: 2015-12-10
 Author: William T. Stockhausen
 Maintainer: William T. Stockhausen <william.stockhausen@noaa.gov>
 Description: Provides a set of functions for dealing with DisMELS model output,
     including calculating and analyzing connectivity matrices.
-License: MIT
+License: MIT + file LICENSE
+Depends: R (>= 3.2.1)
 Imports:
-    graphics,
-    grid,
-    ggplot2,
-    plyr,
-    RColorBrewer,
-    reshape2,
-    sqldf,
-    wtsUtilities
+    graphics (>= 3.2.1),
+    grid (>= 3.2.1),
+    ggplot2 (>= 1.0.1),
+    plyr (>= 1.8.3),
+    RColorBrewer (>= 1.1-2),
+    reshape2 (>= 1.4.1),
+    sqldf (>= 0.4-10),
+    tcltk (>= 3.2.1),
+    wtsUtilities (>= 1.0.16)
 RoxygenNote: 5.0.1
