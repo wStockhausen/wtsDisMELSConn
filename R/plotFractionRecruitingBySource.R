@@ -14,9 +14,9 @@
 #' @param width - figure width (ignored if devtype='win'; pixels if devtype='png', inches if devtype='pdf')
 #' @param height - figure height (ignored if devtype='win'; pixels if devtype='png', inches if devtype='pdf')
 #' 
-#' @import RColorBrewer
 #' @import graphics
-#' @importFrom wtsUtilities computeStats
+#' @import RColorBrewer
+#' @import wtsUtilities
 #' 
 #' @export
 #'

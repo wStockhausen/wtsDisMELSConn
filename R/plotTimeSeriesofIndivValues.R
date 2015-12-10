@@ -18,8 +18,8 @@
 #'@param facets - expression for creating facets (use bquote(...))
 #'@param ggtheme - ggplot2 theme for plot
 #'
-#'@importFrom sqldf sqldf
-#'@importFrom wtsUtilities getCSV
+#'@import sqldf
+#'@import wtsUtilities
 #'@import ggplot2
 #' 
 #'@export

@@ -27,8 +27,8 @@
 #' dfrNR - numbers by source (spawning area)\cr
 #' dfrIC - dataframe of start and end locations for each individual in the model run\cr
 #' 
-#' @importFrom sqldf sqldf
-#' @importFrom wtsUtilities getCSV
+#' @import sqldf
+#' @import wtsUtilities
 #' 
 #' @export
 #'

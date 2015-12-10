@@ -7,7 +7,7 @@
 #' 
 #' @return matrix of fractions recruiting, with times as rows and sources as columns
 #' 
-#'@importFrom sqldf sqldf
+#'@import sqldf
 #'
 #' @export
 #' 

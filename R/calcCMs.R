@@ -32,7 +32,7 @@
 #' \item dfrNRs - dataframe with numbers released
 #'}
 #' 
-#' @importFrom wtsUtilities getCSV
+#' @import wtsUtilities
 #' 
 #' @export
 #'

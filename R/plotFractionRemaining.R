@@ -13,9 +13,9 @@
 #'@param title   - plot title
 #'@param ggtheme - ggplot2 theme for plot
 #'
-#'@importFrom sqldf sqldf
-#'@importFrom wtsUtilities getCSV
 #'@import ggplot2
+#'@import sqldf
+#'@import wtsUtilities
 #' 
 #'@export
 #'

@@ -20,8 +20,8 @@
 #'@details If indivConn or results are NULL, the user will be prompted to select the 
 #'corresponding file(s) using a file chooser dialog.
 #'
-#'@importFrom sqldf sqldf
-#'@importFrom wtsUtilities getCSV
+#'@import sqldf
+#'@import wtsUtilities
 #'
 #'@export
 #'

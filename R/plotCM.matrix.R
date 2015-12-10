@@ -20,7 +20,7 @@
 #'@param devtype - 'win' or 'png'
 #'
 #'@import graphics
-#'@importFrom wtsUtilities createColorScale
+#'@import wtsUtilities
 #'
 #source("../Plots/createColorScale.R",chdir=TRUE);
 #----------------------------------------------------------

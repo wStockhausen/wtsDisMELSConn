@@ -16,7 +16,7 @@
 #'@param plotsize - 2 element vector giving plot size in pixels (c(W,H))
 #'@param devtype - 'win' or 'png'
 #'
-#'@importFrom wtsUtilities getCSV
+#'@import wtsUtilities
 #' 
 #'@export
 #'

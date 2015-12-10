@@ -12,9 +12,10 @@
 #'
 #'@return melted dataframe with concatenated indices
 #'
-#'@importFrom wtsUtilities addFilter
 #'@importFrom tcltk tk_choose.files
-#'@importFrom reshape2 melt
+#'
+#'@import reshape2
+#'@import wtsUtilities
 #'
 #'@export
 #'

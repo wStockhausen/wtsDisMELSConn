@@ -19,8 +19,8 @@
 #'If onlyUnsuccessful=TRUE, then it is assumed that 'unsuccessful' individuals are those which 
 #'don't make it to the final life stage.
 #'
-#'@importFrom sqldf sqldf
-#'@importFrom wtsUtilities getCSV
+#'@import sqldf
+#'@import wtsUtilities
 #'
 #'@export
 #'
