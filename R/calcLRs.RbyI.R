@@ -11,10 +11,12 @@
 #'@param labelByGroup - flag to use "group" column to organize linear regression analysis
 #'
 #'@return list with elements
-#'* mdfrZIs - dataframe with z-scores for index time series
-#'* lms     - list with linear model (lm) results by index
-#'* summary - dataframe with summaries of linear model results
-#'* plots   - list of ggplot2 objects (raw time series, standardized time series, fits to lm's)
+#'\itemize{
+#'  \item mdfrZIs - dataframe with z-scores for index time series
+#'  \item lms     - list with linear model (lm) results by index
+#'  \item summary - dataframe with summaries of linear model results
+#'  \item plots   - list of ggplot2 objects (raw time series, standardized time series, fits to lm's)
+#'}
 #'
 #'@import ggplot2
 #'@import plyr
@@ -23,12 +25,12 @@
 #'
 #'@export
 #'
-calcLinRegs.RbyI<-function(mdfrZR,
-                           mdfrI,
-                           ylab,
-                           vars,
-                           nrows=2,
-                           labelByGroup=FALSE){
+calcLRs.RbyI<-function(mdfrZR,
+                       mdfrI,
+                       ylab,
+                       vars,
+                       nrows=2,
+                       labelByGroup=FALSE){
   #define list for ggplot2 objects
   plots<-list();
   
@@ -90,7 +92,6 @@ calcLinRegs.RbyI<-function(mdfrZR,
     }#vars loop
     ##cat(uG,'\n')
   }#uGs loop
-  ##knitr::kable(sum.vars);
 
   ##plot the linear fits
   tmp<-mdfrZIs;

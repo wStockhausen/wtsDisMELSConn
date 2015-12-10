@@ -87,7 +87,7 @@ plotFractionRecruitingBySource<-function(prbRS,
     if (devtype=='png') dev.off();
     
     #plot time series of standardized residuals for spawning areas
-    stats<-wtsUtilities::computeStats(prbRS);
+    stats<-computeStats(prbRS);
     devs<-0*prbRS;
     for (src in srcs) {
         if(stats[src,"stdev"]>0) devs[,src]<-(prbRS[,src]-stats[src,"mean"])/(stats[src,"stdev"])

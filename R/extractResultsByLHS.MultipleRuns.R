@@ -33,10 +33,10 @@ extractResultsByLHS.MultipleRuns<-function(YYYYs=NULL,
                                            outDir=NULL,
                                            basename.Out="Results"){
     if (is.null(inpDir.Results)){
-        inpDir.Results<-tcltk::tk_choose.dir(default=inpDir.IndivConn,caption='Select input directory for DisMELS model results (csv) files.')
+        inpDir.Results<-tk_choose.dir(default=inpDir.IndivConn,caption='Select input directory for DisMELS model results (csv) files.')
     }
     if (is.null(outDir)){
-        outDir<-tcltk::tk_choose.dir(default=inpDir.Results,caption='Select output directory.')
+        outDir<-tk_choose.dir(default=inpDir.Results,caption='Select output directory.')
     }
     
     #format YYYYs, MMs, DDs

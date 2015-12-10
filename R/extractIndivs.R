@@ -42,7 +42,7 @@ extractIndivs<-function(indivConn=NULL,    #individual connectivity results file
     if (!is.data.frame(indivConn)){
         #read in individual connectivity results from csv file
         if (is.null(indivConn)){
-            indivConn<-wtsUtilities::getCSV(caption='Select individual connectivity results file');
+            indivConn<-getCSV(caption='Select individual connectivity results file');
             if (is.null(indivConn)) return(NULL);#user aborted
         } else {
             indivConn<-read.csv(indivConn,stringsAsFactors=FALSE);
@@ -54,7 +54,7 @@ extractIndivs<-function(indivConn=NULL,    #individual connectivity results file
     if (!is.data.frame(results)){
         #read in full results of DisMELS model run from csv file
         if (is.null(results)){
-            results<-wtsUtilities::getCSV(caption='Select full DisMELS results file');
+            results<-getCSV(caption='Select full DisMELS results file');
             if (is.null(results)) {
                 if (retIndivConn) return(indivConn);
                 return(NULL);#user aborted
@@ -85,7 +85,7 @@ extractIndivs<-function(indivConn=NULL,    #individual connectivity results file
                               nurseryZones=nurseryZones);
     cat('Will extract results for ',nrow(indivIDs),' individuals\n',sep='')
     qry<-"select distinct ID from indivIDs order by ID;"
-    uids<-sqldf::sqldf(qry);
+    uids<-sqldf(qry);
     cat("Number of unique ids in indivIDs =",nrow(uids),'\n');
     print(uids$ID[1:10]);
     
@@ -116,11 +116,11 @@ extractIndivs<-function(indivConn=NULL,    #individual connectivity results file
             qry<-gsub("&&resVars",resVars,qry); 
             qry<-gsub("&&typeName",typeName,qry); 
             cat("query = ",qry,sep='\n');
-            indivsTmp<-sqldf::sqldf(qry);    
+            indivsTmp<-sqldf(qry);    
             
             #check on indivs
             qry<-"select distinct id from indivsTmp order by id;"
-            uids<-sqldf::sqldf(qry);
+            uids<-sqldf(qry);
             cat("Number of unique ids in indivsTmp =",nrow(uids),'\n');
             print(uids$id[1:10]);
             cat('names(indivsTmp)= [',paste(names(indivsTmp),collapse=','),']\n')
@@ -144,7 +144,7 @@ extractIndivs<-function(indivConn=NULL,    #individual connectivity results file
                     id,age;";
             qry<-gsub("&&varsOut",varsOutStr,qry);  
             cat("query = ",qry,sep='\n');
-            indivsType<-sqldf::sqldf(qry);
+            indivsType<-sqldf(qry);
             
             #write indivs to csv file
             if (writeOutput) write.csv(indivsType,file=file.path(outDir,paste(outBaseCSV,ctr,typeName,'csv',sep='.')),row.names=FALSE);

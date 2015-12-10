@@ -34,7 +34,7 @@ extractIndivIDs<-function(indivConn=NULL,
     if (!is.data.frame(indivConn)){
         #read in individual connectivity results from csv file
         if (is.null(indivConn)){
-            indivConn<-wtsUtilities::getCSV(caption='Select individual connectivity results file');
+            indivConn<-getCSV(caption='Select individual connectivity results file');
             if (is.null(indivConn)) return(NULL);#user aborted
         } else {
             indivConn<-read.csv(indivConn,stringsAsFactors=FALSE);
@@ -104,7 +104,7 @@ extractIndivIDs<-function(indivConn=NULL,
         }
     }
     cat(qry,'\n');
-    indivIDs<-sqldf::sqldf(qry);
+    indivIDs<-sqldf(qry);
     cat('----finished running extractIndivIDs(...)----\n')
     return(invisible(indivIDs));
 }

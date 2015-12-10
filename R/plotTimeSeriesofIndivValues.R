@@ -42,7 +42,7 @@ plotTimeSeriesofIndivValues<-function(dfr=NULL,
     if (!is.data.frame(dfr)){
         #read in extracted individuals csv file
         if (is.null(dfr)){
-            dfr<-wtsUtilities::getCSV(caption='Select extracted individuals results file');
+            dfr<-getCSV(caption='Select extracted individuals results file');
             if (is.null(dfr)) return(NULL);#user aborted
         } else {
             dfr<-read.csv(dfr,stringsAsFactors=FALSE);
@@ -83,7 +83,7 @@ plotTimeSeriesofIndivValues<-function(dfr=NULL,
     qry<-gsub("&&end_depthzones",       paste(nurseryDepthZones,      collapse="','"),qry);
     qry<-gsub("&&end_alongshorezones",  paste(nurseryAlongshoreZones, collapse=","),qry);
     cat(qry,"\n");
-    dfr<-sqldf::sqldf(qry);
+    dfr<-sqldf(qry);
     dfr$xp<-as.factor(as.integer(round(dfr[[by]])));
     dfr$end_alongshorezone<-as.factor(as.integer(dfr$end_alongshorezone))
     dfr$start_alongshorezone<-as.factor(as.integer(dfr$start_alongshorezone))

@@ -12,11 +12,17 @@
 #'@param coord_fixed - flag to use equal x/y unit dimensions in LR plots
 #'@param labelByGroup - flag to use "group" column to organize linear regression analysis
 #'
-#'@return list with named elements res and p3. p3 is a ggplot object.
-#'res is a list with sublists by unique Y with elements
-#'* lms     - list with linear model (lm) results by Y for X
-#'* summary - dataframe with summaries of linear model results
-#'* plots   - list of ggplot2 objects (p1=standardized time series, p2=fits to lm's)
+#'@return list with named elements 'res', 'sums' and 'plot': \cr
+#'\itemize{
+#'  \item res - a list with sublists by unique Y with elements
+#'  \itemize{
+#'    \item lms     - list with linear model (lm) results by Y for X
+#'    \item summary - dataframe with summaries of linear model results
+#'    \item plots   - list of ggplot2 objects (p1=standardized time series, p2=fits to lm's)\cr
+#'  }
+#'  \item sums - a dataframe summarizing all LR results.
+#'  \item plot - a ggplot object.
+#'}
 #'
 #'@import ggplot2
 #'@import plyr
@@ -25,21 +31,22 @@
 #'
 #'@export
 #'
-calcLinRegs.YbyXs<-function(mdfrX,
-                            mdfrY,
-                            yvars=NULL,
-                            xlab='index',
-                            ylab='index',
-                            nrows=2,
-                            coord_fixed=FALSE,
-                            labelByGroup=FALSE){
+calcLRs.YbyXs<-function(mdfrX,
+                        mdfrY,
+                        yvars=NULL,
+                        xlab='index',
+                        ylab='index',
+                        nrows=2,
+                        coord_fixed=FALSE,
+                        labelByGroup=FALSE){
 #   require(ggplot2);
 #   require(plyr);
 #   require(reshape2);
 #   require(wtsUtilities);
   
-  #define list for results
-  res<-list();
+  #define objects for output
+  res<-list();#list of individual LR results and plot objects
+  sums<-NULL; #dataframe for summary of LR results
   
   ##standardize independent (X) values by variable, group across years
   if (!('group' %in% names(mdfrX))) mdfrX$group<-"";#add group column, if missing
@@ -102,8 +109,7 @@ calcLinRegs.YbyXs<-function(mdfrX,
       }#uXVs loop
       ##cat(uXG,'\n')
     }#uXGs loop
-    ##knitr::kable(sum.vars);
-  
+
     ##plot the linear fits
     tmp<-mdfrZXs;
     if (!labelByGroup) tmp$group<-'';
@@ -124,6 +130,8 @@ calcLinRegs.YbyXs<-function(mdfrX,
     #print(p2);
     
     res[[uYV]]<-list(lms=lm.vars,summary=sum.vars,plots=list(p1=p1,p2=p2))
+    sum.vars$y<-uYV;
+    sums<-rbind(sums,sum.vars[,c("y","index","rho","rsq","p")]);
   }##uYVs
   
   ##plot the linear fits on one page
@@ -151,7 +159,7 @@ calcLinRegs.YbyXs<-function(mdfrX,
   p3 <- p3 + facet_grid(yvar~xvar);
   #print(p3);
 
-  return(invisible(list(res=res,p3=p3)));
+  return(invisible(list(res=res,sums=sums,plot=p3)));
 }
 
 # mdfrI<-mdfrEIs;  ylab<-'Index';           vars<-c('AO','PDO','MEI','lagged MEI');

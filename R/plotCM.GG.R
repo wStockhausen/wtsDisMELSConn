@@ -23,29 +23,31 @@
 #'@param reverseX - flag to reverse x axis
 #'@param useGrad2 - flag to use reshape2::scale_fill_gradient2 for fill axis
 #'
+#'@return a ggplot2 object
+#'
 #'@import ggplot2
 #'
 #'@export
 #'
-plotConnectivityMatrixGG<-function(dfr,
-                                   x='nursery area',
-                                   y='spawning area',
-                                   z='Pr(N|S)',
-                                   xLab=x,
-                                   yLab=y,
-                                   zLab=z,
-                                   xMin=NULL,
-                                   xMax=NULL,
-                                   yMin=NULL,
-                                   yMax=NULL,
-                                   zMin=NULL,
-                                   zMax=NULL,
-                                   facetWrap=NULL,
-                                   facetGrid=NULL,
-                                   ncol=4,
-                                   reverseX=FALSE,
-                                   reverseY=FALSE,
-                                   useGrad2=FALSE){
+plotCM.GG<-function(dfr,
+                     x='nursery area',
+                     y='spawning area',
+                     z='Pr(N|S)',
+                     xLab=x,
+                     yLab=y,
+                     zLab=z,
+                     xMin=NULL,
+                     xMax=NULL,
+                     yMin=NULL,
+                     yMax=NULL,
+                     zMin=NULL,
+                     zMax=NULL,
+                     facetWrap=NULL,
+                     facetGrid=NULL,
+                     ncol=4,
+                     reverseX=FALSE,
+                     reverseY=FALSE,
+                     useGrad2=FALSE){
   #create dataframe to be plotted
   dfrp <- dfr;
   if (is.null(zMax)) zMax<-max(abs(dfrp[[z]]),na.rm=TRUE);

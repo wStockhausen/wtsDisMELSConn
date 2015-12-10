@@ -49,7 +49,7 @@ calcConnectivityMatrix<-function(ibmResTbl=NULL,
   if (!is.data.frame(ibmResTbl)){
     cat("Reading connectivity results file.\n")
     if (is.null(ibmResTbl)) {
-        ibmResTbl<-wtsUtilities::getCSV(caption="Select DisMELS connectivity results file");
+        ibmResTbl<-getCSV(caption="Select DisMELS connectivity results file");
         if (is.null(ibmResTbl)) return(NULL);
     } else {
         ibmResTbl<-read.csv(ibmResTbl,stringsAsFactors=FALSE);
@@ -61,7 +61,7 @@ calcConnectivityMatrix<-function(ibmResTbl=NULL,
   if (!is.data.frame(cellsTbl)){
     cat("Reading cells file.\n")
     if (is.null(cellsTbl)) {
-        cellsTbl<-wtsUtilities::getCSV(caption="Select classified grid cells (csv) file");
+        cellsTbl<-getCSV(caption="Select classified grid cells (csv) file");
         if (is.null(cellsTbl)) return(NULL);
     } else {
         cellsTbl<-read.csv(cellsTbl,stringsAsFactors=FALSE);
@@ -82,7 +82,7 @@ calcConnectivityMatrix<-function(ibmResTbl=NULL,
   nurseryZones <-as.data.frame(list(zone=nurseryZones));
   
   #create unique nursery zones table */
-  uniqNurseryZones<-sqldf::sqldf("select distinct
+  uniqNurseryZones<-sqldf("select distinct
                             depthzone      as depthzone,
                             alongshorezone as alongshorezone
                           from 
@@ -102,7 +102,7 @@ calcConnectivityMatrix<-function(ibmResTbl=NULL,
           from ibmResTbl 
         where typeName='&&firstLHS' and ageInStage=0";
   qry<-gsub("&&firstLHS",firstLHS,qry);
-  strtTbl1<-sqldf::sqldf(qry);
+  strtTbl1<-sqldf(qry);
   
   qry<-"select
           i.typeName as typeName,
@@ -125,10 +125,10 @@ calcConnectivityMatrix<-function(ibmResTbl=NULL,
           p.depthzone in spawningZones
         order by
           alongshorezone;" 
-  strtTbl<-sqldf::sqldf(qry); #this includes ONLY inidividuals released w/in defined spawning zones
+  strtTbl<-sqldf(qry); #this includes ONLY inidividuals released w/in defined spawning zones
   
   #create unique spawning zones table
-  uniqSpawningZones<-sqldf::sqldf("select distinct
+  uniqSpawningZones<-sqldf("select distinct
                               depthzone,
                               alongshorezone
                             from 
@@ -137,7 +137,7 @@ calcConnectivityMatrix<-function(ibmResTbl=NULL,
                               depthzone, alongshorezone;");
   
   #create unique spawning/nursery zones table
-  uniqSpawningNurseryZones1<-sqldf::sqldf("select
+  uniqSpawningNurseryZones1<-sqldf("select
                                       s.depthzone      as spawning_depthzone,
                                       s.alongshorezone as spawning_alongshorezone,
                                       n.depthzone      as nursery_depthzone,
@@ -158,7 +158,7 @@ calcConnectivityMatrix<-function(ibmResTbl=NULL,
           (select id from strtTbl) s
         where 
           ibmResTbl1.id = s.id";
-  ibmResTbl<-sqldf::sqldf(qry);
+  ibmResTbl<-sqldf(qry);
   #last column of ibmResTbl has duplicate name 'id'
   #need to replace it with unique name
   nms<-names(ibmResTbl)
@@ -192,7 +192,7 @@ calcConnectivityMatrix<-function(ibmResTbl=NULL,
           order by
             id;"
   qry<-gsub("&&lastLHS",lastLHS,qry);
-  tmpFinPts0<-sqldf::sqldf(qry);
+  tmpFinPts0<-sqldf(qry);
 
   qry<-"select 
           x.id as ID,
@@ -217,7 +217,7 @@ calcConnectivityMatrix<-function(ibmResTbl=NULL,
           x.typename = l.stage
         order by
           ID, rank;"
-  tmpFinPts1<-sqldf::sqldf(qry);
+  tmpFinPts1<-sqldf(qry);
     
   qry<-"select
           f.id as ID,
@@ -233,10 +233,10 @@ calcConnectivityMatrix<-function(ibmResTbl=NULL,
           f.rank = mx.mxLHS
         order by 
           id;";
-  tmpFinPts2<-sqldf::sqldf(qry);
+  tmpFinPts2<-sqldf(qry);
   
   #table of ending locations
-  endTbl0<-sqldf::sqldf("select
+  endTbl0<-sqldf("select
                     i.typeName as typeName,
                     i.ID as ID,
                     i.origID as origID,
@@ -296,14 +296,14 @@ calcConnectivityMatrix<-function(ibmResTbl=NULL,
           i.gridCellID=p.ID
       order by
           age, origID, ID;";  
-  endTbl<-sqldf::sqldf(qry);
+  endTbl<-sqldf(qry);
   endTbl$alongshorezone[is.na(endTbl$alongshorezone)]<--1;
   endTbl$depthzone[is.na(endTbl$depthzone)]<-'exited grid';
   
   
   #construct connectivity table for individuals
     # note that this works only for ordinary indivs, not super individuals
-  tblIndivConn<-sqldf::sqldf("select
+  tblIndivConn<-sqldf("select
                           s.ID as ID,
                           s.origID as origID,
                           s.typeName as start_typeName,
@@ -338,7 +338,7 @@ calcConnectivityMatrix<-function(ibmResTbl=NULL,
     #   Analyze the individual connectivity data and construct various          *
     #   source-sink summary tables.                                             *
     #***************************************************************************/
-  numSourceSink1<-sqldf::sqldf("select
+  numSourceSink1<-sqldf("select
                            start_depthzone,
                            start_alongshorezone,
                            end_depthzone,
@@ -389,11 +389,11 @@ calcConnectivityMatrix<-function(ibmResTbl=NULL,
           end_depthzone,
           end_alongshorezone;";
   qry<-gsub("&&lastLHS",lastLHS,qry);
-  numSourceSink2<-sqldf::sqldf(qry);
+  numSourceSink2<-sqldf(qry);
   numSourceSink2$end_depthzone[is.na(numSourceSink2$end_depthzone)]<-'non-nursery areas';
   numSourceSink2$end_alongshorezone[is.na(numSourceSink2$end_alongshorezone)]<--1;
   
-  numSourceSink<-sqldf::sqldf("select
+  numSourceSink<-sqldf("select
                             u.spawning_depthzone      as start_depthzone,
                             u.spawning_alongshorezone as start_alongshorezone,
                             u.nursery_depthzone       as end_depthzone,
@@ -419,7 +419,7 @@ calcConnectivityMatrix<-function(ibmResTbl=NULL,
   
   #***********************************************************
   #***********************************************************
-  numSource<-sqldf::sqldf("select
+  numSource<-sqldf("select
                       r.start_depthzone as start_depthzone,
                       r.start_alongshorezone as start_alongshorezone,
                       r.totRel as totRel,
@@ -454,7 +454,7 @@ calcConnectivityMatrix<-function(ibmResTbl=NULL,
   
   #***********************************************************
   #***********************************************************
-  totals<-sqldf::sqldf("select
+  totals<-sqldf("select
                     sum(totRel) as totRel,
                     sum(totSet) as totSet,
                     sum(totSet)/sum(totRel) as pSrv
@@ -500,7 +500,7 @@ calcConnectivityMatrix<-function(ibmResTbl=NULL,
           order by
             start_depthzone,start_alongshorezone,
             end_depthzone,end_alongshorezone;";
-  prbSinkGivenSource<-sqldf::sqldf(qry);  
+  prbSinkGivenSource<-sqldf(qry);  
   idx<-is.na(prbSinkGivenSource$numRel);
   prbSinkGivenSource$numRel[idx]<-0;
   prbSinkGivenSource$numRel<-as.numeric(prbSinkGivenSource$numRel);#not sure why this is non-numeric
@@ -531,7 +531,7 @@ calcConnectivityMatrix<-function(ibmResTbl=NULL,
         order by
           start_depthzone,start_alongshorezone,
           end_depthzone,end_alongshorezone;";
-  dfrCM<-sqldf::sqldf(qry);  
+  dfrCM<-sqldf(qry);  
 
   if (writeCSVs){
     write.csv(numSource,   file=outNumSource)

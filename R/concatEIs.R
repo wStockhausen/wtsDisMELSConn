@@ -10,7 +10,7 @@
 #'@param out.csv - name of output csv file
 #'@param out.dir - directory for output csv file
 #'
-#'@return melted dataframe
+#'@return melted dataframe with concatenated indices
 #'
 #'@importFrom wtsUtilities addFilter
 #'@importFrom tcltk tk_choose.files
@@ -18,7 +18,7 @@
 #'
 #'@export
 #'
-concatenateEIs<-function(caption="Select environmental index files",
+concatEIs<-function(caption="Select environmental index files",
                          types="txt",
                          hasHeader=FALSE,
                          id.vars='year',

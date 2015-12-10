@@ -6,16 +6,18 @@
 #'
 #' @param allRes - the results list from a connectivity analysis
 #' 
-#' @return list with 5 elements:\cr
-#'  avg  - the average connectivity matrix \cr
-#'  stdv - the standard deviations in connectivity matrix form\cr
-#'  devs - the deviations in connectivity matrix form\cr
-#'  dmin - the minimum value in the devs\cr
-#'  dmax - the maximum value in the devs\cr
+#' @return list with 5 elements:
+#' \itemize{
+#'  \item avg  - the average connectivity matrix 
+#'  \item stdv - the standard deviations in connectivity matrix form
+#'  \item devs - the deviations in connectivity matrix form
+#'  \item dmin - the minimum value in the devs
+#'  \item dmax - the maximum value in the devs
+#'}
 #'  
 #'  @export
 #'  
-calcAvgConnectivityMatrix<-function(allRes){
+calcAvgCM<-function(allRes){
   
   nRes<-length(allRes)
   avg<-0*allRes[[1]]$prbSinkGivenSource$prSetBySrc

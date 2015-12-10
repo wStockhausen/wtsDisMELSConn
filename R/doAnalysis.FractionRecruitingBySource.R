@@ -33,7 +33,7 @@ doAnalysis.FractionRecruitingBySource<-function(allRes){
           order by src;';
     for (time in times){
         prbSGS<-allRes[[time]]$prbSinkGivenSource;
-        prbRS<-sqldf::sqldf(qry);
+        prbRS<-sqldf(qry);
         for (src in srcs){
             prbRec.Source[time,src]<-prbRS[prbRS$src==src,"frRec"];
         }

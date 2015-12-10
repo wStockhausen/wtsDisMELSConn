@@ -16,17 +16,17 @@
 #'@param devtype - device type ('win' or 'png')
 #'
 #----------------------------------------------------------
-plotConnectivityMatrix.dataframe<-function(tbl,
-                                           zmax=NULL,
-                                           zmin=0,
-                                           title=NULL,
-                                           xlab=xlab,
-                                           ylab=ylab,
-                                           devtype='win',
-                                           cex=1*(devtype=='win')+1.5*(devtype!='win'),
-                                           colorscale=c("hot","cold","coldhot"),
-                                           plotfile="ConnectivityMatrix.png",
-                                           plotsize=c(970,780)){
+plotCM.dataframe<-function(tbl,
+                           zmax=NULL,
+                           zmin=0,
+                           title=NULL,
+                           xlab=xlab,
+                           ylab=ylab,
+                           devtype='win',
+                           cex=1*(devtype=='win')+1.5*(devtype!='win'),
+                           colorscale=c("hot","cold","coldhot"),
+                           plotfile="CM.png",
+                           plotsize=c(970,780)){
   uSDZs<-unique(tbl[["start_depthzone"]]);
   uSAZs<-unique(tbl[["start_alongshorezone"]]);
   uNDZs<-unique(tbl[["end_depthzone"]]);
@@ -48,19 +48,19 @@ plotConnectivityMatrix.dataframe<-function(tbl,
     }
   }
 
-  plotConnectivityMatrix.matrix(prbMat,
-                                uNAZs=uNAZs,
-                                uNDZs=uNDZs,
-                                uSAZs=uSAZs,
-                                uSDZs=uSDZs,
-                                xlab="Nursery Areas/Alongshore Zones",
-                                ylab="Spawning Areas/Alongshore Zones",
-                                zmax=zmax,
-                                zmin=zmin,
-                                title=title,
-                                devtype=devtype,
-                                cex=cex,
-                                colorscale=colorscale,
-                                plotfile=plotfile,
-                                plotsize=plotsize);
+  plotCM.matrix(prbMat,
+                uNAZs=uNAZs,
+                uNDZs=uNDZs,
+                uSAZs=uSAZs,
+                uSDZs=uSDZs,
+                xlab="Nursery Areas/Alongshore Zones",
+                ylab="Spawning Areas/Alongshore Zones",
+                zmax=zmax,
+                zmin=zmin,
+                title=title,
+                devtype=devtype,
+                cex=cex,
+                colorscale=colorscale,
+                plotfile=plotfile,
+                plotsize=plotsize);
 }

@@ -25,10 +25,12 @@
 #' and DD the day (if applicable) for a particular model run. If YYYY, MM, or DD is **not** part of the file name, use "" as the 
 #' function input for the corresponding years, months, or days.
 #' 
-#' @return list w/ 3 elements:\cr
-#' dfrCMs - dataframe with connectivity matrices results\cr
-#' dfrICs - dataframe with individual connectivity results\cr
-#' dfrNRs - dataframe with numbers released
+#' @return list w/ 3 elements:
+#' \itemize{
+#' \item dfrCMs - dataframe with connectivity matrices results
+#' \item dfrICs - dataframe with individual connectivity results
+#' \item dfrNRs - dataframe with numbers released
+#'}
 #' 
 #' @importFrom wtsUtilities getCSV
 #' 
@@ -38,23 +40,23 @@
 ################################################################################
 # Calculate connectivity matrices for a set of IBM runs
 ################################################################################
-calcConnectivityMatrices<-function(resDir="C:\\Projects\\GOA_IERP\\IBM_Runs\\ATF\\FullSeries",
-                                   connResBase="ConnYYYYMMDD.csv",
-                                   cellsTbl=file.path(resDir,'ATF_ClassifiedCGOAGridCells.csv'),
-                                   years=as.character(1996:2011),
-                                   months=c("01"),
-                                   days=c("01"),
-                                   spawningZones=c("SpawningArea_300to600m"),
-                                   nurseryZones=c("NurseryArea_000to050m","NurseryArea_050to150m"),
-                                   lhsTypeInfo=getLifeStageInfo.ATF(),
-                                   writeCSVs=TRUE,
-                                   folder=getwd(),
-                                   basename=""){
+calcCMs<-function(resDir="C:\\Projects\\GOA_IERP\\IBM_Runs\\ATF\\FullSeries",
+                   connResBase="ConnYYYYMMDD.csv",
+                   cellsTbl=file.path(resDir,'ATF_ClassifiedCGOAGridCells.csv'),
+                   years=as.character(1996:2011),
+                   months=c("01"),
+                   days=c("01"),
+                   spawningZones=c("SpawningArea_300to600m"),
+                   nurseryZones=c("NurseryArea_000to050m","NurseryArea_050to150m"),
+                   lhsTypeInfo=getLifeStageInfo.ATF(),
+                   writeCSVs=TRUE,
+                   folder=getwd(),
+                   basename=""){
                                    
   #read in classified cells table
   if (!is.data.frame(cellsTbl)){
       if (is.null(cellsTbl)) {
-        cellsTbl = wtsUtilities::getCSV(caption="Select classified grid cells (csv) file");
+        cellsTbl = getCSV(caption="Select classified grid cells (csv) file");
         if (is.null(cellsTbl)) return(NULL);
       } else {
         cellsTbl<-read.csv(cellsTbl,stringsAsFactors=FALSE);
@@ -75,12 +77,12 @@ calcConnectivityMatrices<-function(resDir="C:\\Projects\\GOA_IERP\\IBM_Runs\\ATF
         if (file.exists(connResFile)){
           ibmResTbl<-read.csv(connResFile,stringsAsFactors=FALSE);
           
-          res<-calcConnectivityMatrix(ibmResTbl=ibmResTbl,                # table for connectivity results
-                                      cellsTbl=cellsTbl,                  # table for classified grid cells
-                                      lhsTypeInfo=lhsTypeInfo,            # list object with life stage info
-                                      spawningZones=spawningZones,        # spawning area name(s)
-                                      nurseryZones=nurseryZones,          # nursery area name(s)
-                                      writeCSVs=FALSE);                   # flag to write results to csv files
+          res<-calcCM(ibmResTbl=ibmResTbl,                # table for connectivity results
+                      cellsTbl=cellsTbl,                  # table for classified grid cells
+                      lhsTypeInfo=lhsTypeInfo,            # list object with life stage info
+                      spawningZones=spawningZones,        # spawning area name(s)
+                      nurseryZones=nurseryZones,          # nursery area name(s)
+                      writeCSVs=FALSE);                   # flag to write results to csv files
           allRes[[paste(year,month,day,sep='.')]]<-res;
           mx<-max(mx,res$dfrCM$prFin,na.rm=TRUE);
         }

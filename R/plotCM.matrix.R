@@ -24,21 +24,21 @@
 #'
 #source("../Plots/createColorScale.R",chdir=TRUE);
 #----------------------------------------------------------
-plotConnectivityMatrix.matrix<-function(prbMat,
-                                        uNAZs=NULL,
-                                        uNDZs=NULL,
-                                        uSAZs=NULL,
-                                        uSDZs=NULL,
-                                        xlab="Nursery Areas/Alongshore Zones",
-                                        ylab="Spawning Areas/Alongshore Zones",
-                                        zmax=NULL,
-                                        zmin=0,
-                                        title=NULL,
-                                        devtype='win',
-                                        cex=1*(devtype=='win')+1.5*(devtype!='win'),
-                                        colorscale=c("hot","cold","coldhot"),
-                                        plotfile="ConnectivityMatrix.png",
-                                        plotsize=c(970,780)){
+plotCM.matrix<-function(prbMat,
+                        uNAZs=NULL,
+                        uNDZs=NULL,
+                        uSAZs=NULL,
+                        uSDZs=NULL,
+                        xlab="Nursery Areas/Alongshore Zones",
+                        ylab="Spawning Areas/Alongshore Zones",
+                        zmax=NULL,
+                        zmin=0,
+                        title=NULL,
+                        devtype='win',
+                        cex=1*(devtype=='win')+1.5*(devtype!='win'),
+                        colorscale=c("hot","cold","coldhot"),
+                        plotfile="CM.png",
+                        plotsize=c(970,780)){
   if (devtype=='win'){}
   else if (devtype=='png'){
       png(filename=plotfile,width=plotsize[1],height=plotsize[2])
@@ -62,7 +62,7 @@ plotConnectivityMatrix.matrix<-function(prbMat,
   
   cat("zmin = ",zmin,"\n")
   cat("zmax = ",zmax,"\n")
-  colorScale<-wtsUtilities::createColorScale(name=colorscale[1]);
+  colorScale<-createColorScale(name=colorscale[1]);
   pal<-colorScale((1:ncolors)/ncolors)
 #  image(1:ncol,1:nrow,t(prbMat),col=rev(heat.colors(ncolors)),
   image(1:ncol,1:nrow,t(prbMat),col=pal,

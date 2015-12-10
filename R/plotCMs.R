@@ -20,16 +20,16 @@
 ################################################################################
 # Plot series of connectivity matrices
 ################################################################################
-plotConnectivityMatrices<-function(allRes=NULL,
-                                   zmax=NULL,
-                                   zmin=0,
-                                   colorscale=c("hot","cold","coldhot"),
-                                   plotBase="ConnectivityMatrixYYYYMMDD.png",
-                                   plotDir='',
-                                   years=as.character(1996:2011),
-                                   months=c("01"),
-                                   days=c("01"),
-                                   devtype='win'){
+plotCMs<-function(allRes=NULL,
+                   zmax=NULL,
+                   zmin=0,
+                   colorscale=c("hot","cold","coldhot"),
+                   plotBase="ConnectivityMatrixYYYYMMDD.png",
+                   plotDir='',
+                   years=as.character(1996:2011),
+                   months=c("01"),
+                   days=c("01"),
+                   devtype='win'){
   
   #process all matrices  
 
@@ -43,20 +43,20 @@ plotConnectivityMatrices<-function(allRes=NULL,
         res<-allRes[[paste(year,month,day,sep='.')]];
         if (!is.null(res)){
             if (devtype=='win'){
-              plotConnectivityMatrix(res$prbSinkGivenSource,
-                                     zmax=zmax,
-                                     zmin=zmin,
-                                     colorscale=colorscale,
-                                     title=paste(day,month,year,sep='-'),
-                                     devtype='win')
+              plotCM(res$prbSinkGivenSource,
+                     zmax=zmax,
+                     zmin=zmin,
+                     colorscale=colorscale,
+                     title=paste(day,month,year,sep='-'),
+                     devtype='win')
             } else {
-              plotConnectivityMatrix(res$prbSinkGivenSource,
-                                     zmax=zmax,
-                                     zmin=zmin,
-                                     colorscale=colorscale,
-                                     title=paste(day,month,year,sep='-'),
-                                     plotfile=file.path(plotDir,dyBase),
-                                     devtype='png')
+              plotCM(res$prbSinkGivenSource,
+                     zmax=zmax,
+                     zmin=zmin,
+                     colorscale=colorscale,
+                     title=paste(day,month,year,sep='-'),
+                     plotfile=file.path(plotDir,dyBase),
+                     devtype='png')
             }
         }
       }

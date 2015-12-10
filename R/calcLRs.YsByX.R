@@ -12,11 +12,17 @@
 #'@param coord_fixed - flag to use equal x/y unit dimensions in LR plots
 #'@param labelByGroup - flag to use "group" column to organize linear regression analysis
 #'
-#'@return list with named elements res and p3. p3 is a ggplot object.
-#'res is a list with sublists by unique Y with elements
-#'* lms     - list with linear model (lm) results by Y for X
-#'* summary - dataframe with summaries of linear model results
-#'* plots   - list of ggplot2 objects (p1=standardized time series, p2=fits to lm's)
+#'@return list with named elements 'res', 'sums' and 'plot': \cr
+#'\itemize{
+#'  \item res - a list with sublists by unique X with elements
+#'  \itemize{
+#'    \item lms     - list with linear model (lm) results by Y for X
+#'    \item summary - dataframe with summaries of linear model results
+#'    \item plots   - list of ggplot2 objects (p1=standardized time series, p2=fits to lm's)\cr
+#'  }
+#'  \item sums - a dataframe summarizing all LR results.
+#'  \item plot - a ggplot object.
+#'}
 #'
 #'@import ggplot2
 #'@import plyr
@@ -25,14 +31,14 @@
 #'
 #'@export
 #'
-calcLinRegs.YsByX<-function(mdfrX,
-                            mdfrY,
-                            yvars=NULL,
-                            xlab="index",
-                            ylab=NULL,
-                            nrows=2,
-                            coord_fixed=FALSE,
-                            labelByGroup=FALSE){
+calcLRs.YsByX<-function(mdfrX,
+                        mdfrY,
+                        yvars=NULL,
+                        xlab="index",
+                        ylab=NULL,
+                        nrows=2,
+                        coord_fixed=FALSE,
+                        labelByGroup=FALSE){
 #   require(ggplot2);
 #   require(plyr);
 #   require(reshape2);
@@ -105,8 +111,7 @@ calcLinRegs.YsByX<-function(mdfrX,
       }#yvars loop
       ##cat(uYG,'\n')
     }#uYGs loop
-    ##knitr::kable(sum.vars);
-  
+
     ##plot the linear fits
     tmp<-mdfrZYs[mdfrZYs$variable %in% yvars,];
     if (!labelByGroup) tmp$group<-'';
