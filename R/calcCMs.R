@@ -36,7 +36,6 @@
 #' 
 #' @export
 #'
-#source("calcConnectivityMatrix.R",chdir=TRUE);
 ################################################################################
 # Calculate connectivity matrices for a set of IBM runs
 ################################################################################
@@ -56,7 +55,7 @@ calcCMs<-function(resDir="C:\\Projects\\GOA_IERP\\IBM_Runs\\ATF\\FullSeries",
   #read in classified cells table
   if (!is.data.frame(cellsTbl)){
       if (is.null(cellsTbl)) {
-        cellsTbl = getCSV(caption="Select classified grid cells (csv) file");
+        cellsTbl<-getCSV(caption="Select classified grid cells (csv) file");
         if (is.null(cellsTbl)) return(NULL);
       } else {
         cellsTbl<-read.csv(cellsTbl,stringsAsFactors=FALSE);

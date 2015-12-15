@@ -12,22 +12,24 @@
 #'@param coord_fixed - flag to use equal x/y unit dimensions in LR plots
 #'@param labelByGroup - flag to use "group" column to organize linear regression analysis
 #'
-#'@return list with named elements 'res', 'sums' and 'plot': \cr
+#'@return list with named elements 'res', 'summary' and 'plot': \cr
 #'\itemize{
 #'  \item res - a list with sublists by unique Y with elements
 #'  \itemize{
 #'    \item lms     - list with linear model (lm) results by Y for X
+#'    \item summary - dataframe with summaries of linear model results
+#'    \item plots   - list of ggplot2 objects (p1=standardized time series, p2=fits to lm's)
+#'  }
 #'  \item summary - a dataframe summarizing all LR results. Columns are
 #'  \itemize{
-#'    \item y   - dependent variable label
-#'    \item x   - independent variable label
-#'    \item rho - Pearson's correlation coefficient
-#'    \item rsq - R-squared for linear fit
-#'    \item p   - P-value (uncorrected for multiple comparisons)
+#'    \item ygroup - dependent variable group label
+#'    \item y      - dependent variable label
+#'    \item xgroup - independent variable group label
+#'    \item x      - independent variable label
+#'    \item rho    - Pearson's correlation coefficient
+#'    \item rsq    - R-squared for linear fit
+#'    \item p      - P-value (uncorrected for multiple comparisons)
 #'  }
-#'    \item plots   - list of ggplot2 objects (p1=standardized time series, p2=fits to lm's)\cr
-#'  }
-#'  \item sums - a dataframe summarizing all LR results.
 #'  \item plot - a ggplot object.
 #'}
 #'
@@ -56,11 +58,11 @@ calcLRs.YbyXs<-function(mdfrX,
   sums<-NULL; #dataframe for summary of LR results
   
   ##standardize independent (X) values by variable, group across years
-  if (!('group' %in% names(mdfrX))) mdfrX$group<-"";#add group column, if missing
+  if (!('group' %in% names(mdfrX))) mdfrX$group<-"";#add group column
   mdfrZXs<-ddply(mdfrX,.variables=c('group','variable'),.fun=standardize,col='value',.inform=TRUE);
   
   ##standardize dependent (Y) values by variable, group across years
-  mdfrY$group<-"";#set (or add) group column to ""
+  if (!('group' %in% names(mdfrY))) mdfrY$group<-"";#add group column
   mdfrZYs<-ddply(mdfrY,.variables=c('group','variable'),.fun=standardize,col='value',.inform=TRUE);
 
   uXGs<-as.character(unique(mdfrZXs[["group"]]));
@@ -108,7 +110,8 @@ calcLRs.YbyXs<-function(mdfrX,
           cat("------Processing independent group/variable ",gv,'\n')
           lm.vars[[gv]]<-lm(as.formula(paste("`",uYV,"`~\`",uXV,"`",sep='')),dfrYOnXs);
           s<-summary(lm.vars[[gv]]);
-          sum.vars<-rbind(sum.vars,data.frame(x=gv,
+          sum.vars<-rbind(sum.vars,data.frame(xgroup=uXG,
+                                              x=uXV,
                                               rho=s$coefficients[2,1],
                                               rsq=s$r.squared,
                                               p=s$coefficients[2,4]));
@@ -137,8 +140,9 @@ calcLRs.YbyXs<-function(mdfrX,
     #print(p2);
     
     res[[uYV]]<-list(lms=lm.vars,summary=sum.vars,plots=list(p1=p1,p2=p2))
-    sum.vars$y<-uYV;
-    sums<-rbind(sums,sum.vars[,c("y","x","rho","rsq","p")]);
+    sum.vars$ygroup<-'';
+    sum.vars$y     <-uYV;
+    sums<-rbind(sums,sum.vars[,c("ygroup","y","xgroup","x","rho","rsq","p")]);
   }##uYVs
   
   ##plot the linear fits on one page

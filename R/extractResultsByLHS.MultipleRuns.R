@@ -33,7 +33,7 @@ extractResultsByLHS.MultipleRuns<-function(YYYYs=NULL,
                                            outDir=NULL,
                                            basename.Out="Results"){
     if (is.null(inpDir.Results)){
-        inpDir.Results<-tk_choose.dir(default=inpDir.IndivConn,caption='Select input directory for DisMELS model results (csv) files.')
+        inpDir.Results<-tk_choose.dir(caption='Select input directory for DisMELS model results (csv) files.')
     }
     if (is.null(outDir)){
         outDir<-tk_choose.dir(default=inpDir.Results,caption='Select output directory.')

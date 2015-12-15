@@ -25,22 +25,24 @@ calcLRs.YbyXs(mdfrX, mdfrY, yvars = NULL, xlab = "index", ylab = "index",
 \item{labelByGroup}{- flag to use "group" column to organize linear regression analysis}
 }
 \value{
-list with named elements 'res', 'sums' and 'plot': \cr
+list with named elements 'res', 'summary' and 'plot': \cr
 \itemize{
  \item res - a list with sublists by unique Y with elements
  \itemize{
    \item lms     - list with linear model (lm) results by Y for X
+   \item summary - dataframe with summaries of linear model results
+   \item plots   - list of ggplot2 objects (p1=standardized time series, p2=fits to lm's)
+ }
  \item summary - a dataframe summarizing all LR results. Columns are
  \itemize{
-   \item y   - dependent variable label
-   \item x   - independent variable label
-   \item rho - Pearson's correlation coefficient
-   \item rsq - R-squared for linear fit
-   \item p   - P-value (uncorrected for multiple comparisons)
+   \item ygroup - dependent variable group label
+   \item y      - dependent variable label
+   \item xgroup - independent variable group label
+   \item x      - independent variable label
+   \item rho    - Pearson's correlation coefficient
+   \item rsq    - R-squared for linear fit
+   \item p      - P-value (uncorrected for multiple comparisons)
  }
-   \item plots   - list of ggplot2 objects (p1=standardized time series, p2=fits to lm's)\cr
- }
- \item sums - a dataframe summarizing all LR results.
  \item plot - a ggplot object.
 }
 }

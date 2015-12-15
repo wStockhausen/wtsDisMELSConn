@@ -27,7 +27,7 @@
 #' dfrNR - numbers by source (spawning area)\cr
 #' dfrIC - dataframe of start and end locations for each individual in the model run\cr
 #' 
-#' @import sqldf
+#' @import sqldf 
 #' @import wtsUtilities
 #' 
 #' @export
@@ -35,16 +35,16 @@
 #*********************************************************
 #  Calculate connectivity matrix for one model run
 #**********************************************************/
-calcConnectivityMatrix<-function(ibmResTbl=NULL,
-                                 cellsTbl=NULL, 
-                                 lhsTypeInfo=getLifeStageInfo.ATF(),            
-                                 spawningZones=c("SpawningArea_300to600m"),                       #spawning area name(s)
-                                 nurseryZones=c("NurseryArea_000to050m","NurseryArea_050to150m"), #nursery area name(s)
-                                 writeCSVs=TRUE,
-                                 outNumRel="NumbersReleasedFromSpawningAreas.csv",          #initial numbers released csv file 
-                                 outConn="ConnectivityToNurseryAreasFromSpawningAreas.csv", #output connectivity csv file
-                                 outIndivs="IndivStartEndPositions.csv"                     #output indivs csv file
-                                 ){
+calcCM<-function(ibmResTbl=NULL,
+                 cellsTbl=NULL, 
+                 lhsTypeInfo=getLifeStageInfo.ATF(),            
+                 spawningZones=c("SpawningArea_300to600m"),                       #spawning area name(s)
+                 nurseryZones=c("NurseryArea_000to050m","NurseryArea_050to150m"), #nursery area name(s)
+                 writeCSVs=TRUE,
+                 outNumRel="NumbersReleasedFromSpawningAreas.csv",          #initial numbers released csv file 
+                 outConn="ConnectivityToNurseryAreasFromSpawningAreas.csv", #output connectivity csv file
+                 outIndivs="IndivStartEndPositions.csv"                     #output indivs csv file
+                 ){
   #create IBM connectivity results table (if not an input)
   if (!is.data.frame(ibmResTbl)){
     cat("Reading connectivity results file.\n")

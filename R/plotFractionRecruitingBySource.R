@@ -59,7 +59,7 @@ plotFractionRecruitingBySource<-function(prbRS,
     
     if (devtype=='pdf') {
         pdf(file=paste(basename,"pdf",sep='.'),width,height,onefile=TRUE);
-        old.par<par(mfrow=c(3,1));
+        old.par<-par(mfrow=c(3,1));
         on.exit(par(old.par));
     }
     
