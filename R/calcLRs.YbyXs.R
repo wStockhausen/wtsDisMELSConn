@@ -19,6 +19,7 @@
 #'    \item lms     - list with linear model (lm) results by Y for X
 #'    \item summary - dataframe with summaries of linear model results
 #'    \item plots   - list of ggplot2 objects (p1=standardized time series, p2=fits to lm's)
+#'    \item data    - dataframe with data involved in linear models
 #'  }
 #'  \item summary - a dataframe summarizing all LR results. Columns are
 #'  \itemize{
@@ -55,6 +56,7 @@ calcLRs.YbyXs<-function(mdfrX,
   
   #define objects for output
   res<-list();#list of individual LR results and plot objects
+##  data<-NULL; #dataframe for data involved in LR results
   sums<-NULL; #dataframe for summary of LR results
   
   ##standardize independent (X) values by variable, group across years
@@ -139,6 +141,7 @@ calcLRs.YbyXs<-function(mdfrX,
     p2 <- p2 + facet_wrap(~variable,nrow=nrows);
     #print(p2);
     
+##    data <- rbind(data,mYonX);
     res[[uYV]]<-list(lms=lm.vars,summary=sum.vars,plots=list(p1=p1,p2=p2))
     sum.vars$ygroup<-'';
     sum.vars$y     <-uYV;
@@ -158,7 +161,7 @@ calcLRs.YbyXs<-function(mdfrX,
     mYonX$variable<-gsub("_"," ",mYonX$variable,fixed=TRUE);
     mYonX$yvar<-uYV;
     names(mYonX)<-c("year","y","xvar","x","yvar");
-    mYonXp<-rbind(mYonXp,mYonX);
+    mYonXp<-rbind(mYonXp,mYonX[,c("year","yvar","y","xvar","x")]);
   }
   
   p3 <- ggplot(mYonXp,aes_string(y="y",x="x"));
@@ -170,7 +173,22 @@ calcLRs.YbyXs<-function(mdfrX,
   p3 <- p3 + facet_grid(yvar~xvar);
   #print(p3);
 
-  return(invisible(list(res=res,summary=sums,plot=p3)));
+  ##create a dataframe for the data to the linear fits, but without using "group"
+  mYonXp<-NULL;
+  for (uYV in uYVs){
+    tmp<-mdfrZXs;
+    dX<-dcast(tmp,year~variable,value.var='value');
+    mX<-melt(dX,id.vars='year');
+    mYX<-rbind(mX,mdfrZYs[mdfrZYs$variable==uYV,c('year','variable','value')])
+    dYX<-dcast(mYX,year~variable,value.var='value');
+    mYonX<-melt(dYX,id.vars=c('year',uYV));
+    mYonX$variable<-gsub("_"," ",mYonX$variable,fixed=TRUE);
+    mYonX$yvar<-uYV;
+    names(mYonX)<-c("year","y","xvar","x","yvar");
+    mYonXp<-rbind(mYonXp,mYonX[,c("year","yvar","y","xvar","x")]);
+  }
+  
+  return(invisible(list(res=res,summary=sums,plot=p3,data=mYonXp)));
 }
 
 # mdfrI<-mdfrEIs;  ylab<-'Index';           vars<-c('AO','PDO','MEI','lagged MEI');

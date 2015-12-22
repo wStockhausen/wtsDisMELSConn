@@ -19,6 +19,7 @@
 #'    \item lms     - list with linear model (lm) results by Y for X
 #'    \item summary - dataframe with summaries of linear model results
 #'    \item plots   - list of ggplot2 objects (p1=standardized time series, p2=fits to lm's)
+#'    \item data    - dataframe with data involved in linear models
 #'  }
 #'  \item summary - a dataframe summarizing all LR results. Columns are
 #'  \itemize{
@@ -162,7 +163,7 @@ calcLRs.YsByX<-function(mdfrX,
     mYonX$variable<-gsub("_"," ",mYonX$variable,fixed=TRUE);
     mYonX$xvar<-uXV;
     names(mYonX)<-c("year","x","yvar","y","xvar");
-    mYonXp<-rbind(mYonXp,mYonX);
+    mYonXp<-rbind(mYonXp,mYonX[,c("year","yvar","y","xvar","x")]);
   }
   
   p3 <- ggplot(mYonXp,aes_string(y="y",x="x"));
@@ -174,7 +175,22 @@ calcLRs.YsByX<-function(mdfrX,
   p3 <- p3 + facet_grid(yvar~xvar);
   #print(p3);
 
-  return(invisible(list(res=res,summary=sums,plot=p3)));
+  ##create a dataframe for the data to the linear fits, but without using "group"
+  mYonXp<-NULL;
+  for (uXV in uXVs){
+    tmp<-mdfrZYs[mdfrZYs$variable %in% yvars,];
+    dY<-dcast(tmp,year~variable,value.var='value');
+    mY<-melt(dY,id.vars='year');
+    mYX<-rbind(mdfrZXs[mdfrZXs$variable==uXV,c('year','variable','value')],mY)
+    dYX<-dcast(mYX,year~variable,value.var='value');
+    mYonX<-melt(dYX,id.vars=c('year',uXV));
+    mYonX$variable<-gsub("_"," ",mYonX$variable,fixed=TRUE);
+    mYonX$xvar<-uXV;
+    names(mYonX)<-c("year","x","yvar","y","xvar");
+    mYonXp<-rbind(mYonXp,mYonX[,c("year","yvar","y","xvar","x")]);
+  }
+  
+  return(invisible(list(res=res,summary=sums,plot=p3,data=mYonXp)));
 }
 
 # mdfrI<-mdfrEIs;  ylab<-'Index';           vars<-c('AO','PDO','MEI','lagged MEI');

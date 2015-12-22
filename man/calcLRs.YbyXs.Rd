@@ -32,6 +32,7 @@ list with named elements 'res', 'summary' and 'plot': \cr
    \item lms     - list with linear model (lm) results by Y for X
    \item summary - dataframe with summaries of linear model results
    \item plots   - list of ggplot2 objects (p1=standardized time series, p2=fits to lm's)
+   \item data    - dataframe with data involved in linear models
  }
  \item summary - a dataframe summarizing all LR results. Columns are
  \itemize{
