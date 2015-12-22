@@ -20,7 +20,6 @@
 #'    \item lms     - list with linear model (lm) results by Y for X
 #'    \item summary - dataframe with summaries of linear model results
 #'    \item plots   - list of ggplot2 objects (p1=standardized time series, p2=fits to lm's)
-#'    \item data    - dataframe with data involved in linear models
 #'  }
 #'  \item summary - a dataframe summarizing all LR results. Columns are
 #'  \itemize{
@@ -28,11 +27,13 @@
 #'    \item y      - dependent variable label
 #'    \item xgroup - independent variable group label
 #'    \item x      - independent variable label
+#'    \item n      - number of valid data points
 #'    \item rho    - Pearson's correlation coefficient
 #'    \item rsq    - R-squared for linear fit
 #'    \item p      - P-value (uncorrected for multiple comparisons)
 #'  }
 #'  \item plot - a ggplot object.
+#'  \item data - dataframe with data involved in linear models
 #'}
 #'
 #'@import ggplot2
@@ -116,6 +117,7 @@ calcLRs.YbyXs<-function(mdfrX,
           s<-summary(lm.vars[[gv]]);
           sum.vars<-rbind(sum.vars,data.frame(xgroup=uXG,
                                               x=uXV,
+                                              n=sum((!is.na(dfrYsOnX[[uXV]]))&(!is.na(dfrYsOnX[[uYV]]))),
                                               rho=s$coefficients[2,1],
                                               rsq=s$r.squared,
                                               p=s$coefficients[2,4]));
@@ -147,7 +149,7 @@ calcLRs.YbyXs<-function(mdfrX,
     res[[uYV]]<-list(lms=lm.vars,summary=sum.vars,plots=list(p1=p1,p2=p2))
     sum.vars$ygroup<-'';
     sum.vars$y     <-uYV;
-    sums<-rbind(sums,sum.vars[,c("ygroup","y","xgroup","x","rho","rsq","p")]);
+    sums<-rbind(sums,sum.vars[,c("ygroup","y","xgroup","x","n","rho","rsq","p")]);
   }##uYVs
   
   ##plot the linear fits on one page

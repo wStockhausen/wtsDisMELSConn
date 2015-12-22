@@ -34,7 +34,6 @@ list with named elements 'res', 'summary' and 'plot': \cr
    \item lms     - list with linear model (lm) results by Y for X
    \item summary - dataframe with summaries of linear model results
    \item plots   - list of ggplot2 objects (p1=standardized time series, p2=fits to lm's)
-   \item data    - dataframe with data involved in linear models
  }
  \item summary - a dataframe summarizing all LR results. Columns are
  \itemize{
@@ -42,11 +41,13 @@ list with named elements 'res', 'summary' and 'plot': \cr
    \item y      - dependent variable label
    \item xgroup - independent variable group label
    \item x      - independent variable label
+   \item n      - number of valid data points
    \item rho    - Pearson's correlation coefficient
    \item rsq    - R-squared for linear fit
    \item p      - P-value (uncorrected for multiple comparisons)
  }
  \item plot - a ggplot object.
+ \item data - dataframe with data involved in linear models
 }
 }
 \description{
