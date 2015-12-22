@@ -11,6 +11,7 @@
 #'@param nrows - number of rows for LR plots
 #'@param coord_fixed - flag to use equal x/y unit dimensions in LR plots
 #'@param labelByGroup - flag to use "group" column to organize linear regression analysis
+#'@param verbose - flag to print messages
 #'
 #'@return list with named elements 'res', 'summary' and 'plot': \cr
 #'\itemize{
@@ -48,7 +49,8 @@ calcLRs.YbyXs<-function(mdfrX,
                         ylab='index',
                         nrows=2,
                         coord_fixed=FALSE,
-                        labelByGroup=FALSE){
+                        labelByGroup=FALSE,
+                        verbose=FALSE){
 #   require(ggplot2);
 #   require(plyr);
 #   require(reshape2);
@@ -73,7 +75,7 @@ calcLRs.YbyXs<-function(mdfrX,
   uYVs<-as.character(unique(mdfrZYs[["variable"]]));
   if (is.null(yvars)) yvars<-uYVs;
   for (uYV in uYVs){
-    cat("Processing dependent variable ",uYV,"\n");
+    if (verbose) cat("Processing dependent variable ",uYV,"\n");
     mdfrYByXs<-NULL;
     for (uXG in uXGs){
       tmp<-mdfrZYs[mdfrZYs$variable==uYV,];
@@ -100,16 +102,16 @@ calcLRs.YbyXs<-function(mdfrX,
     sum.vars<-NULL;
     ##process by unique values of "group" for independent variables
     for (uXG in uXGs){ 
-      cat("--Processing X group ",uXG,'\n')
+      if (verbose) cat("--Processing X group ",uXG,'\n');
       dfrYOnXs<-dcast(mdfrYByXs[mdfrYByXs$group==uXG,],year~variable,fun.aggregate=sum,value.var='value');
       ##linear model analysis
       for (uXV in uXVs){
-        cat("----Assessing independent variable ",uXV,'\n')
+        if (verbose) cat("----Assessing independent variable ",uXV,'\n');
         tst<-sum(abs(dfrYOnXs[[uXV]]),na.rm=TRUE)*sum(abs(dfrYOnXs[[uYV]]),na.rm=TRUE);
         if(!is.na(tst)&&(tst>0)){
           gv<-uXV;
           if (labelByGroup) gv<-paste(uXG,gv);
-          cat("------Processing independent group/variable ",gv,'\n')
+          if (verbose) cat("------Processing independent group/variable ",gv,'\n');
           lm.vars[[gv]]<-lm(as.formula(paste("`",uYV,"`~\`",uXV,"`",sep='')),dfrYOnXs);
           s<-summary(lm.vars[[gv]]);
           sum.vars<-rbind(sum.vars,data.frame(xgroup=uXG,
@@ -119,7 +121,7 @@ calcLRs.YbyXs<-function(mdfrX,
                                               p=s$coefficients[2,4]));
         }
       }#uXVs loop
-      ##cat(uXG,'\n')
+      ##if (verbose) cat(uXG,'\n');
     }#uXGs loop
 
     ##plot the linear fits
