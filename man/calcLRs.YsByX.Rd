@@ -5,7 +5,7 @@
 \title{Calculate linear regressions for time series in Y as function of time series in X.}
 \usage{
 calcLRs.YsByX(mdfrX, mdfrY, yvars = NULL, xlab = "index", ylab = NULL,
-  nrows = 2, coord_fixed = FALSE, labelByGroup = FALSE)
+  nrows = 2, coord_fixed = FALSE, labelByGroup = FALSE, verbose = FALSE)
 }
 \arguments{
 \item{mdfrX}{- melted dataframe with independent (X) time series}
@@ -23,6 +23,8 @@ calcLRs.YsByX(mdfrX, mdfrY, yvars = NULL, xlab = "index", ylab = NULL,
 \item{coord_fixed}{- flag to use equal x/y unit dimensions in LR plots}
 
 \item{labelByGroup}{- flag to use "group" column to organize linear regression analysis}
+
+\item{verbose}{- flag to print messages}
 }
 \value{
 list with named elements 'res', 'summary' and 'plot': \cr
