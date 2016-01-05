@@ -6,7 +6,8 @@
 \usage{
 plotHistogram(dfr, x, label = "", fill = "grey50", binwidth = NULL,
   lines = NULL, colour = "black", linetype = 2, linesize = 1.25,
-  reverse = FALSE, flip = TRUE, facets = NULL, showPlot = FALSE)
+  showPct = FALSE, reverse = FALSE, flip = TRUE, facets = NULL,
+  showPlot = FALSE)
 }
 \arguments{
 \item{dfr}{- dataframe}
@@ -27,6 +28,8 @@ plotHistogram(dfr, x, label = "", fill = "grey50", binwidth = NULL,
 
 \item{linesize}{- size for reference lines}
 
+\item{showPct}{- flag to include \% observations falling outside lines as text on plot}
+
 \item{reverse}{- reverse bin order}
 
 \item{flip}{- flag to flip orientation}
@@ -36,7 +39,9 @@ plotHistogram(dfr, x, label = "", fill = "grey50", binwidth = NULL,
 \item{showPlot}{- flag to print plot}
 }
 \value{
-a ggplot2 object
+a ggplot2 object with an extra list element, 'xtra'. 'xtra' is a 
+list with one element: pct.outside, which gives the \% observations falling
+outside the range of the 'lines' (if specified), or NULL.
 }
 \description{
 Function to plot a histogram for a column in a dataframe
