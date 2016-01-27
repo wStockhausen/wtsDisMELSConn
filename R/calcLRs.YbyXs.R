@@ -74,22 +74,29 @@ calcLRs.YbyXs<-function(mdfrX,
   uXVs<-as.character(unique(mdfrZXs[["variable"]]));
   uYGs<-as.character(unique(mdfrZYs[["group"]]));
   uYVs<-as.character(unique(mdfrZYs[["variable"]]));
+  if (verbose){
+      cat("uXGs = \n",paste0("---'",uXGs,"'\n"));
+      cat("uXVs = \n",paste0("---'",uXVs,"'\n"));
+      cat("uYGs = \n",paste0("---'",uYGs,"'\n"));
+      cat("uYVs = \n",paste0("---'",uYVs,"'\n"));
+      cat("---\n")
+  }
   if (is.null(yvars)) yvars<-uYVs;
   for (uYV in uYVs){
-    if (verbose) cat("Processing dependent variable ",uYV,"\n");
-    mdfrYByXs<-NULL;
+    if (verbose) cat("--\nProcessing dependent variable ",uYV,"\n");
+    mdfrYbyXs<-NULL;
     for (uXG in uXGs){
       tmp<-mdfrZYs[mdfrZYs$variable==uYV,];
       tmp$group<-uXG;
       tmp$linetype<-uYV;
-      mdfrYByXs<-rbind(mdfrYByXs,tmp);
+      mdfrYbyXs<-rbind(mdfrYbyXs,tmp);
     }
     tmp<-mdfrZXs;
     tmp$linetype<-xlab;
-    mdfrYByXs<-rbind(mdfrYByXs,tmp);
+    mdfrYbyXs<-rbind(mdfrYbyXs,tmp);
     ##plot zscores for uYV and uXVs by year (x axis) and group (plot)
     ncol<-ceiling(length(uXVs)/8);
-    p1 <- ggplot(mdfrYByXs,aes_string(x='year',y='value',
+    p1 <- ggplot(mdfrYbyXs,aes_string(x='year',y='value',
                                      colour='variable',linetype="linetype"));
     p1 <- p1 + geom_line(size=1.25);
     p1 <- p1 + scale_linetype_manual(values=c('dotted','solid'),breaks=c(uYV,xlab),limits=c(uYV,xlab))
@@ -103,24 +110,33 @@ calcLRs.YbyXs<-function(mdfrX,
     sum.vars<-NULL;
     ##process by unique values of "group" for independent variables
     for (uXG in uXGs){ 
-      if (verbose) cat("--Processing X group ",uXG,'\n');
-      dfrYOnXs<-dcast(mdfrYByXs[mdfrYByXs$group==uXG,],year~variable,fun.aggregate=sum,value.var='value');
+      if (verbose) cat("--Processing X group '",uXG,"'\n",sep='');
+      dfrYonXs<-dcast(mdfrYbyXs[mdfrYbyXs$group==uXG,],year~variable,fun.aggregate=sum,value.var='value');
       ##linear model analysis
       for (uXV in uXVs){
-        if (verbose) cat("----Assessing independent variable ",uXV,'\n');
-        tst<-sum(abs(dfrYOnXs[[uXV]]),na.rm=TRUE)*sum(abs(dfrYOnXs[[uYV]]),na.rm=TRUE);
-        if(!is.na(tst)&&(tst>0)){
-          gv<-uXV;
-          if (labelByGroup) gv<-paste(uXG,gv);
-          if (verbose) cat("------Processing independent group/variable ",gv,'\n');
-          lm.vars[[gv]]<-lm(as.formula(paste("`",uYV,"`~\`",uXV,"`",sep='')),dfrYOnXs);
-          s<-summary(lm.vars[[gv]]);
-          sum.vars<-rbind(sum.vars,data.frame(xgroup=uXG,
-                                              x=uXV,
-                                              n=sum((!is.na(dfrYsOnX[[uXV]]))&(!is.na(dfrYsOnX[[uYV]]))),
-                                              rho=s$coefficients[2,1],
-                                              rsq=s$r.squared,
-                                              p=s$coefficients[2,4]));
+        if (verbose) cat("----Assessing independent variable '",uXV,"'\n",sep='');
+        if (verbose) cat("----is.null(dfrYonXs[[uXV]]) =",is.null(dfrYonXs[[uXV]]),'\n');
+        if (verbose) cat("----length(dfrYonXs[[uXV]])  =",length(dfrYonXs[[uXV]]),'\n');
+        if (is.null(dfrYonXs[[uXV]])){
+            cat("skipping model for X = '",uXG,"'/'",uXV,"', Y = '",uYV,"'\n",sep='');
+        } else {
+            tst<-sum(abs(dfrYonXs[[uXV]]),na.rm=TRUE)*sum(abs(dfrYonXs[[uYV]]),na.rm=TRUE);
+            if(is.na(tst)||(tst==0)){
+                cat("skipping model for X = '",uXG,"'/'",uXV,"', Y = '",uYV,"'\n",sep='');
+            } else {
+              cat("running model for X = '",uXG,"'/'",uXV,"', Y = '",uYV,"'\n",sep='');
+              gv<-uXV;
+              if (labelByGroup) gv<-paste(uXG,gv);
+              #if (verbose) cat("------Running LR for independent group/variable ",gv,'\n');
+              lm.vars[[gv]]<-lm(as.formula(paste("`",uYV,"`~\`",uXV,"`",sep='')),dfrYonXs);
+              s<-summary(lm.vars[[gv]]);
+              sum.vars<-rbind(sum.vars,data.frame(xgroup=uXG,
+                                                  x=uXV,
+                                                  n=sum((!is.na(dfrYonXs[[uXV]]))&(!is.na(dfrYonXs[[uYV]]))),
+                                                  rho=s$coefficients[2,1],
+                                                  rsq=s$r.squared,
+                                                  p=s$coefficients[2,4]));
+            }
         }
       }#uXVs loop
       ##if (verbose) cat(uXG,'\n');
@@ -177,19 +193,21 @@ calcLRs.YbyXs<-function(mdfrX,
   p3 <- p3 + facet_grid(yvar~xvar);
   #print(p3);
 
-  ##create a dataframe for the data to the linear fits, but without using "group"
+  ##create a dataframe for the data to the linear fits
   mYonXp<-NULL;
-  for (uYV in uYVs){
-    tmp<-mdfrZXs;
-    dX<-dcast(tmp,year~variable,value.var='value');
-    mX<-melt(dX,id.vars='year');
-    mYX<-rbind(mX,mdfrZYs[mdfrZYs$variable==uYV,c('year','variable','value')])
-    dYX<-dcast(mYX,year~variable,value.var='value');
-    mYonX<-melt(dYX,id.vars=c('year',uYV));
-    mYonX$variable<-gsub("_"," ",mYonX$variable,fixed=TRUE);
-    mYonX$yvar<-uYV;
-    names(mYonX)<-c("year","y","xvar","x","yvar");
-    mYonXp<-rbind(mYonXp,mYonX[,c("year","yvar","y","xvar","x")]);
+  for (uYG in uYGs){
+      for (uYV in uYVs){
+        tmp<-mdfrZXs;
+        dX<-dcast(tmp,year~variable,value.var='value');
+        mX<-melt(dX,id.vars='year');
+        mYX<-rbind(mX,mdfrZYs[mdfrZYs$variable==uYV,c('year','variable','value')])
+        dYX<-dcast(mYX,year~variable,value.var='value');
+        mYonX<-melt(dYX,id.vars=c('year',uYV));
+        mYonX$variable<-gsub("_"," ",mYonX$variable,fixed=TRUE);
+        mYonX$yvar<-uYV;
+        names(mYonX)<-c("year","y","xvar","x","yvar");
+        mYonXp<-rbind(mYonXp,mYonX[,c("year","yvar","y","xvar","x")]);
+      }
   }
   
   return(invisible(list(res=res,summary=sums,plot=p3,data=mYonXp)));
