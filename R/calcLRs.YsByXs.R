@@ -123,10 +123,10 @@ calcLRs.YsByXs<-function(mdfrX,
                                                   xgroup=uXG,
                                                   xvar=uXV,
                                                   n=sum((!is.na(dfrYX$x))&(!is.na(dfrYX$y))),
-                                                  rho=s$coefficients[2,1],
+                                                  rho=s$coefficients[1,1],
                                                   rsq=s$r.squared,
                                                   adj.rsq=s$adj.r.squared,
-                                                  p=s$coefficients[2,4],
+                                                  p=s$coefficients[1,4],
                                                   aicc=aicc(lmp)));
                 ##add data to mYsOnXs
                 dfrYX$ygroup<-uYG;
