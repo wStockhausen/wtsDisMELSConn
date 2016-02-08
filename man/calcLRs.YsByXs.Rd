@@ -50,6 +50,7 @@ list with named elements 'res', 'summary' and 'plot': \cr
 Function to calculate linear regressions between time series in Y as function of time series in X.
 }
 \details{
-Requires packages 'plyr' and 'reshape2'.
+Requires packages 'plyr' and 'reshape2'. Datasets are standardized as z-scores, 
+so the constant term in the linear model is dropped.
 }
 

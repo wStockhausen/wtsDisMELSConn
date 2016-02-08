@@ -7,7 +7,8 @@
 #'@param mdfrY - melted dataframe with dependent (Y) time series
 #'@param verbose - flag to print messages
 #'
-#'@details Requires packages 'plyr' and 'reshape2'.
+#'@details Requires packages 'plyr' and 'reshape2'. Datasets are standardized as z-scores, 
+#'so the constant term in the linear model is dropped.
 #'
 #'@return list with named elements 'res', 'summary' and 'plot': \cr
 #'\itemize{
@@ -111,7 +112,7 @@ calcLRs.YsByXs<-function(mdfrX,
                   cat("skipping model for X = '",uXG,"'/'",uXV,"', Y = '",uYG,"/",uYV,"'\n",sep='');
               } else {
                 cat("------running model for X = '",uXG,"'/'",uXV,"', Y = '",uYG,"/",uYV,"'\n",sep='');
-                lmp<-lm(y~x,dfrYX);
+                lmp<-lm(y~x-1,dfrYX);
                 s<-summary(lmp);
                 ##add lm results to lm.res
                 gv<-paste(uYG,uYV,uXG,uXV,sep=":");
