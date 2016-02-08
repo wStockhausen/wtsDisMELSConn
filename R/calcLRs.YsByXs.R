@@ -24,8 +24,10 @@
 #'    \item x      - independent variable label
 #'    \item n      - number of valid data points
 #'    \item rho    - Pearson's correlation coefficient
-#'    \item rsq    - R-squared for linear fit
+#'    \item rsq    - R^2 for linear fit
+#'    \item adj.rsq - adjusted R^2 for linear fit
 #'    \item p      - P-value (uncorrected for multiple comparisons)
+#'    \item aicc   - AICc value
 #'  }
 #'  \item data - dataframe with data involved in linear models
 #'  \itemize{
@@ -122,7 +124,9 @@ calcLRs.YsByXs<-function(mdfrX,
                                                   n=sum((!is.na(dfrYX$x))&(!is.na(dfrYX$y))),
                                                   rho=s$coefficients[2,1],
                                                   rsq=s$r.squared,
-                                                  p=s$coefficients[2,4]));
+                                                  adj.rsq=s$adj.r.squared,
+                                                  p=s$coefficients[2,4],
+                                                  aicc=aicc(lmp)));
                 ##add data to mYsOnXs
                 dfrYX$ygroup<-uYG;
                 dfrYX$yvar  <-uYV;
