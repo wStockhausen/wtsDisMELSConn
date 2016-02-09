@@ -31,7 +31,8 @@ list with named elements 'res', 'summary' and 'plot': \cr
    \item rho    - Pearson's correlation coefficient
    \item rsq    - R^2 for linear fit
    \item adj.rsq - adjusted R^2 for linear fit
-   \item p      - P-value (uncorrected for multiple comparisons)
+   \item F      - F statistic
+   \item prF    - Pr(>F) (p-value uncorrected for multiple comparisons)
    \item aicc   - AICc value
  }
  \item data - dataframe with data involved in linear models

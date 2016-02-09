@@ -27,7 +27,8 @@
 #'    \item rho    - Pearson's correlation coefficient
 #'    \item rsq    - R^2 for linear fit
 #'    \item adj.rsq - adjusted R^2 for linear fit
-#'    \item p      - P-value (uncorrected for multiple comparisons)
+#'    \item F      - F statistic
+#'    \item prF    - Pr(>F) (p-value uncorrected for multiple comparisons)
 #'    \item aicc   - AICc value
 #'  }
 #'  \item data - dataframe with data involved in linear models
@@ -113,7 +114,8 @@ calcLRs.YsByXs<-function(mdfrX,
               } else {
                 cat("------running model for X = '",uXG,"'/'",uXV,"', Y = '",uYG,"/",uYV,"'\n",sep='');
                 lmp<-lm(y~x-1,dfrYX);
-                s<-summary(lmp);
+                smr<-summary(lmp);
+                ant<-anova(lmp);
                 ##add lm results to lm.res
                 gv<-paste(uYG,uYV,uXG,uXV,sep=":");
                 lm.res[[gv]]<-list(ygroup=uYG,yvar=uYV,xgroup=uXG,xvar=uXV,lm=lmp,data=dfrYX);
@@ -126,7 +128,8 @@ calcLRs.YsByXs<-function(mdfrX,
                                                   rho=s$coefficients[1,1],
                                                   rsq=s$r.squared,
                                                   adj.rsq=s$adj.r.squared,
-                                                  p=s$coefficients[1,4],
+                                                  F=ant[1,"F statistic"],
+                                                  prF=ant[1,"Pr(>F)"],
                                                   aicc=aicc(lmp)));
                 ##add data to mYsOnXs
                 dfrYX$ygroup<-uYG;
