@@ -2,7 +2,10 @@
 
 export(aggregateCMs)
 export(calcCM)
+export(calcCM.orig)
 export(calcCMs)
+export(calcCMs.orig)
+export(calcIC)
 export(calcLRs.RbyI)
 export(calcLRs.YbyXs)
 export(calcLRs.YsByX)
