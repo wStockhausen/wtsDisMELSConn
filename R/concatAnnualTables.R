@@ -1,5 +1,5 @@
 #'
-#'@title Concatenate annual tables (connectivity matrices, individual connectivities, numbers by source), write to csv files.
+#'@title Concatenate annual tables (connectivity matrices, individual connectivities, numbers by source), write to csv files
 #'
 #'@description Function to concatenate annual tables (connectivity matrices, individual connectivities, numbers by source), write to csv files.
 #'
@@ -10,6 +10,8 @@
 #'@param basename - base name for output csv file
 #'
 #'@return dataframe with concatenated matrices
+#'
+#'@details none.
 #'
 #'@export
 #'

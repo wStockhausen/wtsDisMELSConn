@@ -1,5 +1,5 @@
 #'
-#'@title Concatenate files with environmental indices.
+#'@title Concatenate files with environmental indices
 #'
 #'@description Function to concatenate files with environmental indices.
 #'
@@ -10,9 +10,9 @@
 #'@param out.csv - name of output csv file
 #'@param out.dir - directory for output csv file
 #'
-#'@return melted dataframe with concatenated indices
+#'@details Uses \code{tcltk::tk_choose_files}.
 #'
-#'@importFrom tcltk tk_choose.files
+#'@return melted dataframe with concatenated indices
 #'
 #'@import reshape2
 #'@import wtsUtilities
@@ -32,7 +32,7 @@ concatEIs<-function(caption="Select environmental index files",
     for (type in types){
         Filters<-addFilter(type,desc=paste(type," files (*.",type,")",sep=''),filter=paste("*.",type,sep=''),Filters=Filters);
     }
-    in.fns<-tk_choose.files(caption=caption,
+    in.fns<-tcltk::tk_choose.files(caption=caption,
                              multi=TRUE,filters=matrix(Filters[types,],nrow=length(types),ncol=2,byrow=FALSE));
     if (is.null(out.dir)) {
         out.dir<-dirname(file.path('.'));

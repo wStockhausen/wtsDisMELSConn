@@ -11,6 +11,8 @@
 #'@param outDir - folder to write output csv files
 #'@param outBaseCSV - base name for output csv files
 #'
+#'@details none.
+#'
 #'@export
 #'
 extractResultsByLHS<-function(results,

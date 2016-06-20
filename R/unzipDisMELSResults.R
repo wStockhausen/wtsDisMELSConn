@@ -1,5 +1,5 @@
 #'
-#'@title Unzips and renames a series of DisMELS results or connectivity files.
+#'@title Unzips and renames a series of DisMELS results or connectivity files
 #'
 #'@description Function to unzip and rename a series of DisMELS results or connectivity files.
 #'

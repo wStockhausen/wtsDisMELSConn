@@ -31,4 +31,7 @@ list with elements
 \description{
 Function to calculate linear regressions between recruitment and index time series
 }
+\details{
+none.
+}
 

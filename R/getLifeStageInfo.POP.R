@@ -1,9 +1,11 @@
 #'
-#'@title Get a list that defines life stage info for the DisMELS POP IBM.
+#'@title Get a list that defines life stage info for the DisMELS POP IBM
 #'
 #'@description Function to get a list that defines life stage info for the DisMELS POP IBM.
 #'
 #'@return a list
+#'
+#'@details none.
 #'
 #'@export
 #'

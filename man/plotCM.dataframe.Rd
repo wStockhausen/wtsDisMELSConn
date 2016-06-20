@@ -2,7 +2,7 @@
 % Please edit documentation in R/plotCM.dataframe.R
 \name{plotCM.dataframe}
 \alias{plotCM.dataframe}
-\title{Plot a connectivity matrix from a dataframe.}
+\title{Plot a connectivity matrix from a dataframe}
 \usage{
 plotCM.dataframe(tbl, zmax = NULL, zmin = 0, title = NULL, xlab = xlab,
   ylab = ylab, devtype = "win", cex = 1 * (devtype == "win") + 1.5 *
@@ -34,5 +34,8 @@ plotCM.dataframe(tbl, zmax = NULL, zmin = 0, title = NULL, xlab = xlab,
 }
 \description{
 Plot a connectivity matrix from a dataframe.
+}
+\details{
+deprecated in favor of \code{plotCM.GG}.
 }
 

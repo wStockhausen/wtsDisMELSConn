@@ -2,7 +2,7 @@
 % Please edit documentation in R/writeIndivConns.R
 \name{writeIndivConns}
 \alias{writeIndivConns}
-\title{Write dataframe with individual connectivity results to files by date.}
+\title{Write dataframe with individual connectivity results to files by date}
 \usage{
 writeIndivConns(dfrICs, folder = getwd(), basename = "IndivConn")
 }
@@ -14,6 +14,9 @@ writeIndivConns(dfrICs, folder = getwd(), basename = "IndivConn")
 \item{basename}{- base name for csv files}
 }
 \description{
-Funcrion to write dataframe with individual connectivity results to files by date.
+Function to write dataframe with individual connectivity results to files by date.
+}
+\details{
+none
 }
 

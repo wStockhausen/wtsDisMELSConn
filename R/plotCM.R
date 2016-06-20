@@ -1,5 +1,5 @@
 #'
-#'@title Plot a connectivity matrix.
+#'@title Plot a connectivity matrix
 #'
 #'@description Plot a connectivity matrix (from a matrix, dataframe, or csv file).
 #'
@@ -15,6 +15,9 @@
 #'@param plotfile - file to save plot to (if devtype != 'win')
 #'@param plotsize - 2 element vector giving plot size in pixels (c(W,H))
 #'@param devtype - 'win' or 'png'
+#'
+#'@details - deprecated in favor of \code{plotCM.GG}. Calls \code{plotCM.matrix} or \code{plotCM.dataframe},
+#'depending on class of 'tbl'.
 #'
 #'@import wtsUtilities
 #' 

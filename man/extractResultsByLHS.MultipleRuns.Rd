@@ -2,7 +2,7 @@
 % Please edit documentation in R/extractResultsByLHS.MultipleRuns.R
 \name{extractResultsByLHS.MultipleRuns}
 \alias{extractResultsByLHS.MultipleRuns}
-\title{Extracts and re-exports a series of DisMELS model results files by life stage.}
+\title{Extracts and re-exports a series of DisMELS model results files by life stage}
 \usage{
 extractResultsByLHS.MultipleRuns(YYYYs = NULL, MMs = NULL, DDs = NULL,
   lhsTypeInfo = NULL, lhsTypes = NULL, inpDir.Results = NULL,

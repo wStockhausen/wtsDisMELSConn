@@ -1,11 +1,13 @@
 #'
-#'@title Write dataframe with individual connectivity results to files by date.
+#'@title Write dataframe with individual connectivity results to files by date
 #'
-#'@description Funcrion to write dataframe with individual connectivity results to files by date.
+#'@description Function to write dataframe with individual connectivity results to files by date.
 #'
 #'@param dfrICs - dataframe
 #'@param folder - folder to write to
 #'@param basename - base name for csv files
+#'
+#'@details none
 #'
 #'@export
 #'

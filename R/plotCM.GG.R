@@ -1,5 +1,5 @@
 #'
-#'@title Plot connectivity matrices using ggplot2.
+#'@title Plot connectivity matrices using ggplot2
 #'
 #'@description Function to plot connectivity matrices using ggplot2.
 #'
@@ -24,6 +24,8 @@
 #'@param useGrad2 - flag to use reshape2::scale_fill_gradient2 for fill axis
 #'
 #'@return a ggplot2 object
+#'
+#'@details none.
 #'
 #'@import ggplot2
 #'

@@ -1,5 +1,5 @@
 #'
-#'@title Extract tracks of individuals from a DisMELS model run.
+#'@title Extract tracks of individuals from a DisMELS model run
 #'
 #'@description Function to extract tracks of individuals from a DisMELS model run.
 #'
@@ -9,11 +9,13 @@
 #'@param lhsTypes - vector of lhs types to process (NULL = all)
 #'@param onlySuccessful   - flag (T/F) to extract only successful indivs (if TRUE)
 #'@param onlyUnsuccessful - flag (T/F) to extract only unsuccessful indivs (if TRUE)
+#'@param successful - sql "where" clause to determine final state for individuals regarded as successful
 #'@param nurseryZones - vector of names of zones used as nursery areas in the IBM
 #'@param returnList - flag (T/F) indicating whether a list should be returned (otherwise NULL--helps with memory)
 #'@param writeOutput - flag (T/F) indicating whether output files should be written
 #'@param outDir - folder for output
 #'@param outBaseCSV - base name for output csv files
+#'@param verbose - flag (T/F) to print debugging info
 #'
 #'@return list of dataframes with indiv results by lhs type name if returnList=TRUE, otherwise NULL.
 #'
@@ -31,11 +33,13 @@ extractIndivs<-function(indivConn=NULL,    #individual connectivity results file
                           lhsTypes=NULL,    
                           onlySuccessful=FALSE,
                           onlyUnsuccessful=FALSE,
+                          successful='where (end_typeName="benthic.juvenile")',
                           nurseryZones=c("NurseryArea_000to050m","NurseryArea_050to150m"), #nursery area name(s)
                           returnList=TRUE,
                           writeOutput=TRUE,
                           outDir='./',
-                          outBaseCSV="allIndivs"
+                          outBaseCSV="allIndivs",
+                          verbose=FALSE
                           ){
 
     retIndivConn<-FALSE;
@@ -82,7 +86,9 @@ extractIndivs<-function(indivConn=NULL,    #individual connectivity results file
                               lhsTypeInfo=lhsTypeInfo,
                               onlySuccessful=onlySuccessful,
                               onlyUnsuccessful=onlyUnsuccessful,
-                              nurseryZones=nurseryZones);
+                              successful=successful,
+                              nurseryZones=nurseryZones,
+                              verbose=verbose);
     cat('Will extract results for ',nrow(indivIDs),' individuals\n',sep='')
     qry<-"select distinct ID from indivIDs order by ID;"
     uids<-sqldf(qry);

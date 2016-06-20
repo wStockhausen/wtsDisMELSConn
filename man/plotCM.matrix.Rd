@@ -2,7 +2,7 @@
 % Please edit documentation in R/plotCM.matrix.R
 \name{plotCM.matrix}
 \alias{plotCM.matrix}
-\title{Plot a connectivity matrix from a matrix representation.}
+\title{Plot a connectivity matrix from a matrix representation}
 \usage{
 plotCM.matrix(prbMat, uNAZs = NULL, uNDZs = NULL, uSAZs = NULL,
   uSDZs = NULL, xlab = "Nursery Areas/Alongshore Zones",
@@ -44,5 +44,8 @@ plotCM.matrix(prbMat, uNAZs = NULL, uNDZs = NULL, uSAZs = NULL,
 }
 \description{
 Plot a connectivity matrix from a matrix representation.
+}
+\details{
+deprecated in favor of \code{plotCM.GG}.
 }
 

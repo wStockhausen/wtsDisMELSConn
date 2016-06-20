@@ -5,6 +5,8 @@
 #'
 #'@return a list
 #'
+#'@details none
+#'
 #'@export
 #'
 getLifeStageInfo.ATF<-function(){

@@ -1,5 +1,5 @@
 #'
-#'@title Plot a connectivity matrix from a dataframe.
+#'@title Plot a connectivity matrix from a dataframe
 #'
 #'@description Plot a connectivity matrix from a dataframe.
 #'
@@ -15,7 +15,8 @@
 #'@param plotsize - 2 element vector giving plot size in pixels (c(W,H))
 #'@param devtype - device type ('win' or 'png')
 #'
-#----------------------------------------------------------
+#'@details deprecated in favor of \code{plotCM.GG}.
+#'
 plotCM.dataframe<-function(tbl,
                            zmax=NULL,
                            zmin=0,

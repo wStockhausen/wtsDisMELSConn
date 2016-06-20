@@ -2,14 +2,15 @@
 % Please edit documentation in R/extractIndivs.R
 \name{extractIndivs}
 \alias{extractIndivs}
-\title{Extract tracks of individuals from a DisMELS model run.}
+\title{Extract tracks of individuals from a DisMELS model run}
 \usage{
 extractIndivs(indivConn = NULL, results = NULL,
   lhsTypeInfo = getLifeStageInfo.ATF(), lhsTypes = NULL,
   onlySuccessful = FALSE, onlyUnsuccessful = FALSE,
+  successful = "where (end_typeName=\\"benthic.juvenile\\")",
   nurseryZones = c("NurseryArea_000to050m", "NurseryArea_050to150m"),
   returnList = TRUE, writeOutput = TRUE, outDir = "./",
-  outBaseCSV = "allIndivs")
+  outBaseCSV = "allIndivs", verbose = FALSE)
 }
 \arguments{
 \item{indivConn}{- individual connectivity file (or dataframe)}
@@ -24,6 +25,8 @@ extractIndivs(indivConn = NULL, results = NULL,
 
 \item{onlyUnsuccessful}{- flag (T/F) to extract only unsuccessful indivs (if TRUE)}
 
+\item{successful}{- sql "where" clause to determine final state for individuals regarded as successful}
+
 \item{nurseryZones}{- vector of names of zones used as nursery areas in the IBM}
 
 \item{returnList}{- flag (T/F) indicating whether a list should be returned (otherwise NULL--helps with memory)}
@@ -33,6 +36,8 @@ extractIndivs(indivConn = NULL, results = NULL,
 \item{outDir}{- folder for output}
 
 \item{outBaseCSV}{- base name for output csv files}
+
+\item{verbose}{- flag (T/F) to print debugging info}
 }
 \value{
 list of dataframes with indiv results by lhs type name if returnList=TRUE, otherwise NULL.

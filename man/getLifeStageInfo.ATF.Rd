@@ -12,4 +12,7 @@ a list
 \description{
 Function to get a list that defines life stage info for the DisMELS arrowtooth flounder IBM.
 }
+\details{
+none
+}
 

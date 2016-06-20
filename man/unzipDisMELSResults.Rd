@@ -2,7 +2,7 @@
 % Please edit documentation in R/unzipDisMELSResults.R
 \name{unzipDisMELSResults}
 \alias{unzipDisMELSResults}
-\title{Unzips and renames a series of DisMELS results or connectivity files.}
+\title{Unzips and renames a series of DisMELS results or connectivity files}
 \usage{
 unzipDisMELSResults(YYYYs = NULL, MMs = NULL, DDs = NULL,
   basename = "Results", dir.inp = getwd(), dir.out = getwd())

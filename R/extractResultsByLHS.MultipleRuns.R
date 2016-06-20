@@ -1,5 +1,5 @@
 #'
-#'@title Extracts and re-exports a series of DisMELS model results files by life stage.
+#'@title Extracts and re-exports a series of DisMELS model results files by life stage
 #'
 #'@description Function to extract and re-export a series of DisMELS model results by life stage.
 #'

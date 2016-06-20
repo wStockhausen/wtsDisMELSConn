@@ -2,7 +2,7 @@
 % Please edit documentation in R/calcOverlapCoefficient.CMs.R
 \name{calcOverlapCoefficient.CMs}
 \alias{calcOverlapCoefficient.CMs}
-\title{UNFINISHED: Calculate the overlap coefficient (OC) time series for a set of connectivity matrices.}
+\title{UNFINISHED: Calculate the overlap coefficient (OC) time series for a set of connectivity matrices}
 \usage{
 calcOverlapCoefficient.CMs(dfrCMs)
 }
@@ -11,10 +11,11 @@ calcOverlapCoefficient.CMs(dfrCMs)
 }
 \value{
 TODO: complete this
- 
- @export
 }
 \description{
 Calculates the overlap coefficient (OC) time series for a set of connectivity matrices.
+}
+\details{
+None.
 }
 

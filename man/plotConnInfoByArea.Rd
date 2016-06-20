@@ -2,7 +2,7 @@
 % Please edit documentation in R/plotConnInfoByArea.R
 \name{plotConnInfoByArea}
 \alias{plotConnInfoByArea}
-\title{Plot dataframe with connectivity info aggregated over sources or sinks as time series and boxplots.}
+\title{Plot dataframe with connectivity info aggregated over sources or sinks as time series and boxplots}
 \usage{
 plotConnInfoByArea(dfr, time = "year", area = "spawning area",
   y = "Pr(.|S)", timeLab = time, areaLab = area, yLab = y, facets = EW
@@ -30,5 +30,8 @@ list with ggplot2 elements pTS (time series) and pBP (boxplot)
 }
 \description{
 Function to plot dataframe with connectivity info aggregated over sources or sinks as time series and boxplots.
+}
+\details{
+none.
 }
 

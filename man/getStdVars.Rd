@@ -2,7 +2,7 @@
 % Please edit documentation in R/getStdVars.R
 \name{getStdVars}
 \alias{getStdVars}
-\title{Get standard variable names for DisMELS output.}
+\title{Get standard variable names for DisMELS output}
 \usage{
 getStdVars(newResType)
 }
@@ -14,5 +14,8 @@ data frame with columns for names of standard variables ('vars') and types ('typ
 }
 \description{
 Function to get standard variable names for DisMELS output.
+}
+\details{
+none
 }
 

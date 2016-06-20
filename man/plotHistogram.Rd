@@ -44,6 +44,9 @@ list with one element: pct.outside, which gives the \% observations falling
 outside the range of the 'lines' (if specified), or NULL.
 }
 \description{
-Function to plot a histogram for a column in a dataframe
+Function to plot a histogram for a column in a dataframe.
+}
+\details{
+none.
 }
 

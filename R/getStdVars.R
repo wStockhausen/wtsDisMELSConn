@@ -1,11 +1,13 @@
 #'
-#'@title Get standard variable names for DisMELS output.
+#'@title Get standard variable names for DisMELS output
 #'
 #'@description Function to get standard variable names for DisMELS output.
 #'
 #'@param newResType - flag ("NEW" or "OLD") indicating if results are based on the new or old DisMELS results format.
 #'
 #'@return data frame with columns for names of standard variables ('vars') and types ('types)
+#'
+#'@details none
 #'
 #'@export
 #'

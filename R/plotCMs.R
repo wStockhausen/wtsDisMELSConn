@@ -1,5 +1,5 @@
 #'
-#'@title Plot a set of connectivity matrices.
+#'@title Plot a set of connectivity matrices
 #'
 #'@description Plot a set of connectivity matrices (an allRes output from \code{calcConnectivityMatrices})
 #'
@@ -13,6 +13,8 @@
 #'@param months - vector of months to plot (MM)
 #'@param days - vector of days to plot (DD)
 #'@param devtype - 'win' or 'png'
+#'
+#'@details calls \code{plotCM} to plot individual connectivity matrices.
 #'
 #'@export
 #' 

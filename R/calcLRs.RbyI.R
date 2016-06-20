@@ -18,6 +18,8 @@
 #'  \item plots   - list of ggplot2 objects (raw time series, standardized time series, fits to lm's)
 #'}
 #'
+#'@details none.
+#'
 #'@import ggplot2
 #'@import plyr
 #'@import reshape2

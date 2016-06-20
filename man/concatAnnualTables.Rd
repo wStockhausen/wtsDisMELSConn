@@ -2,7 +2,7 @@
 % Please edit documentation in R/concatAnnualTables.R
 \name{concatAnnualTables}
 \alias{concatAnnualTables}
-\title{Concatenate annual tables (connectivity matrices, individual connectivities, numbers by source), write to csv files.}
+\title{Concatenate annual tables (connectivity matrices, individual connectivities, numbers by source), write to csv files}
 \usage{
 concatAnnualTables(allRes = NULL, type = c("prbSinkGivenSource",
   "tblIndivConn", "numSource"), writeCSV = TRUE, folder = getwd(),
@@ -24,5 +24,8 @@ dataframe with concatenated matrices
 }
 \description{
 Function to concatenate annual tables (connectivity matrices, individual connectivities, numbers by source), write to csv files.
+}
+\details{
+none.
 }
 

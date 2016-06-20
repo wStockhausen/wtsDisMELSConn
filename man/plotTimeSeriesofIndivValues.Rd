@@ -2,13 +2,13 @@
 % Please edit documentation in R/plotTimeSeriesofIndivValues.R
 \name{plotTimeSeriesofIndivValues}
 \alias{plotTimeSeriesofIndivValues}
-\title{Plot time series of a variable for individuals.}
+\title{Plot time series of a variable for individuals}
 \usage{
 plotTimeSeriesofIndivValues(dfr = NULL, vars = NULL, by = "age",
-  lhsTypeInfo = getLifeStageInfo.ATF(), nurseryAlongshoreZones = NULL,
-  nurseryDepthZones = NULL, spawningAlongshoreZones = NULL,
-  spawningDepthZones = NULL, xlab = NULL, ylabs = NULL, titles = NULL,
-  subsets = NULL, facets = NULL, ggtheme = theme_grey())
+  nurseryAlongshoreZones = NULL, nurseryDepthZones = NULL,
+  spawningAlongshoreZones = NULL, spawningDepthZones = NULL, xlab = NULL,
+  ylabs = NULL, titles = NULL, subsets = NULL, facets = NULL,
+  ggtheme = theme_grey())
 }
 \arguments{
 \item{dfr}{- dataframe or filename (or NULL) from call to extractIndivs(...)}
@@ -16,8 +16,6 @@ plotTimeSeriesofIndivValues(dfr = NULL, vars = NULL, by = "age",
 \item{vars}{- name(s) of variable(s) (columns) to plot}
 
 \item{by}{- name of x-axis variable to plot by}
-
-\item{lhsTypeInfo}{- life stage info list for IBM (req'd if onlySuccessful=TRUE or onlyUnsuccessful=TRUE)}
 
 \item{nurseryAlongshoreZones}{- alongshore id's for nursery zones to include}
 
@@ -39,7 +37,13 @@ plotTimeSeriesofIndivValues(dfr = NULL, vars = NULL, by = "age",
 
 \item{ggtheme}{- ggplot2 theme for plot}
 }
+\value{
+list of ggplot2 objects
+}
 \description{
 Funcrtion to plot time series of a variable for individuals.
+}
+\details{
+none
 }
 

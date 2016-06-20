@@ -2,15 +2,16 @@
 % Please edit documentation in R/extractIndivs.MultipleRuns.R
 \name{extractIndivs.MultipleRuns}
 \alias{extractIndivs.MultipleRuns}
-\title{Extracts and re-orders a series of DisMELS model results files by individual.}
+\title{Extracts and re-orders a series of DisMELS model results files by individual}
 \usage{
 extractIndivs.MultipleRuns(YYYYs = NULL, MMs = NULL, DDs = NULL,
   lhsTypeInfo = NULL, lhsTypes = NULL,
+  successful = "where (end_typeName=\\"benthic.juvenile\\")",
   nurseryZones = c("NurseryArea_000to050m", "NurseryArea_050to150m"),
   onlySuccessful = TRUE, onlyUnsuccessful = FALSE,
   inpDir.IndivConn = NULL, basename.IndivConn = "IndivConn",
   inpDir.Results = NULL, basename.Results = "Results", outDir = NULL,
-  basename.Out = "SuccessfulIndivs")
+  basename.Out = "SuccessfulIndivs", verbose = FALSE)
 }
 \arguments{
 \item{YYYYs}{- years to extract (can be NULL)}
@@ -22,6 +23,8 @@ extractIndivs.MultipleRuns(YYYYs = NULL, MMs = NULL, DDs = NULL,
 \item{lhsTypeInfo}{- life stage info list for IBM}
 
 \item{lhsTypes}{- lhs types to keep for output (NULL = all)}
+
+\item{successful}{- sql "where" clause to determine final state for individuals regarded as successful}
 
 \item{nurseryZones}{- vector of nursery area names}
 
@@ -40,6 +43,8 @@ extractIndivs.MultipleRuns(YYYYs = NULL, MMs = NULL, DDs = NULL,
 \item{outDir}{- output folder}
 
 \item{basename.Out}{- base name for output files}
+
+\item{verbose}{- flag (T/F) to print debugging info}
 }
 \value{
 no return value

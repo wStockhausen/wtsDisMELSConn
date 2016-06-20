@@ -1,5 +1,5 @@
 #'
-#'@title Aggregate dataframe with connectivity matrices according to new dates, spawning areas, nursery areas.
+#'@title Aggregate dataframe with connectivity matrices according to new dates, spawning areas, nursery areas
 #'
 #'@description Function to aggregate dataframe with connectivity matrices according to new dates, spawning areas, nursery areas.
 #'

@@ -1,5 +1,5 @@
 #'
-#'@title Plot fraction remaining by age-in-stage.
+#'@title Plot fraction remaining by age-in-stage
 #'
 #'@description Function to plot fraction remaining by age-in-stage.
 #'
@@ -12,6 +12,10 @@
 #'@param spawningDepthZones      - vector of names for depth zones used as spawning areas in the IBM (req'd if onlySuccessful=TRUE)
 #'@param title   - plot title
 #'@param ggtheme - ggplot2 theme for plot
+#'
+#'@return list with elements list(dfr=dfr,dfr.fracs=dfr1,ps=ps)
+#'
+#'@details none.
 #'
 #'@import ggplot2
 #'@import sqldf

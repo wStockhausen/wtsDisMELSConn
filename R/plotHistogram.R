@@ -1,7 +1,7 @@
 #'
 #'@title Plot a histogram for a column in a dataframe
 #'
-#'@description Function to plot a histogram for a column in a dataframe
+#'@description Function to plot a histogram for a column in a dataframe.
 #'
 #'@param dfr - dataframe
 #'@param x - name of column for histogram
@@ -21,6 +21,8 @@
 #'@return a ggplot2 object with an extra list element, 'xtra'. 'xtra' is a 
 #'list with one element: pct.outside, which gives the \% observations falling
 #'outside the range of the 'lines' (if specified), or NULL.
+#'
+#'@details none.
 #'
 #'@import grid
 #'@import ggplot2

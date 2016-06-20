@@ -2,11 +2,13 @@
 % Please edit documentation in R/extractIndivIDs.R
 \name{extractIndivIDs}
 \alias{extractIndivIDs}
-\title{Extract unique IDs for individuals from a DisMELS model run.}
+\title{Extract unique IDs for individuals from a DisMELS model run}
 \usage{
 extractIndivIDs(indivConn = NULL, lhsTypeInfo = NULL,
   onlySuccessful = FALSE, onlyUnsuccessful = FALSE,
-  nurseryZones = c("NurseryArea_000to050m", "NurseryArea_050to150m"))
+  successful = "where (end_typeName=\\"benthic.juvenile\\")",
+  nurseryZones = c("NurseryArea_000to050m", "NurseryArea_050to150m"),
+  verbose = FALSE)
 }
 \arguments{
 \item{indivConn}{- individual connectivity file (or dataframe)}
@@ -17,7 +19,11 @@ extractIndivIDs(indivConn = NULL, lhsTypeInfo = NULL,
 
 \item{onlyUnsuccessful}{- flag (T/F) to pull out only unsuccessful individuals}
 
-\item{nurseryZones}{- vector of names of zones used as nursery areas in the IBM (req'd if onlySuccessful=TRUE)}
+\item{successful}{- sql "where" clause to determine final state for individuals regarded as successful}
+
+\item{nurseryZones}{- vector of names of zones used as nursery areas in the IBM (req'd if onlySuccessful or onlyUnsuccessful=TRUE)}
+
+\item{verbose}{- flag (T/F) to print debugging info}
 }
 \value{
 data frame with columns 
@@ -28,9 +34,9 @@ Function to extract unique IDs for individuals from a DisMELS model run.
 }
 \details{
 If onlySuccessful=TRUE, then it is assumed that 'successful' individuals are those which are in
-one of the nursery areas in the final life stage.\cr
+one of the nursery areas and meet the 'successful' criteria.\cr
 \cr
 If onlyUnsuccessful=TRUE, then it is assumed that 'unsuccessful' individuals are those which 
-don't make it to the final life stage.
+don't meet the 'successful' criteria.
 }
 

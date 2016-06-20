@@ -32,4 +32,7 @@ plotFractionRecruitingBySource(prbRS, srcLbls = NULL, xTicks = NULL,
 \description{
 Function to produce plots based on time series of the total fraction recruiting by source.
 }
+\details{
+deprecated.
+}
 

@@ -1,5 +1,5 @@
 #'
-#'@title Calculate linear regressions for time series in Y as function of time series in X.
+#'@title Calculate linear regressions for time series in Y as function of time series in X
 #'
 #'@description Function to calculate linear regressions between time series in Y as function of time series in X.
 #'
@@ -42,6 +42,8 @@
 #'    \item y      - dependent value in LR
 #'  }
 #'}
+#'
+#'@details none.
 #'
 #'@import wtsUtilities
 #'

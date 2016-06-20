@@ -1,5 +1,5 @@
 #'
-#' @title Calculate an "average" connectivity matrix.
+#' @title Calculate an "average" connectivity matrix
 #'
 #' @description Calculates an "average" connectivity matrix from 
 #' results of a connectivity analysis. 
@@ -14,8 +14,10 @@
 #'  \item dmin - the minimum value in the devs
 #'  \item dmax - the maximum value in the devs
 #'}
+#'
+#'@details none.
 #'  
-#'  @export
+#'@export
 #'  
 calcAvgCM<-function(allRes){
   

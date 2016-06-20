@@ -2,7 +2,7 @@
 % Please edit documentation in R/plotFractionRemaining.R
 \name{plotFractionRemaining}
 \alias{plotFractionRemaining}
-\title{Plot fraction remaining by age-in-stage.}
+\title{Plot fraction remaining by age-in-stage}
 \usage{
 plotFractionRemaining(dfr = NULL, subsets = NULL,
   lhsTypeInfo = getLifeStageInfo.ATF(), nurseryAlongshoreZones = NULL,
@@ -28,7 +28,13 @@ plotFractionRemaining(dfr = NULL, subsets = NULL,
 
 \item{ggtheme}{- ggplot2 theme for plot}
 }
+\value{
+list with elements list(dfr=dfr,dfr.fracs=dfr1,ps=ps)
+}
 \description{
 Function to plot fraction remaining by age-in-stage.
+}
+\details{
+none.
 }
 

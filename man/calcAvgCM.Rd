@@ -2,7 +2,7 @@
 % Please edit documentation in R/calcAvgCM.R
 \name{calcAvgCM}
 \alias{calcAvgCM}
-\title{Calculate an "average" connectivity matrix.}
+\title{Calculate an "average" connectivity matrix}
 \usage{
 calcAvgCM(allRes)
 }
@@ -18,11 +18,12 @@ list with 5 elements:
  \item dmin - the minimum value in the devs
  \item dmax - the maximum value in the devs
 }
- 
- @export
 }
 \description{
 Calculates an "average" connectivity matrix from 
 results of a connectivity analysis.
+}
+\details{
+none.
 }
 

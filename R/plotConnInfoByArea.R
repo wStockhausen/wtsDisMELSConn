@@ -1,5 +1,5 @@
 #'
-#'@title Plot dataframe with connectivity info aggregated over sources or sinks as time series and boxplots.
+#'@title Plot dataframe with connectivity info aggregated over sources or sinks as time series and boxplots
 #'
 #'@description Function to plot dataframe with connectivity info aggregated over sources or sinks as time series and boxplots.
 #'
@@ -13,6 +13,8 @@
 #'@param facets - formula to facet by
 #'
 #'@return list with ggplot2 elements pTS (time series) and pBP (boxplot)
+#'
+#'@details none.
 #'
 #'@import ggplot2
 #'

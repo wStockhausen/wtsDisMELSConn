@@ -26,4 +26,7 @@ extractResultsByLHS(results, lhsTypeInfo = getLifeStageInfo.ATF(),
 \description{
 Function to extract results from DisMELS model run to individual files by life stage.
 }
+\details{
+none.
+}
 

@@ -1,12 +1,11 @@
 #'
-#'@title Plot time series of a variable for individuals.
+#'@title Plot time series of a variable for individuals
 #'
 #'@description Funcrtion to plot time series of a variable for individuals.
 #'
 #'@param dfr - dataframe or filename (or NULL) from call to extractIndivs(...)
 #'@param vars - name(s) of variable(s) (columns) to plot
 #'@param by - name of x-axis variable to plot by
-#'@param lhsTypeInfo - life stage info list for IBM (req'd if onlySuccessful=TRUE or onlyUnsuccessful=TRUE)
 #'@param nurseryAlongshoreZones  - alongshore id's for nursery zones to include
 #'@param nurseryDepthZones       - vector of names of depth zones used as nursery areas in the IBM (req'd if onlySuccessful=TRUE)
 #'@param spawningAlongshoreZones - alongshore id's for nursery zones to include
@@ -18,16 +17,19 @@
 #'@param facets - expression for creating facets (use bquote(...))
 #'@param ggtheme - ggplot2 theme for plot
 #'
+#'@return list of ggplot2 objects
+#'
+#'@details none
+#'
+#'@import ggplot2
 #'@import sqldf
 #'@import wtsUtilities
-#'@import ggplot2
 #' 
 #'@export
 #'
 plotTimeSeriesofIndivValues<-function(dfr=NULL,
                                    vars=NULL,
                                    by='age',
-                                   lhsTypeInfo=getLifeStageInfo.ATF(),
                                    nurseryAlongshoreZones=NULL,
                                    nurseryDepthZones=NULL, 
                                    spawningAlongshoreZones=NULL,
@@ -138,14 +140,12 @@ plotTimeSeriesofIndivValues<-function(dfr=NULL,
 #                            by='age',
 #                            xlab='age (days)',
 #                            ylabs=c(quote(temperature~degree*C),'depth (m)'),
-#                            title='1997: Survivors',
-#                            lhsTypeInfo=getLifeStageInfo.ATF())
+#                            title='1997: Survivors')
 #                                    
 # plotTimeSeriesofIndivValues(dfr=res.fracs.u$dfr,
 #                            vars=c('temperature','vertPos'),
 #                            by='age',
 #                            xlab='age (days)',
 #                            ylabs=c(quote(temperature~degree*C),'depth (m)'),
-#                            title='1997: Diers',
-#                            lhsTypeInfo=getLifeStageInfo.ATF())
+#                            title='1997: Diers')
                                    

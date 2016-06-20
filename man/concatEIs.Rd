@@ -2,7 +2,7 @@
 % Please edit documentation in R/concatEIs.R
 \name{concatEIs}
 \alias{concatEIs}
-\title{Concatenate files with environmental indices.}
+\title{Concatenate files with environmental indices}
 \usage{
 concatEIs(caption = "Select environmental index files", types = "txt",
   hasHeader = FALSE, id.vars = "year", out.csv = "test.csv",
@@ -26,5 +26,8 @@ melted dataframe with concatenated indices
 }
 \description{
 Function to concatenate files with environmental indices.
+}
+\details{
+Uses \code{tcltk::tk_choose_files}.
 }
 

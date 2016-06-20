@@ -1,11 +1,13 @@
 #'
-#'@title Calculate time series of the total fraction recruiting by source.
+#'@title Calculate time series of the total fraction recruiting by source
 #'
 #'@description Function to calculate  time series of the total fraction recruiting by source.
 #'
 #' @param allRes - results list object from calcConnectivityMatrices(...)
 #' 
 #' @return matrix of fractions recruiting, with times as rows and sources as columns
+#' 
+#' @details deprecated.
 #' 
 #'@import sqldf
 #'

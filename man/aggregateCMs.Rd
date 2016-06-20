@@ -2,7 +2,7 @@
 % Please edit documentation in R/aggregateCMs.R
 \name{aggregateCMs}
 \alias{aggregateCMs}
-\title{Aggregate dataframe with connectivity matrices according to new dates, spawning areas, nursery areas.}
+\title{Aggregate dataframe with connectivity matrices according to new dates, spawning areas, nursery areas}
 \usage{
 aggregateCMs(dfrCMs, newDates = NULL, newSAs = NULL, newNAs = NULL,
   debug = FALSE)

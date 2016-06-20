@@ -2,7 +2,7 @@
 % Please edit documentation in R/plotCMs.R
 \name{plotCMs}
 \alias{plotCMs}
-\title{Plot a set of connectivity matrices.}
+\title{Plot a set of connectivity matrices}
 \usage{
 plotCMs(allRes = NULL, zmax = NULL, zmin = 0, colorscale = c("hot",
   "cold", "coldhot"), plotBase = "ConnectivityMatrixYYYYMMDD.png",
@@ -32,5 +32,8 @@ plotCMs(allRes = NULL, zmax = NULL, zmin = 0, colorscale = c("hot",
 }
 \description{
 Plot a set of connectivity matrices (an allRes output from \code{calcConnectivityMatrices})
+}
+\details{
+calls \code{plotCM} to plot individual connectivity matrices.
 }
 

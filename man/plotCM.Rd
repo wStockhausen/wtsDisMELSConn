@@ -2,7 +2,7 @@
 % Please edit documentation in R/plotCM.R
 \name{plotCM}
 \alias{plotCM}
-\title{Plot a connectivity matrix.}
+\title{Plot a connectivity matrix}
 \usage{
 plotCM(tbl = NULL, csvfile = NULL, zmax = NULL, zmin = 0,
   title = NULL, xlab = "Nursery Areas/Alongshore Zones",
@@ -37,5 +37,9 @@ plotCM(tbl = NULL, csvfile = NULL, zmax = NULL, zmin = 0,
 }
 \description{
 Plot a connectivity matrix (from a matrix, dataframe, or csv file).
+}
+\details{
+- deprecated in favor of \code{plotCM.GG}. Calls \code{plotCM.matrix} or \code{plotCM.dataframe},
+depending on class of 'tbl'.
 }
 

@@ -2,7 +2,7 @@
 % Please edit documentation in R/plotCM.GG.R
 \name{plotCM.GG}
 \alias{plotCM.GG}
-\title{Plot connectivity matrices using ggplot2.}
+\title{Plot connectivity matrices using ggplot2}
 \usage{
 plotCM.GG(dfr, x = "nursery area", y = "spawning area", z = "Pr(N|S)",
   xLab = x, yLab = y, zLab = z, xMin = NULL, xMax = NULL,
@@ -54,5 +54,8 @@ a ggplot2 object
 }
 \description{
 Function to plot connectivity matrices using ggplot2.
+}
+\details{
+none.
 }
 

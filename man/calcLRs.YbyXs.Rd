@@ -2,7 +2,7 @@
 % Please edit documentation in R/calcLRs.YbyXs.R
 \name{calcLRs.YbyXs}
 \alias{calcLRs.YbyXs}
-\title{Calculate linear regressions for time series in Y as function of time series in X.}
+\title{Calculate linear regressions for time series in Y as function of time series in X}
 \usage{
 calcLRs.YbyXs(mdfrX, mdfrY, yvars = NULL, xlab = "index", ylab = "index",
   nrows = 2, coord_fixed = FALSE, labelByGroup = FALSE, verbose = FALSE)
@@ -52,5 +52,8 @@ list with named elements 'res', 'summary' and 'plot': \cr
 }
 \description{
 Function to calculate linear regressions between time series in Y as function of time series in X.
+}
+\details{
+none.
 }
 

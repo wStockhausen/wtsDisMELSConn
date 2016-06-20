@@ -1,5 +1,5 @@
 #'
-#'@title Extracts and re-orders a series of DisMELS model results files by individual.
+#'@title Extracts and re-orders a series of DisMELS model results files by individual
 #'
 #'@description Function to extract and re-order a series of DisMELS model results by individual.
 #'
@@ -8,6 +8,7 @@
 #'@param DDs - days to extract (can be NULL)
 #'@param lhsTypeInfo - life stage info list for IBM
 #'@param lhsTypes - lhs types to keep for output (NULL = all)
+#'@param successful - sql "where" clause to determine final state for individuals regarded as successful
 #'@param nurseryZones - vector of nursery area names
 #'@param onlySuccessful   - flag (T/F) to extract only successful indivs (if TRUE)
 #'@param onlyUnsuccessful - flag (T/F) to extract only unsuccessful indivs (if TRUE)
@@ -17,6 +18,7 @@
 #'@param basename.Results - base name for DisMELS model results files
 #'@param outDir - output folder
 #'@param basename.Out - base name for output files
+#'@param verbose - flag (T/F) to print debugging info
 #'
 #'@return no return value
 #'
@@ -33,6 +35,7 @@ extractIndivs.MultipleRuns<-function(YYYYs=NULL,
                                        DDs=NULL,
                                        lhsTypeInfo=NULL,    
                                        lhsTypes=NULL,
+                                       successful='where (end_typeName="benthic.juvenile")',
                                        nurseryZones=c("NurseryArea_000to050m","NurseryArea_050to150m"), #nursery area name(s)
                                        onlySuccessful=TRUE,
                                        onlyUnsuccessful=FALSE,
@@ -41,7 +44,8 @@ extractIndivs.MultipleRuns<-function(YYYYs=NULL,
                                        inpDir.Results=NULL,
                                        basename.Results="Results",
                                        outDir=NULL,
-                                       basename.Out="SuccessfulIndivs"){
+                                       basename.Out="SuccessfulIndivs",
+                                       verbose=FALSE){
     if (is.null(inpDir.IndivConn)){
         inpDir.IndivConn<-tk_choose.dir(caption='Select input directory for csv files with Individual Connectivity matrices.')
     }
@@ -86,11 +90,13 @@ extractIndivs.MultipleRuns<-function(YYYYs=NULL,
                                       lhsTypes=lhsTypes,
                                       onlySuccessful=onlySuccessful,
                                       onlyUnsuccessful=onlyUnsuccessful,
+                                      successful=successful,
                                       nurseryZones=nurseryZones,
                                       returnList=FALSE,
                                       writeOutput=TRUE,
                                       outDir=outDir,
-                                      outBaseCSV=outBaseCSV);
+                                      outBaseCSV=outBaseCSV,
+                                      verbose=verbose);
                         gc(verbose=TRUE);#force garbage collection
                     } else {
                         cat("could not process '",results,"'. File does not exist.\n",sep='')

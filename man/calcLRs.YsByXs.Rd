@@ -2,7 +2,7 @@
 % Please edit documentation in R/calcLRs.YsByXs.R
 \name{calcLRs.YsByXs}
 \alias{calcLRs.YsByXs}
-\title{Calculate linear regressions for time series in Y as function of time series in X.}
+\title{Calculate linear regressions for time series in Y as function of time series in X}
 \usage{
 calcLRs.YsByXs(mdfrX, mdfrY, verbose = FALSE)
 }
@@ -53,5 +53,8 @@ Function to calculate linear regressions between time series in Y as function of
 \details{
 Requires packages 'plyr' and 'reshape2'. Datasets are standardized as z-scores, 
 so the constant term in the linear model is dropped.
+
+
+none.
 }
 
