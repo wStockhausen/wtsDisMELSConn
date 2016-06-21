@@ -19,18 +19,16 @@
 #'
 #'@return list of dataframes with indiv results by lhs type name if returnList=TRUE, otherwise NULL.
 #'
-#'@details If indivConn or results are NULL, the user will be prompted to select the 
+#'@details If indivConn or results are NULL, the user will be prompted to select the
 #'corresponding file(s) using a file chooser dialog.
-#'
-#'@import sqldf
-#'@import wtsUtilities
+#'Uses functions \code{wtsUtilities::getCSV} and \code{sqldf::sqldf}.
 #'
 #'@export
 #'
 extractIndivs<-function(indivConn=NULL,    #individual connectivity results file (or dataframe)
                           results=NULL,    #DisMELS results file (or dataframe)
-                          lhsTypeInfo=getLifeStageInfo.ATF(),    
-                          lhsTypes=NULL,    
+                          lhsTypeInfo=getLifeStageInfo.ATF(),
+                          lhsTypes=NULL,
                           onlySuccessful=FALSE,
                           onlyUnsuccessful=FALSE,
                           successful='where (end_typeName="benthic.juvenile")',
@@ -46,24 +44,26 @@ extractIndivs<-function(indivConn=NULL,    #individual connectivity results file
     if (!is.data.frame(indivConn)){
         #read in individual connectivity results from csv file
         if (is.null(indivConn)){
-            indivConn<-getCSV(caption='Select individual connectivity results file');
+            indivConn<-wtsUtilities::getCSV(caption='Select individual connectivity results file');
             if (is.null(indivConn)) return(NULL);#user aborted
         } else {
+            cat("Reading indivConns from '",indivConn,"'\n",sep='');
             indivConn<-read.csv(indivConn,stringsAsFactors=FALSE);
         }
         retIndivConn<-TRUE;
     }
-    
+
     retRes<-FALSE;
     if (!is.data.frame(results)){
         #read in full results of DisMELS model run from csv file
         if (is.null(results)){
-            results<-getCSV(caption='Select full DisMELS results file');
+            results<-wtsUtilities::getCSV(caption='Select full DisMELS results file');
             if (is.null(results)) {
                 if (retIndivConn) return(indivConn);
                 return(NULL);#user aborted
             }
         } else {
+            cat("Reading results from '",results,"'\n",sep='');
             results<-read.csv(results,stringsAsFactors=FALSE);
         }
         retRes<-TRUE;
@@ -72,7 +72,7 @@ extractIndivs<-function(indivConn=NULL,    #individual connectivity results file
     #define life stage types
     typeNames=names(lhsTypeInfo$lifeStageTypes);
     if (is.null(lhsTypes)) lhsTypes<-typeNames;#process all typeNames
-    
+
     #define variables
     conVars <- c('start_typeName','start_depthzone','start_alongshorezone',
                   'end_typeName','end_depthzone','end_alongshorezone');
@@ -80,7 +80,7 @@ extractIndivs<-function(indivConn=NULL,    #individual connectivity results file
     stdVarsOut<-c('typeName','id','time',
                   'horizPos1','horizPos2','vertPos','track',
                   'alive','age','ageInStage','number');
-    
+
     #pull out IDs for indviduals from indivConn
     indivIDs<-extractIndivIDs(indivConn=indivConn,
                               lhsTypeInfo=lhsTypeInfo,
@@ -91,16 +91,16 @@ extractIndivs<-function(indivConn=NULL,    #individual connectivity results file
                               verbose=verbose);
     cat('Will extract results for ',nrow(indivIDs),' individuals\n',sep='')
     qry<-"select distinct ID from indivIDs order by ID;"
-    uids<-sqldf(qry);
+    uids<-sqldf::sqldf(qry);
     cat("Number of unique ids in indivIDs =",nrow(uids),'\n');
     print(uids$ID[1:10]);
-    
+
     #loop over type names and extract results for indivs
     if (returnList) indivsLst<-list();
     for (ctr in 1:length(typeNames)){
         typeName<-typeNames[ctr];
         if (typeName %in% lhsTypes){
-            
+            cat("Extracting results for '",typeName,"'\n",sep='');
             #extract indivs from results
             resVars<-paste('r',names(results),sep='.',collapse=',');
             qry<-"select
@@ -115,18 +115,18 @@ extractIndivs<-function(indivConn=NULL,    #individual connectivity results file
                     results r,
                     indivIDs i
                   where
-                    r.id=i.ID and 
+                    r.id=i.ID and
                     r.typeName='&&typeName'
                   order by
                     r.id,r.age;";
-            qry<-gsub("&&resVars",resVars,qry); 
-            qry<-gsub("&&typeName",typeName,qry); 
+            qry<-gsub("&&resVars",resVars,qry);
+            qry<-gsub("&&typeName",typeName,qry);
             cat("query = ",qry,sep='\n');
-            indivsTmp<-sqldf(qry);    
-            
+            indivsTmp<-sqldf::sqldf(qry);
+
             #check on indivs
             qry<-"select distinct id from indivsTmp order by id;"
-            uids<-sqldf(qry);
+            uids<-sqldf::sqldf(qry);
             cat("Number of unique ids in indivsTmp =",nrow(uids),'\n');
             print(uids$id[1:10]);
             cat('names(indivsTmp)= [',paste(names(indivsTmp),collapse=','),']\n')
@@ -138,29 +138,26 @@ extractIndivs<-function(indivConn=NULL,    #individual connectivity results file
             nms<-names(indivsTmp);
             nms[1:length(allVars)]<-allVars; #substitute allVars
             names(indivsTmp)<-nms;           #assign names to extracted columns
-            
+
             #determine output column names for life stage
             varsOutStr<-paste(allVars,sep='',collapse=',')
-    
+
             qry<-"select
                     &&varsOut
                   from
                     indivsTmp
                   order by
                     id,age;";
-            qry<-gsub("&&varsOut",varsOutStr,qry);  
+            qry<-gsub("&&varsOut",varsOutStr,qry);
             cat("query = ",qry,sep='\n');
-            indivsType<-sqldf(qry);
-            
+            indivsType<-sqldf::sqldf(qry);
+
             #write indivs to csv file
             if (writeOutput) write.csv(indivsType,file=file.path(outDir,paste(outBaseCSV,ctr,typeName,'csv',sep='.')),row.names=FALSE);
             if (returnList) indivsLst[[typeName]]<-indivsType;
         }#if typeName in lhsTypes
     }#loop over typeNames
-    
-#     if (retRes&&retIndivConn) return(invisible(list(indivConn=indivConn,results=results)));
-#     if (retRes)               return (invisible(results));
-#     if (retIndivConn)         return(invisible(indivConn));
+
     if (returnList) return(invisible(indivsLst));
     return(NULL);
 }

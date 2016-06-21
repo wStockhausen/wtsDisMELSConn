@@ -46,7 +46,8 @@ list of dataframes with indiv results by lhs type name if returnList=TRUE, other
 Function to extract tracks of individuals from a DisMELS model run.
 }
 \details{
-If indivConn or results are NULL, the user will be prompted to select the 
+If indivConn or results are NULL, the user will be prompted to select the
 corresponding file(s) using a file chooser dialog.
+Uses functions \code{wtsUtilities::getCSV} and \code{sqldf::sqldf}.
 }
 

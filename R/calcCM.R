@@ -26,13 +26,12 @@
 #' Note: this function calculates successful individuals using the dfrIC dataframe based on their final location
 #' being in on of the defined nursery zones, not on reaching the final life stage.
 #' 
+#' Uses \code{wtsUtilities::getCSV} and \code{sqldf::sqldf}.
+#' 
 #' @return list w/ 2 elements:\cr
 #' dfrCM - dataframe with probability of transport to a sink (nursery area) conditioned on starting in a source (spawning area)\cr
 #' dfrNR - numbers by source (spawning area)\cr
 #' dfrIC - dataframe of start and end locations for each individual in the model run\cr
-#' 
-#' @import sqldf 
-#' @import wtsUtilities
 #' 
 #' @export
 #'
@@ -54,7 +53,7 @@ calcCM<-function(ibmResTbl=NULL,
   if (!is.data.frame(ibmResTbl)){
     cat("Reading connectivity results file.\n")
     if (is.null(ibmResTbl)) {
-        ibmResTbl<-getCSV(caption="Select DisMELS connectivity results file");
+        ibmResTbl<-wtsUtilities::getCSV(caption="Select DisMELS connectivity results file");
         if (is.null(ibmResTbl)) return(NULL);
     } else {
         ibmResTbl<-read.csv(ibmResTbl,stringsAsFactors=FALSE);
@@ -66,7 +65,7 @@ calcCM<-function(ibmResTbl=NULL,
   if (!is.data.frame(cellsTbl)){
     cat("Reading cells file.\n")
     if (is.null(cellsTbl)) {
-        cellsTbl<-getCSV(caption="Select classified grid cells (csv) file");
+        cellsTbl<-wtsUtilities::getCSV(caption="Select classified grid cells (csv) file");
         if (is.null(cellsTbl)) return(NULL);
     } else {
         cellsTbl<-read.csv(cellsTbl,stringsAsFactors=FALSE);
@@ -94,7 +93,7 @@ calcCM<-function(ibmResTbl=NULL,
   nurseryZones <-as.data.frame(list(zone=nurseryZones));
   
   #create unique spawning zones table
-  uniqSpawningZones<-sqldf("select distinct
+  uniqSpawningZones<-sqldf::sqldf("select distinct
                               start_depthzone as depthzone,
                               start_alongshorezone as alongshorezone
                             from 
@@ -103,7 +102,7 @@ calcCM<-function(ibmResTbl=NULL,
                               depthzone, alongshorezone;");
   
   #create unique nursery zones table */
-  uniqNurseryZones<-sqldf("select distinct
+  uniqNurseryZones<-sqldf::sqldf("select distinct
                             depthzone      as depthzone,
                             alongshorezone as alongshorezone
                           from 
@@ -132,7 +131,7 @@ calcCM<-function(ibmResTbl=NULL,
         order by
           start_depthzone,
           start_alongshorezone;";
-  numRel<-sqldf(qry);
+  numRel<-sqldf::sqldf(qry);
   
   ##number "successful", by start/end zones, start/end typeNames
   qry<-"select
@@ -161,7 +160,7 @@ calcCM<-function(ibmResTbl=NULL,
           start_typeName,
           end_typeName;";
   qry<-gsub("&&where_clause",where_clause,qry,fixed=TRUE);
-  numSS1<-sqldf(qry);
+  numSS1<-sqldf::sqldf(qry);
   
   ##number "successful", by start/end zones (integrated over typeNames)
   qry<-"select
@@ -182,7 +181,7 @@ calcCM<-function(ibmResTbl=NULL,
           start_alongshorezone,
           end_depthzone,
           end_alongshorezone;";
-  numSS2<-sqldf(qry);
+  numSS2<-sqldf::sqldf(qry);
   
   ##calculate non-zero connectivity
   qry<-"select
@@ -203,7 +202,7 @@ calcCM<-function(ibmResTbl=NULL,
           start_alongshorezone,
           end_depthzone,
           end_alongshorezone;";
-  numSS3<-sqldf(qry);
+  numSS3<-sqldf::sqldf(qry);
 
 
   ##expand to unique spzawning zones x nursery zones
@@ -230,7 +229,7 @@ calcCM<-function(ibmResTbl=NULL,
           order by
             start_depthzone,start_alongshorezone,
             end_depthzone,end_alongshorezone;";
-  prbSS1<-sqldf(qry);  
+  prbSS1<-sqldf::sqldf(qry);  
   prbSS1$numFin[is.na(prbSS1$numFin)]<-0;
   prbSS1$prbCon[is.na(prbSS1$prbCon)]<-0;
 
@@ -253,7 +252,7 @@ calcCM<-function(ibmResTbl=NULL,
         order by
           start_depthzone,start_alongshorezone,
           end_depthzone,end_alongshorezone;";
-  dfrCon<-sqldf(qry);  
+  dfrCon<-sqldf::sqldf(qry);  
 
   if (writeCSVs){
     write.csv(numRel,file=outNumRel);

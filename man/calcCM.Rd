@@ -54,5 +54,7 @@ If the writeCSVs flag is set, the two files specified by outConn and outIndivs a
 
 Note: this function calculates successful individuals using the dfrIC dataframe based on their final location
 being in on of the defined nursery zones, not on reaching the final life stage.
+
+Uses \code{wtsUtilities::getCSV} and \code{sqldf::sqldf}.
 }
 
