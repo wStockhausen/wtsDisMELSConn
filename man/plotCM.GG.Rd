@@ -8,7 +8,7 @@ plotCM.GG(dfr, x = "nursery area", y = "spawning area", z = "Pr(N|S)",
   title = NULL, xLab = x, yLab = y, zLab = z, xMin = NULL,
   xMax = NULL, yMin = NULL, yMax = NULL, zMin = NULL, zMax = NULL,
   facetWrap = NULL, facetGrid = NULL, ncol = 4, reverseX = FALSE,
-  reverseY = FALSE, useGrad2 = FALSE)
+  reverseY = FALSE, useGrad2 = FALSE, verbose = FALSE)
 }
 \arguments{
 \item{dfr}{- dataframe to plot}
@@ -50,6 +50,8 @@ plotCM.GG(dfr, x = "nursery area", y = "spawning area", z = "Pr(N|S)",
 \item{reverseY}{- flag to reverse y axis}
 
 \item{useGrad2}{- flag to use reshape2::scale_fill_gradient2 for fill axis}
+
+\item{verbose}{- flag (T/F) to print debugging info}
 }
 \value{
 a ggplot2 object

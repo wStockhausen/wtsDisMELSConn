@@ -23,6 +23,7 @@
 #'@param reverseY - flag to reverse y axis
 #'@param reverseX - flag to reverse x axis
 #'@param useGrad2 - flag to use reshape2::scale_fill_gradient2 for fill axis
+#'@param verbose - flag (T/F) to print debugging info
 #'
 #'@return a ggplot2 object
 #'
@@ -51,7 +52,8 @@ plotCM.GG<-function(dfr,
                      ncol=4,
                      reverseX=FALSE,
                      reverseY=FALSE,
-                     useGrad2=FALSE){
+                     useGrad2=FALSE,
+                    verbose=FALSE){
   #create dataframe to be plotted
   dfrp <- dfr;
   if (is.null(zMax)) zMax<-max(abs(dfrp[[z]]),na.rm=TRUE);
@@ -67,10 +69,12 @@ plotCM.GG<-function(dfr,
   uY<-unique(dfrp[[y]]);
   if (is.null(yMin)) yMin<-min(uY,na.rm=TRUE)-0.5;
   if (is.null(yMax)) yMax<-max(uY,na.rm=TRUE)+0.5;
-  cat('uX =',uX,'\n')
-  cat('xMin=',xMin,', xMax=',xMax,"\n",sep='')
-  cat('uY =',uY,'\n')
-  cat('yMin=',yMin,', yMax=',yMax,"\n",sep='')
+  if (verbose){
+    cat('uX =',uX,'\n')
+    cat('xMin=',xMin,', xMax=',xMax,"\n",sep='')
+    cat('uY =',uY,'\n')
+    cat('yMin=',yMin,', yMax=',yMax,"\n",sep='')
+  }
   
   #replace spaces in column names with underscores
   names(dfrp)<-gsub(' ','_',names(dfrp),fixed=TRUE);
