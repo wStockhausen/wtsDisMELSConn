@@ -34,4 +34,3 @@ Function to plot dataframe with connectivity info aggregated over sources or sin
 \details{
 none.
 }
-

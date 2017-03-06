@@ -49,4 +49,3 @@ Function to plot a histogram for a column in a dataframe.
 \details{
 none.
 }
-

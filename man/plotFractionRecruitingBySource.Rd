@@ -35,4 +35,3 @@ Function to produce plots based on time series of the total fraction recruiting 
 \details{
 deprecated.
 }
-

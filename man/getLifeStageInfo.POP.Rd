@@ -15,4 +15,3 @@ Function to get a list that defines life stage info for the DisMELS POP IBM.
 \details{
 none.
 }
-

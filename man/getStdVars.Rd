@@ -18,4 +18,3 @@ Function to get standard variable names for DisMELS output.
 \details{
 none
 }
-

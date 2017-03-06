@@ -28,4 +28,3 @@ Function to concatenate annual tables (connectivity matrices, individual connect
 \details{
 none.
 }
-

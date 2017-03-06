@@ -51,4 +51,3 @@ If the writeCSVs flag is set, the two files specified by outConn and outIndivs a
 
 Note that this calculation classifies ONLY animals reaching the final life stage as successful.
 }
-

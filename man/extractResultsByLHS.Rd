@@ -29,4 +29,3 @@ Function to extract results from DisMELS model run to individual files by life s
 \details{
 none.
 }
-

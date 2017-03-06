@@ -18,4 +18,3 @@ Function to calculate  time series of the total fraction recruiting by source.
 \details{
 deprecated.
 }
-

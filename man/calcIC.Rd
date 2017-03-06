@@ -38,4 +38,3 @@ file dialog box.\cr \cr
 If the writeCSV flag is set, the inidividual connectivity data frame (dfrIC) 
 is written to the file specified by 'outIndivs'.
 }
-

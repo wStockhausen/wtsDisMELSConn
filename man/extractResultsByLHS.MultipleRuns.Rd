@@ -37,4 +37,3 @@ Function to extract and re-export a series of DisMELS model results by life stag
 This function assumes files are named something like 'basenameYYYYMMDD.csv'. 
 Note that at least one of YYYYs, MMs, and DDs must be a non-null vector.
 }
-

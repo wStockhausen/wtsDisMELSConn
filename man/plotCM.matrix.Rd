@@ -48,4 +48,3 @@ Plot a connectivity matrix from a matrix representation.
 \details{
 deprecated in favor of \code{plotCM.GG}.
 }
-

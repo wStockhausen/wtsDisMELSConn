@@ -57,4 +57,3 @@ so the constant term in the linear model is dropped.
 
 none.
 }
-

@@ -19,4 +19,3 @@ Function to write dataframe with individual connectivity results to files by dat
 \details{
 none
 }
-

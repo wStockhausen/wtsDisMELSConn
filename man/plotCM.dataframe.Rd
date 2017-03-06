@@ -38,4 +38,3 @@ Plot a connectivity matrix from a dataframe.
 \details{
 deprecated in favor of \code{plotCM.GG}.
 }
-

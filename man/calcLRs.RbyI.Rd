@@ -34,4 +34,3 @@ Function to calculate linear regressions between recruitment and index time seri
 \details{
 none.
 }
-

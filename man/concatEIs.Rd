@@ -30,4 +30,3 @@ Function to concatenate files with environmental indices.
 \details{
 Uses \code{tcltk::tk_choose_files}.
 }
-

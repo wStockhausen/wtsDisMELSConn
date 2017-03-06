@@ -56,4 +56,3 @@ Function to calculate linear regressions between time series in Y as function of
 \details{
 none.
 }
-

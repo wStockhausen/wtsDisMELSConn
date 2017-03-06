@@ -26,4 +26,3 @@ results of a connectivity analysis.
 \details{
 none.
 }
-

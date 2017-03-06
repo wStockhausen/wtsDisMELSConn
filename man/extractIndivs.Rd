@@ -50,4 +50,3 @@ If indivConn or results are NULL, the user will be prompted to select the
 corresponding file(s) using a file chooser dialog.
 Uses functions \code{wtsUtilities::getCSV} and \code{sqldf::sqldf}.
 }
-

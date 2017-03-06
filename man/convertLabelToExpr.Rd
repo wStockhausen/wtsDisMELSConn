@@ -27,4 +27,3 @@ as a plotmath expression, as is 'R^2'.
 
 test=TRUE requires ggplot2 package.
 }
-

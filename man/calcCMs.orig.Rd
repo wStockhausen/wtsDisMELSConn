@@ -62,4 +62,3 @@ function input for the corresponding years, months, or days.
 
 Note that this function calls \code{calcCMs.orig}, which classifies ONLY animals reaching the final life stage as successful.
 }
-

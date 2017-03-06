@@ -46,4 +46,3 @@ Funcrtion to plot time series of a variable for individuals.
 \details{
 none
 }
-

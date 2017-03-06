@@ -36,4 +36,3 @@ Plot a set of connectivity matrices (an allRes output from \code{calcConnectivit
 \details{
 calls \code{plotCM} to plot individual connectivity matrices.
 }
-

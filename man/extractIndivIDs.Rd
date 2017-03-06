@@ -39,4 +39,3 @@ one of the nursery areas and meet the 'successful' criteria.\cr
 If onlyUnsuccessful=TRUE, then it is assumed that 'unsuccessful' individuals are those which 
 don't meet the 'successful' criteria.
 }
-

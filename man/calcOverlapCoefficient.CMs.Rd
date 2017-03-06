@@ -18,4 +18,3 @@ Calculates the overlap coefficient (OC) time series for a set of connectivity ma
 \details{
 None.
 }
-

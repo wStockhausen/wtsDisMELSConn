@@ -29,4 +29,3 @@ that the associated zipped csv file is 'basename.csv'. When the csv file is unzi
 in the folder specified by dir.out, it will be renamed 'basenameYYYYMMDD.csv'. Note
 that at least one of YYYYs, MMs, and DDs must be a non-null vector.
 }
-

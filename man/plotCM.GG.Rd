@@ -5,8 +5,8 @@
 \title{Plot connectivity matrices using ggplot2}
 \usage{
 plotCM.GG(dfr, x = "nursery area", y = "spawning area", z = "Pr(N|S)",
-  xLab = x, yLab = y, zLab = z, xMin = NULL, xMax = NULL,
-  yMin = NULL, yMax = NULL, zMin = NULL, zMax = NULL,
+  title = NULL, xLab = x, yLab = y, zLab = z, xMin = NULL,
+  xMax = NULL, yMin = NULL, yMax = NULL, zMin = NULL, zMax = NULL,
   facetWrap = NULL, facetGrid = NULL, ncol = 4, reverseX = FALSE,
   reverseY = FALSE, useGrad2 = FALSE)
 }
@@ -18,6 +18,8 @@ plotCM.GG(dfr, x = "nursery area", y = "spawning area", z = "Pr(N|S)",
 \item{y}{- column name for y values}
 
 \item{z}{- column name for z values}
+
+\item{title}{- plot title}
 
 \item{xLab}{- x axis label}
 
@@ -58,4 +60,3 @@ Function to plot connectivity matrices using ggplot2.
 \details{
 none.
 }
-

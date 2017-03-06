@@ -37,4 +37,3 @@ Function to plot fraction remaining by age-in-stage.
 \details{
 none.
 }
-

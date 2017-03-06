@@ -42,4 +42,3 @@ Plot a connectivity matrix (from a matrix, dataframe, or csv file).
 - deprecated in favor of \code{plotCM.GG}. Calls \code{plotCM.matrix} or \code{plotCM.dataframe},
 depending on class of 'tbl'.
 }
-

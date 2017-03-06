@@ -62,4 +62,3 @@ where "Conn" is arbitrary (but consistent among results files) and YYYY indicate
 and DD the day (if applicable) for a particular model run. If YYYY, MM, or DD is **not** part of the file name, use "" as the 
 function input for the corresponding years, months, or days.
 }
-

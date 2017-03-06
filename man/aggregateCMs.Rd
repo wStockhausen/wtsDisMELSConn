@@ -29,4 +29,3 @@ input dataframe ("dfrCMs") is assumed to have columns in the order
 (date, spawning area, nursery area, numRel, numFin, and prFin)
 although the names associated with these columns are arbitrary.
 }
-

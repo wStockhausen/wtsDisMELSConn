@@ -57,4 +57,3 @@ being in on of the defined nursery zones, not on reaching the final life stage.
 
 Uses \code{wtsUtilities::getCSV} and \code{sqldf::sqldf}.
 }
-

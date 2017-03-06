@@ -7,6 +7,7 @@
 #'@param x - column name for x values
 #'@param y - column name for y values
 #'@param z - column name for z values
+#'@param title - plot title
 #'@param xLab - x axis label
 #'@param yLab - y axis label
 #'@param zLab - z label
@@ -35,6 +36,7 @@ plotCM.GG<-function(dfr,
                      x='nursery area',
                      y='spawning area',
                      z='Pr(N|S)',
+                    title=NULL,
                      xLab=x,
                      yLab=y,
                      zLab=z,
@@ -97,6 +99,7 @@ plotCM.GG<-function(dfr,
   p1 <- p1 + ylab(yLab);
   if (!is.null(facetWrap)) p1 <- p1 + facet_wrap(facetWrap,ncol=ncol);
   if (!is.null(facetGrid)) p1 <- p1 + facet_grid(facetGrid);
+  if (!is.null(title))     p1 <- p1 + ggtitle(title) + theme(plot.title=element_text(size=rel(0.8)));
   
   return(p1)
 }
