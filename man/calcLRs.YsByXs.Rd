@@ -34,6 +34,7 @@ list with named elements 'res', 'summary' and 'plot': \cr
    \item F      - F statistic
    \item prF    - Pr(>F) (p-value uncorrected for multiple comparisons)
    \item aicc   - AICc value
+   \item del.aicc - AICc relative to null model [i.e., AICc(model) - AICc(null)]
  }
  \item data - dataframe with data involved in linear models
  \itemize{
@@ -51,7 +52,7 @@ list with named elements 'res', 'summary' and 'plot': \cr
 Function to calculate linear regressions between time series in Y as function of time series in X.
 }
 \details{
-Requires packages 'plyr' and 'reshape2'. Datasets are standardized as z-scores, 
+Requires packages 'plyr', 'reshape2', and 'glmulti'. Datasets are standardized as z-scores, 
 so the constant term in the linear model is dropped.
 
 

@@ -7,7 +7,7 @@
 #'@param mdfrY - melted dataframe with dependent (Y) time series
 #'@param verbose - flag to print messages
 #'
-#'@details Requires packages 'plyr' and 'reshape2'. Datasets are standardized as z-scores, 
+#'@details Requires packages 'plyr', 'reshape2', and 'glmulti'. Datasets are standardized as z-scores, 
 #'so the constant term in the linear model is dropped.
 #'
 #'@return list with named elements 'res', 'summary' and 'plot': \cr
@@ -30,6 +30,7 @@
 #'    \item F      - F statistic
 #'    \item prF    - Pr(>F) (p-value uncorrected for multiple comparisons)
 #'    \item aicc   - AICc value
+#'    \item del.aicc - AICc relative to null model [i.e., AICc(model) - AICc(null)]
 #'  }
 #'  \item data - dataframe with data involved in linear models
 #'  \itemize{
@@ -90,7 +91,7 @@ calcLRs.YsByXs<-function(mdfrX,
       idy<-(mdfrZYs$group==uYG)&(mdfrZYs$variable==uYV);
       mdfrZY<-mdfrZYs[idy,];
       if (is.null(mdfrZY)||(nrow(mdfrZY)==0)){
-        cat("skipping All MODELS for Y-group = '",uYG,"'/'",uXV,"', Y-variable = '",uYV,"'\n",sep='');
+        if (verbose) cat("skipping All MODELS for Y-group = '",uYG,"'/'",uXV,"', Y-variable = '",uYV,"'\n",sep='');
       } else {
         if (uYV=='') mdfrZY$variable<-'y';#replace '' with 'y'
         ##process by unique X group variables
@@ -102,7 +103,7 @@ calcLRs.YsByXs<-function(mdfrX,
             idx<-(mdfrZXs$group==uXG)&(mdfrZXs$variable==uXV);
             mdfrZX<-mdfrZXs[idx,];
             if (is.null(mdfrZX)||(nrow(mdfrZX)==0)){
-              cat("------skipping model for X = '",uXG,"'/'",uXV,"', Y = '",uYG,"'/'",uYV,"'\n",sep='');
+              if (verbose) cat("------skipping model for X = '",uXG,"'/'",uXV,"', Y = '",uYG,"'/'",uYV,"'\n",sep='');
             } else {
               if (uXV=='') mdfrZX$variable<-'x';#replace '' with 'x'
               cols<-c("year","variable","value");
@@ -112,12 +113,17 @@ calcLRs.YsByXs<-function(mdfrX,
               names(dfrYX)<-c("year","x","y");                                         #rename columns to canonical form
               tst<-sum(abs(dfrYX$x),na.rm=TRUE)*sum(abs(dfrYX$y),na.rm=TRUE);
               if(is.na(tst)||(tst==0)){
-                  cat("skipping model for X = '",uXG,"'/'",uXV,"', Y = '",uYG,"/",uYV,"'\n",sep='');
+                  if (verbose) cat("skipping model for X = '",uXG,"'/'",uXV,"', Y = '",uYG,"/",uYV,"'\n",sep='');
               } else {
-                cat("------running model for X = '",uXG,"'/'",uXV,"', Y = '",uYG,"/",uYV,"'\n",sep='');
+                if (verbose) cat("------running model for X = '",uXG,"'/'",uXV,"', Y = '",uYG,"/",uYV,"'\n",sep='');
+                #null model
+                lm.null<-lm(y~-1,dfrYX);
+                aicc.null<-glmulti::aicc(lm.null);
+                #model
                 lmp<-lm(y~x-1,dfrYX);
                 smr<-summary(lmp);
                 ant<-anova(lmp);
+                aicc.lmp<-glmulti::aicc(lmp);
                 ##add lm results to lm.res
                 gv<-paste(uYG,uYV,uXG,uXV,sep=":");
                 lm.res[[gv]]<-list(ygroup=uYG,yvar=uYV,xgroup=uXG,xvar=uXV,lm=lmp,data=dfrYX);
@@ -132,7 +138,8 @@ calcLRs.YsByXs<-function(mdfrX,
                                                   adj.rsq=smr$adj.r.squared,
                                                   F=ant[1,"F value"],
                                                   prF=ant[1,"Pr(>F)"],
-                                                  aicc=aicc(lmp)));
+                                                  aicc=aicc.lmp,
+                                                  del.aicc=aicc.lmp-aicc.null));
                 ##add data to mYsOnXs
                 dfrYX$ygroup<-uYG;
                 dfrYX$yvar  <-uYV;
