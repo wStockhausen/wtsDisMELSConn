@@ -205,7 +205,7 @@ calcCM<-function(ibmResTbl=NULL,
   numSS3<-sqldf::sqldf(qry);
 
 
-  ##expand to unique spzawning zones x nursery zones
+  ##expand to unique spawning zones x nursery zones
   qry<-"select
           u.start_depthzone      as start_depthzone,
           u.start_alongshorezone as start_alongshorezone,

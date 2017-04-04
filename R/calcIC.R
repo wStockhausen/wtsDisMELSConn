@@ -32,7 +32,7 @@
 #**********************************************************/
 calcIC<-function(ibmResTbl=NULL,
                  cellsTbl=NULL, 
-                 lhsTypeInfo=getLifeStageInfo.ATF(),            
+                 lhsTypeInfo=NULL,            
                  spawningZones=c("SpawningArea_300to600m"),                 #spawning area name(s)
                  writeCSV=FALSE,
                  outIndivs="IndivStartEndPositions.csv"                     #output indivs csv file
@@ -84,6 +84,7 @@ calcIC<-function(ibmResTbl=NULL,
           i.typeName as typeName,
           i.id as id,
           i.origID as origID,
+          i.startTime as startTime,
           i.age as age,
           i.ageInStage as ageInStage,
           i.number as number,
@@ -166,6 +167,7 @@ calcIC<-function(ibmResTbl=NULL,
           i.typeName as typeName,
           i.ID as ID,
           i.origID as origID,
+          i.time as endTime,
           i.age as age,
           i.ageInStage as ageInStage,
           i.number as number,
@@ -176,7 +178,7 @@ calcIC<-function(ibmResTbl=NULL,
           p.alongshorezone as alongshorezone,
           p.depthzone as depthzone
       from
-         (select x.typeName,x.ID,x.origID,x.age,
+         (select x.typeName,x.ID,x.origID,x.time,x.age,
                  x.ageInStage,x.number,x.horizPos1,x.horizPos2,
                  x.vertPos,x.gridCellID 
           from 
@@ -203,6 +205,8 @@ calcIC<-function(ibmResTbl=NULL,
                 s.origID as origID,
                 s.typeName as start_typeName,
                 e.typeName as end_typeName,
+                s.startTime as start_time,
+                e.endTime as end_time,
                 e.age as age,
                 e.ageInStage as ageInStage,
                 s.number as numStart,
